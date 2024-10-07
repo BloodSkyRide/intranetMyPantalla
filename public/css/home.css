@@ -1,0 +1,36 @@
+.card{
+
+
+    width: 30VW;
+    min-width: 320px;
+
+    background-color: rgba(37, 37, 37, 0.5); /* Rojo con 50% de opacidad */
+    color: white; /* Color del texto */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+
+}
+
+.body{
+
+
+    background: -webkit-linear-gradient(90deg, #b963c2,#638adb,#339dc5);background: linear-gradient(90deg, #b963c2,#638adb,#339dc5);
+}
+
+
+.img{
+
+
+
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+
+}
+
+.img-mypantalla{
+
+    justify-content: center;
+    display: flex;
+
+}

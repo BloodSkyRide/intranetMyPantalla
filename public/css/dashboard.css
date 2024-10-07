@@ -1,0 +1,43 @@
+.aside {
+
+
+    /*background-color: #123691 ; /* Rojo con 50% de opacidad */
+    /*background-image: radial-gradient(circle at 39.55% 68.1%, #4c8edb 0, #335c8f 50%, #1a2e4a 100%);*/
+    background-image: radial-gradient(circle at 39.55% 68.1%, #8754cc 0, #6444ae 25%, #42338f 50%, #202270 75%, #001453 100%);
+
+}
+
+
+
+aside a {
+
+
+    color: white !important;
+}
+
+
+.btn_send {
+
+
+    background-color: #573da2;
+    border: none;
+}
+
+.btn_send:hover{
+
+    background-color: #412988;
+
+}
+
+#container_menu{
+
+
+    max-width: 99%;
+}
+.card_register{
+
+
+    width: 100%;
+
+
+}
