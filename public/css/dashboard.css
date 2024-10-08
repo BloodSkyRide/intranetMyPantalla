@@ -21,6 +21,7 @@ aside a {
 
     background-color: #573da2;
     border: none;
+    width: 200px;
 }
 
 .btn_send:hover{

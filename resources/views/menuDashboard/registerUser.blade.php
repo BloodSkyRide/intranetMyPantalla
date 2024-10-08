@@ -46,35 +46,86 @@
         <!-- form start -->
         <form>
           <div class="card-body">
-            <div class="form-group">
-              <label for="exampleInputEmail1">E-mail</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputFile">File input</label>
-              <div class="input-group">
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="exampleInputFile">
-                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+
+            <div class="row">
+              
+              <div class="col">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Nombre:</label>
+                  <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                 </div>
-                <div class="input-group-append">
-                  <span class="input-group-text">Upload</span>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Apellido:</label>
+                  <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Direccion:</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+
+
+                
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Celular Emergencia:</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Celular emergencia">
+                </div>
+                
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Contraseña:</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
+                </div>
+
+                <div class="form-group">
+                  <label>Tipo de Usuario:</label>
+                  <select class="form-control">
+                    <option value="administrador">Administrador</option>
+                    <option value="usuario">usuario</option>
+                  </select>
+                </div>
+              </div>
+              
+              
+              <div class="col">
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Fecha de nacimiento:</label>
+                  <input type="date" class="form-control" id="exampleInputPassword1" placeholder="Fecha de nacimiento.">
+                </div>
+                
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Direccion:</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Dirección">
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputPassword1">E-mail:</label>
+                  <input type="email" class="form-control" id="exampleInputPassword1" placeholder="E-mail">
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Cédula:</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Cédula">
+                </div>
+
+
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Celular:</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Cédula">
+                </div>
+
+                <div class="form-group" >
+                  <label for="exampleInputPassword1">Nombre Contacto de Emergencia:</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Nombre Emergencia">
                 </div>
               </div>
             </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
           </div>
+
           <!-- /.card-body -->
 
-          <div class="card-footer">
-            <button  class="btn_send btn btn-primary" ><i class="fa-regular fa-paper-plane" ></i>&nbsp;&nbsp;Enviar</button>
+          <div class="card-footer" style="background-color: inherit">
+            <center ><button  class="btn_send btn btn-primary shadow" ><i class="fa-regular fa-paper-plane" ></i>&nbsp;&nbsp;Enviar</button></center>
+            
           </div>
         </form>
       </div>

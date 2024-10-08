@@ -1,14 +1,9 @@
 $(document).ready(function(){
 
-
-    $("#register_nav").click();
-    $("#register_nav").trigger("click");
     $( "#register_nav" ).trigger( "click" );
 
-
-
 })
-
+console.log("hola")
 
 async function register_user(){
 
@@ -24,19 +19,13 @@ async function register_user(){
 
             console.log("entro aqui a depurar el status")
             let element_container = document.getElementById("container_menu");
+            console.log("respuesta: "+res.html)
             element_container.innerHTML = res.html;
     
 
         }
 
     })
-
-
-
-
-
-
-
 }
 
 
