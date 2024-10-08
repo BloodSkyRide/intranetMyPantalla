@@ -38,104 +38,110 @@
 
 
 
-    <div class="card_register card card-primary">
-        <div class="card-header" style="background-color: #573da2">
-          <h3 class="card-title"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp; Registrar usuario</h3>
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-        <form>
-          <div class="card-body">
+<div class="card_register card card-primary">
+    <div class="card-header" style="background-color: #573da2">
+        <h3 class="card-title"><i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp; Registrar usuario</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form id="formdata">
+        <div class="card-body">
 
             <div class="row">
-              
-              <div class="col">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Nombre:</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Apellido:</label>
-                  <input type="password" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                </div>
+                {{-- COLUMNA 1 --}}
 
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Direccion:</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Dirección">
-                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="nombre" name="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" class="form-control" id="apellido" placeholder="apellido"
+                            name="apellido">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="direccion">Direccion:</label>
+                        <input type="text" class="form-control" id="direccion" placeholder="Dirección"
+                            name="direccion">
+                    </div>
 
-                
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Celular Emergencia:</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Celular emergencia">
-                </div>
-                
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Contraseña:</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
-                </div>
+                    <div class="form-group">
+                        <label for="cel_emergencia">Celular Emergencia:</label>
+                        <input type="text" class="form-control" id="cel_emergencia" placeholder="Celular emergencia"
+                            name="cel_emergencia">
+                    </div>
 
-                <div class="form-group">
-                  <label>Tipo de Usuario:</label>
-                  <select class="form-control">
-                    <option value="administrador">Administrador</option>
-                    <option value="usuario">usuario</option>
-                  </select>
-                </div>
-              </div>
-              
-              
-              <div class="col">
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" class="form-control" id="password" placeholder="Contraseña"
+                            name="password">
+                    </div>
 
-                <div class="form-group">
-                  <label>Tipo de labor:</label>
-
-                  
-                  <select class="form-control">
-                    @foreach ($labores as $labor)
-                    <option value="{{$labor["id_labor"]}}">{{$labor["nombre_labor"]}}</option>
-                    @endforeach
-                  </select>
-                  
-                </div>
-              
-
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Fecha de nacimiento:</label>
-                  <input type="date" class="form-control" id="exampleInputPassword1" placeholder="Fecha de nacimiento.">
-                </div>
-                
-
-                <div class="form-group">
-                  <label for="exampleInputPassword1">E-mail:</label>
-                  <input type="email" class="form-control" id="exampleInputPassword1" placeholder="E-mail">
+                    <div class="form-group">
+                        <label for="rol">Tipo de Usuario:</label>
+                        <select class="form-control" name="rol" id="rol">
+                            <option value="administrador">Administrador</option>
+                            <option value="usuario">usuario</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Cédula:</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Cédula">
-                </div>
+                {{-- COLUMNA 2 --}}
+                <div class="col">
+
+                    <div class="form-group">
+                        <label for="labor">Tipo de labor:</label>
 
 
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Celular:</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Cédula">
-                </div>
+                        <select class="form-control" id="labor" name="labor">
+                            @foreach ($labores as $labor)
+                                <option value="{{ $labor['id_labor'] }}">{{ $labor['nombre_labor'] }}</option>
+                            @endforeach
+                        </select>
 
-                <div class="form-group" >
-                  <label for="exampleInputPassword1">Nombre Contacto de Emergencia:</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Nombre Emergencia">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="nacimiento">Fecha de nacimiento:</label>
+                        <input type="date" class="form-control" id="nacimiento" name="nacimiento"
+                            placeholder="Fecha de nacimiento.">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="email">E-mail:</label>
+                        <input type="email" class="form-control" id="email" placeholder="E-mail" name="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cedula">Cédula:</label>
+                        <input type="text" class="form-control" id="cedula" placeholder="Cédula" name="cedula">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="celular">Celular:</label>
+                        <input type="text" class="form-control" id="celular" placeholder="Cédula" name="celular">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contacto_emergencia">Nombre Contacto de Emergencia:</label>
+                        <input type="text" class="form-control" id="contacto_emergencia" name="contacto_emergencia"
+                            placeholder="Nombre Emergencia">
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
 
-          <!-- /.card-body -->
+        <!-- /.card-body -->
 
-          <div class="card-footer" style="background-color: inherit">
-            <center ><button  class="btn_send btn btn-primary shadow" onclick="{{route('saveUser')}}"><i class="fa-regular fa-paper-plane" ></i>&nbsp;&nbsp;Enviar</button></center>
-            
-          </div>
-        </form>
-      </div>
+        <div class="card-footer" style="background-color: inherit">
+            <center><button type="button" class="btn_send btn btn-primary shadow" onclick="sendUser('{{ route('saveUser') }}')"><i
+                        class="fa-regular fa-paper-plane"></i>&nbsp;&nbsp;Enviar</button></center>
+
+        </div>
+    </form>
+</div>

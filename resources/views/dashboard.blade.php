@@ -26,6 +26,10 @@
     <!-- summernote -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    {{-- SweetAlert2 --}}
+
+    <link rel="stylesheet" href="{{asset('javascript/plugins/sweetalert2/sweetalert2.min.css')}}">
+
     <link rel="stylesheet" href="{{asset('css/dashboard.css')}}">
 
   <body class="sidebar-mini layout-fixed" style="height: auto;">
@@ -88,8 +92,8 @@
 
     <aside class="aside main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
-        <img src="{{asset('assets/small_logo.png')}}" alt="Mypantalla" class="brand-image img-circle elevation-3">
+      <a href="https://www.mypantalla.com/" class="brand-link" target="blank">
+        <img src="{{asset('assets/small_logo.png')}}" alt="Mypantalla" class="brand-image img-circle elevation-3 shadow">
         <span class="brand-text font-weight-light">MyPantalla</span>
       </a>
   
@@ -214,7 +218,11 @@
     </div>
   </div>     
   {{-- <script src="{{asset('javascript/plugins/jquery/jquery.min.js')}}"></script> --}}
+  {{-- SweetAlert2 --}}
+
+  <script src="{{asset('javascript/plugins/sweetalert2/sweetalert2.all.min.js')}}"></script>
   <script src="{{asset('javascript/dashboard.js')}}"></script>
+
   <!-- jQuery UI 1.11.4 -->
   <script src="{{asset('javascript/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -244,7 +252,7 @@
   <!-- AdminLTE App -->
   <script src="{{asset('javascript/plugins/dist/js/adminlte.js')}}"></script>
   <!-- AdminLTE for demo purposes -->
-  <script src="{{asset('javascript/plugins/dist/js/demo.js')}}"></script>
+  {{-- <script src="{{asset('javascript/plugins/dist/js/demo.js')}}"></script> --}}
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="{{asset('javascript/plugins/dist/js/pages/dashboard.js')}}"></script>
 
