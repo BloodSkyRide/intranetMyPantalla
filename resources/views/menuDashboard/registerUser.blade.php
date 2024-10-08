@@ -61,7 +61,7 @@
 
                 <div class="form-group">
                   <label for="exampleInputPassword1">Direccion:</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Dirección">
                 </div>
 
 
@@ -87,15 +87,25 @@
               
               
               <div class="col">
+
+                <div class="form-group">
+                  <label>Tipo de labor:</label>
+
+                  
+                  <select class="form-control">
+                    @foreach ($labores as $labor)
+                    <option value="{{$labor["id_labor"]}}">{{$labor["nombre_labor"]}}</option>
+                    @endforeach
+                  </select>
+                  
+                </div>
+              
+
                 <div class="form-group">
                   <label for="exampleInputPassword1">Fecha de nacimiento:</label>
                   <input type="date" class="form-control" id="exampleInputPassword1" placeholder="Fecha de nacimiento.">
                 </div>
                 
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Direccion:</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Dirección">
-                </div>
 
                 <div class="form-group">
                   <label for="exampleInputPassword1">E-mail:</label>
@@ -124,7 +134,7 @@
           <!-- /.card-body -->
 
           <div class="card-footer" style="background-color: inherit">
-            <center ><button  class="btn_send btn btn-primary shadow" ><i class="fa-regular fa-paper-plane" ></i>&nbsp;&nbsp;Enviar</button></center>
+            <center ><button  class="btn_send btn btn-primary shadow" onclick="{{route('saveUser')}}"><i class="fa-regular fa-paper-plane" ></i>&nbsp;&nbsp;Enviar</button></center>
             
           </div>
         </form>

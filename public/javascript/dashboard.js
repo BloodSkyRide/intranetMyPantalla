@@ -19,9 +19,7 @@ async function register_user(){
 
             console.log("entro aqui a depurar el status")
             let element_container = document.getElementById("container_menu");
-            console.log("respuesta: "+res.html)
             element_container.innerHTML = res.html;
-    
 
         }
 
@@ -29,12 +27,24 @@ async function register_user(){
 }
 
 
-function income_report(){
+
+async function sendUser(url){
+
+
+    let formdata = document.getElementById("formdata");
+    let form = new formdata(formdata);
+    let response = await fetch(url,{
+        method: "POST",
+        headers:{
+
+            "Content-Typer": "application/json"
+        },
+
+        body: JSON.stringify({
 
 
 
-
-
-
+        })
+    })
 
 }

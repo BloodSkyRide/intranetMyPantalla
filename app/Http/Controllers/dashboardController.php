@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Models\labores;
 class dashboardController extends Controller
 {
 
@@ -36,9 +37,21 @@ class dashboardController extends Controller
 
     public function viewRegister(){
 
-        $htmlContent = view("menuDashboard.registerUser")->render();
+
+        $labores = labores::getLabores();
+
+
+        $htmlContent = view("menuDashboard.registerUser", ["labores" => $labores])->render();
 
         return response()->json(["status" => true, "html" => $htmlContent ]);
+    }
+
+
+    public function saveUser(Request $request){
+
+        
+
+
     }
 
 

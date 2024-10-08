@@ -30,4 +30,13 @@ class modelUser extends Authenticatable implements JWTSubject
     {
         return []; // puedes agregar datos personalizados al token si es necesario
     }
+
+    public static function saveUser($data){
+
+
+        
+    }
+
+
+
 }

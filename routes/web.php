@@ -20,4 +20,5 @@ Route::get('/refresh', [AuthController::class, 'refresh'])->middleware(["verific
 Route::get('/me', [AuthController::class, 'me'])->middleware(["verificar_token"]);
 Route::get('/dashboard', [dashboardController::class, 'openView'])->name("dashboard")->middleware(["verificar_token"]);
 Route::get('/registerUser', [dashboardController::class, 'viewRegister'])->name("registroUser");
+Route::post('/saveUser', [dashboardController::class, 'saveUser'])->name("saveUser");
 
