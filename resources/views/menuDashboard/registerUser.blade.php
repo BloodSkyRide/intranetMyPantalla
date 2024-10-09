@@ -70,7 +70,7 @@
                     <div class="form-group">
                         <label for="cel_emergencia">Celular Emergencia:</label>
                         <input type="text" class="form-control" id="cel_emergencia" placeholder="Celular emergencia"
-                            name="cel_emergencia">
+                            name="contacto_emergencia">
                     </div>
 
                     <div class="form-group">
@@ -124,12 +124,12 @@
 
                     <div class="form-group">
                         <label for="celular">Celular:</label>
-                        <input type="text" class="form-control" id="celular" placeholder="Cédula" name="celular">
+                        <input type="text" class="form-control" id="celular" placeholder="Celular" name="celular">
                     </div>
 
                     <div class="form-group">
                         <label for="contacto_emergencia">Nombre Contacto de Emergencia:</label>
-                        <input type="text" class="form-control" id="contacto_emergencia" name="contacto_emergencia"
+                        <input type="text" class="form-control" id="contacto_emergencia" name="nombre_contacto"
                             placeholder="Nombre Emergencia">
                     </div>
                 </div>

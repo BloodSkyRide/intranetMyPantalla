@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            
             $table->id();
-            $table->string('cedula',255);
+            $table->string('cedula',255)->unique();
             $table->text('password');
             $table->string('nombre',255)->nullable();
             $table->string('apellido',255)->nullable();

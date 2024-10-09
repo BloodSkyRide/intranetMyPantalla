@@ -18,7 +18,6 @@ async function register_user() {
 }
 
 async function sendUser(url) {
-    console.log("entro aqui: " + url);
 
     let formdata = document.getElementById("formdata");
     let form = new FormData(formdata);
@@ -41,22 +40,32 @@ async function sendUser(url) {
 
     });
 
-    if (response.status) {
-        sweetAlert(
-            "success",
-            "Excelente!",
-            "El usuario fue creado de manera exitosa"
-        );
+    if (response.ok) {
+
+        let data =  await response.json();
+
+        if(data.status){
+
+            sweetAlert(
+                "success",
+                "Excelente!",
+                "El usuario fue creado de manera exitosa"
+            );
+            
+             formdata.reset();
+        }else{
 
 
-        formdata.reset();
+            sweetAlert(
+                "error",
+                "Uuuuups!",
+                "El usuario no pudó ser guardado en la base de datos, por favor revisa que todos los campos esten bien formados, recuerda que el nacimiento debe ser mayor a 18 años consulta con el departamento de sistemas"
+            );
+
+        }
+
+
     }
-
-    sweetAlert(
-        "error",
-        "Uuuuups!",
-        "El usuario no pudó ser guardado en la base de datos, consulta con el departamento de sistemas"
-    );
 
 }
 
