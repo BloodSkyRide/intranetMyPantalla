@@ -1,5 +1,20 @@
+
+
+
+
+
+
+
+
+
+
+
+
 $(document).ready(function () {
     $("#register_nav").trigger("click");
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
 });
 console.log("hola");
 
@@ -65,6 +80,29 @@ async function sendUser(url) {
         }
 
 
+    }
+
+}
+
+
+async function showManageLabor(url){
+
+    
+    let response = await fetch(url,{
+
+        method: "GET",
+        headers:{
+            "Content-Type": "application/json"
+        }
+    })
+
+
+    if(response.status){
+
+        let data = await response.json();
+        let element_container = document.getElementById("container_menu");
+
+        element_container.innerHTML = data.html;
     }
 
 }

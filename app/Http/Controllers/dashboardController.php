@@ -115,4 +115,14 @@ class dashboardController extends Controller
 
 
     }
+
+
+
+    public function showManageLabor(){
+
+
+        $htmlContent = view("menuDashboard.manejoLabores")->render();
+
+        return response()->json(["status" => true, "html" => $htmlContent]);
+    }
 }
