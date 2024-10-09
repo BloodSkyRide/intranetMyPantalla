@@ -1,19 +1,13 @@
 
-
-
-
-
-
-
-
-
-
-
-
 $(document).ready(function () {
     $("#register_nav").trigger("click");
-        //Initialize Select2 Elements
-        $('.select2').select2()
+
+        
+    $('.select2').select2();
+    $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+
 
 });
 console.log("hola");
@@ -33,6 +27,11 @@ async function register_user() {
 }
 
 async function sendUser(url) {
+
+
+
+
+    
 
     let formdata = document.getElementById("formdata");
     let form = new FormData(formdata);
@@ -61,21 +60,33 @@ async function sendUser(url) {
 
         if(data.status){
 
-            sweetAlert(
-                "success",
-                "Excelente!",
-                "El usuario fue creado de manera exitosa"
-            );
+            // sweetAlert(
+            //     "success",
+            //     "Excelente!",
+            //     "El usuario fue creado de manera exitosa"
+            // );
+
+            Swal.fire({
+                title: "Excelente!",
+                text: "El usuario fue creado de manera exitosa",
+                icon: "success"
+              });
             
-             formdata.reset();
+             //formdata.reset();
         }else{
 
 
-            sweetAlert(
-                "error",
-                "Uuuuups!",
-                "El usuario no pudó ser guardado en la base de datos, por favor revisa que todos los campos esten bien formados, recuerda que el nacimiento debe ser mayor a 18 años consulta con el departamento de sistemas"
-            );
+            Swal.fire({
+                title: "Uuuuups!",
+                text: "El usuario no pudó ser guardado en la base de datos, por favor revisa que todos los campos esten bien formados, recuerda que el nacimiento debe ser mayor a 18 años consulta con el departamento de sistemas",
+                icon: "error"
+              });
+
+        //  sweetAlert(
+        //         "error",
+        //         "Uuuuups!",
+        //         "El usuario no pudó ser guardado en la base de datos, por favor revisa que todos los campos esten bien formados, recuerda que el nacimiento debe ser mayor a 18 años consulta con el departamento de sistemas"
+        //     );
 
         }
 
@@ -84,8 +95,7 @@ async function sendUser(url) {
 
 }
 
-
-async function showManageLabor(url){
+ async function showManageLabor(url){
 
     
     let response = await fetch(url,{
@@ -108,10 +118,7 @@ async function showManageLabor(url){
 }
 
 function sweetAlert(icon, title, text) {
-    Swal.fire({
-        title: title,
-        text: text,
-        icon: icon,
-        confirmButtonText: "OK",
-    });
+
+
+
 }
