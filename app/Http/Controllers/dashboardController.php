@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\labores;
 use App\Models\modelUser;
+use App\Models\modelSubLabores;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
@@ -121,7 +122,14 @@ class dashboardController extends Controller
     public function showManageLabor(){
 
         $labores = labores::getLabores();
-        $htmlContent = view("menuDashboard.manejoLabores", ["labores" => $labores])->render();
+        
+
+        $getSubLabores = modelSubLabores::getSubLabores();
+
+        
+        $htmlContent = view("menuDashboard.manejoLabores", ["labores" => $labores, "sublabores" => $getSubLabores])->render();
+
+
 
         return response()->json(["status" => true, "html" => $htmlContent]);
     }

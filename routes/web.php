@@ -2,6 +2,10 @@
 use App\Http\Controllers\tokenController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\adminLaborsController;
+
+
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +30,7 @@ Route::get('/registerUser', [dashboardController::class, 'viewRegister'])->name(
 Route::post('/saveUser', [dashboardController::class, 'saveUser'])->name("saveUser");
 
 Route::get('/showManageLabor', [dashboardController::class, 'showManageLabor'])->name("showManageLabor");
+
+Route::get('/insertSubLabor', [adminLaborsController::class, 'insertSubLabor'])->name("insertSubLabor");
+
 

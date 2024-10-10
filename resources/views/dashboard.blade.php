@@ -156,7 +156,7 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link" onclick="showManageLabor('{{ route('showManageLabor') }}')"
+                            <a class="nav-link" onclick="showManageLabor('{{route('showManageLabor')}}')"
                                 type="button">
                                 <i class="fa-solid fa-clipboard"></i>&nbsp;&nbsp;
                                 <p>
@@ -168,7 +168,7 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link"  onclick="register_user()" type="button" id="register_nav">
+                            <a class="nav-link"  onclick="register_user('{{route('registroUser')}}')" type="button" id="register_nav">
                               <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;
                                 <p>
                                     Registrar Usuarios

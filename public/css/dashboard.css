@@ -42,3 +42,48 @@ aside a {
 
 
 }
+
+
+.div_checknox{
+
+
+    display: inline-flex;
+}
+
+.dropdown{
+
+
+    background-color: #42338f;
+}
+
+.dropdown:hover{
+
+
+    background-color: #1f4ca0;
+}
+
+.dropdown:focus{
+
+
+    background-color: #1f4ca0;
+}
+
+.btn_add_labor{
+
+    background-color: #6846b2;
+    border: #1f4ca0;
+
+}
+
+.btn_add_labor:hover{
+
+    background-color: #41257c;
+    
+}
+
+.trash{
+
+    position: relative;
+    bottom: 15px;
+
+}
