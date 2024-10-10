@@ -120,8 +120,8 @@ class dashboardController extends Controller
 
     public function showManageLabor(){
 
-
-        $htmlContent = view("menuDashboard.manejoLabores")->render();
+        $labores = labores::getLabores();
+        $htmlContent = view("menuDashboard.manejoLabores", ["labores" => $labores])->render();
 
         return response()->json(["status" => true, "html" => $htmlContent]);
     }

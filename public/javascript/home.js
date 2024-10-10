@@ -24,7 +24,7 @@ async function sendData() {
 
     try {
         const res = await $.ajax({
-            url: '/reloj/public/login',
+            url: '/intranetMyPantalla/public/login',
             type: 'POST',
             dataType: 'json',
             data: { cedula, pass }
@@ -47,7 +47,7 @@ async function sendData() {
                 
         //     })
 
-                 window.location.href = `/reloj/public/dashboard?token=${encodeURIComponent(token)}`;
+                 window.location.href = `/intranetMyPantalla/public/dashboard?token=${encodeURIComponent(token)}`;
             
 
             if (!responses.ok) {

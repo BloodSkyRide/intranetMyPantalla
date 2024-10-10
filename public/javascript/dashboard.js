@@ -2,19 +2,12 @@
 $(document).ready(function () {
     $("#register_nav").trigger("click");
 
-        
-    $('.select2').select2();
-    $('.select2bs4').select2({
-        theme: 'bootstrap4'
-      })
-
-
 });
 console.log("hola");
 
 async function register_user() {
     $.ajax({
-        url: "/reloj/public/registerUser",
+        url: "/intranetMyPantalla/public/registerUser",
         type: "GET",
         dataType: "json",
     }).done(function (res) {
@@ -72,7 +65,7 @@ async function sendUser(url) {
                 icon: "success"
               });
             
-             //formdata.reset();
+             formdata.reset();
         }else{
 
 
@@ -113,6 +106,10 @@ async function sendUser(url) {
         let element_container = document.getElementById("container_menu");
 
         element_container.innerHTML = data.html;
+        $('.select2').select2();
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+          })
     }
 
 }
