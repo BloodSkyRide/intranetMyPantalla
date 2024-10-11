@@ -41,6 +41,12 @@
     {{-- estilos --}}
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('javascript/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('javascript/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('javascript/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+
     {{-- SweetAlert2 --}}
 
     <link rel="stylesheet" href="{{ asset('javascript/plugins/sweetalert2/sweetalert2.min.css') }}">
@@ -156,7 +162,7 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link" onclick="showManageLabor('{{route('showManageLabor')}}')"
+                            <a class="nav-link" onclick="showManageLabor('{{ route('showManageLabor') }}')"
                                 type="button">
                                 <i class="fa-solid fa-clipboard"></i>&nbsp;&nbsp;
                                 <p>
@@ -168,8 +174,9 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link"  onclick="register_user('{{route('registroUser')}}')" type="button" id="register_nav">
-                              <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;
+                            <a class="nav-link" onclick="register_user('{{ route('registroUser') }}')"
+                                type="button" id="register_nav">
+                                <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;
                                 <p>
                                     Registrar Usuarios
                                 </p>
@@ -198,6 +205,16 @@
 
 
                         <li class="nav-item">
+                            <a  class="nav-link" type="button" onclick="getShowLabors('{{route('showMyLabors')}}')">
+                                <i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;
+                                <p>
+                                    Mis labores
+                                </p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fa-solid fa-clock"></i>&nbsp;&nbsp;
                                 <p>
@@ -209,12 +226,10 @@
 
                     </ul>
                 </nav>
-                <!-- /.sidebar-menu -->
             </div>
-            <!-- /.sidebar -->
+
         </aside>
 
-        <!-- Main Sidebar Container -->
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="min-height: 805px;">
@@ -232,12 +247,11 @@
                             </ol>
                         </div>
                     </div>
-                    <div id="container_menu" ></div>
+                    <div id="container_menu"></div> <!-- DONDE SE CARGA CADA PESTAÑA -->
 
                 </div>
             </div>
         </div>
-        {{-- <script src="{{asset('javascript/plugins/jquery/jquery.min.js')}}"></script> --}}
     </div>
 
     <!-- jQuery -->
@@ -264,67 +278,24 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('javascript/plugins/dist/js/adminlte.min.js') }}"></script>
     <!-- SweetAlert2 -->
-    <script src="{{asset('javascript/plugins/sweetalert2/sweetalert2.all.min.js')}}"></script>
+    <script src="{{ asset('javascript/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
+    {{-- DATATABLES --}}
+    <script src="{{asset('javascript/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/jszip/jszip.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/pdfmake/pdfmake.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/pdfmake/vfs_fonts.js')}}"></script>
+    <script src="{{asset('javascript/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('javascript/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
     <!-- Page specific script -->
     <script src="{{ asset('javascript/dashboard.js') }}"></script>
 
 </body>
-
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{-- <!-- jQuery UI 1.11.4 -->
-  <script src="{{asset('javascript/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
-  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-  <script>
-    $.widget.bridge('uibutton', $.ui.button)
-  </script>
-  <!-- Bootstrap 4 -->
-  <script src="{{asset('javascript/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <!-- ChartJS -->
-  <script src="{{asset('javascript/plugins/chart.js/Chart.min.js')}}"></script>
-  <!-- Sparkline -->
-  <script src="{{asset('javascript/plugins/sparklines/sparkline.js')}}"></script>
-  <!-- JQVMap -->
-  <script src="{{asset('javascript/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
-  <script src="{{asset('javascript/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
-  <!-- jQuery Knob Chart -->
-  <script src="{{asset('javascript/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
-  <!-- daterangepicker -->
-  <script src="{{asset('javascript/plugins/moment/moment.min.js')}}"></script>
-  <script src="{{asset('javascript/plugins/daterangepicker/daterangepicker.js')}}"></script>
-  <!-- Tempusdominus Bootstrap 4 -->
-  <script src="{{asset('javascript/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-  <!-- Summernote -->
-  <script src="{{asset('javascript/plugins/summernote/summernote-bs4.min.js')}}"></script>
-  <!-- overlayScrollbars -->
-  <script src="{{asset('javascript/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script> --}}
-
-
-
-</body>
-
 </html>

@@ -36,7 +36,7 @@ class modelUser extends Authenticatable implements JWTSubject
     public static function saveUser($data){
 
 
-        return self::create($data);
+        return self::insert($data);
     }
 
 

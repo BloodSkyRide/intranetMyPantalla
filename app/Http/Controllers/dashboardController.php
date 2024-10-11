@@ -91,7 +91,7 @@ class dashboardController extends Controller
             "direccion" => $validate["direccion"],
             "email" => $validate["email"],
             "id_labor" => $validate["labor"],
-            "nacimiento" => $validate["nacimiento"],
+            "fecha_registro" => $validate["nacimiento"],
             "nombre" => $validate["nombre"],
             "password" => $validate["password"],
             "rol" => $validate["rol"],
@@ -132,5 +132,14 @@ class dashboardController extends Controller
 
 
         return response()->json(["status" => true, "html" => $htmlContent]);
+    }
+
+
+    public function getShowMyLabors(){
+
+
+        $render = view("menuDashboard.myLabors")->render();
+
+        return response()->json(["status" => true, "html" => $render]);
     }
 }

@@ -17,4 +17,12 @@ class labores extends Model
         return labores::all();
 
     }
+
+
+    public static function insertLabor($name){
+
+
+        return self::insert(["nombre_labor" =>$name]);
+
+    }
 }
