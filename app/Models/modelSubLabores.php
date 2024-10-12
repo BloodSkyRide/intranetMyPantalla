@@ -33,4 +33,12 @@ class modelSubLabores extends Model
         return self::insert($array);
 
     }
+
+
+    public static function getSubLaborsForId($id){
+
+
+        return self::where('id_labor',$id)->get();
+
+    }
 }

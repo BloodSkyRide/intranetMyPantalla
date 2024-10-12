@@ -195,10 +195,10 @@
 
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="#" class="nav-link" type="button" onclick="getShowAssists('{{route('getShowAssist')}}')">
                                 <i class="fa-brands fa-creative-commons-nd"></i>&nbsp;&nbsp;
                                 <p>
-                                    Reporte de labores
+                                    Asistencias
                                 </p>
                             </a>
                         </li>

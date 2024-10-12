@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Middleware\ValidateToken;
+use App\Http\Middleware\verifyTokenHeader;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -21,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
 
             "verificar_token" => ValidateToken::class,
+            "verifyTokenHeader" => verifyTokenHeader::class
 
         ]);
     })

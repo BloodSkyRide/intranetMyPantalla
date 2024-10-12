@@ -32,9 +32,11 @@ Route::get('/registerUser', [dashboardController::class, 'viewRegister'])->name(
 
 Route::post('/saveUser', [dashboardController::class, 'saveUser'])->name("saveUser");
 
-Route::get('/showManageLabor', [dashboardController::class, 'showManageLabor'])->name("showManageLabor");
+Route::get('/showManageLabor', [dashboardController::class, 'showManageLabor'])->name("showManageLabor"); //verificador de middleware
 
-Route::get('/showMyLabors', [dashboardController::class, 'getShowMyLabors'])->name("showMyLabors");
+Route::get('/showAssists', [dashboardController::class, 'getShowAssist'])->name("getShowAssist");
+
+Route::get('/showMyLabors', [dashboardController::class, 'getShowMyLabors'])->name("showMyLabors")->middleware(["verifyTokenHeader"]);
 
 Route::post('/insertSubLabor', [subLaborsController::class, 'insertSubLabor'])->name("insertSubLabor");
 
