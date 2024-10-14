@@ -24,13 +24,13 @@ async function sendData() {
 
     try {
         const res = await $.ajax({
-            url: '/reloj/public/login',
+            url: '/intranetMyPantalla/public/login',
             type: 'POST',
             dataType: 'json',
             data: { cedula, pass }
         });
 
-        if (await res.status) {
+        if (res.status) {
             console.log("Éxitoso");
             console.log(res.access_token);
             localStorage.setItem('access_token', res.access_token);
@@ -47,14 +47,14 @@ async function sendData() {
                 
         //     })
 
-                 window.location.href = `/reloj/public/dashboard?token=${encodeURIComponent(token)}`;
+                 window.location.href = `/intranetmypantalla/public/dashboard?token=${encodeURIComponent(token)}`;
             
 
-            if (!responses.ok) {
+            if (!res.ok) {
                 throw new Error('Error en la respuesta del dashboard');
             }
 
-            const dashboardData = await responses.json();
+            const dashboardData = await res.json();
             console.log(dashboardData);
         }
     } catch (error) {
