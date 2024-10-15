@@ -17,25 +17,25 @@
                         <th style="width: 40px">Estado</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
 
                     @php
                         $flag = 1;
                     @endphp
 
                     @foreach ($sublabors as $sublabor)
-                        <tr>
+                        <tr >
                             <td>{{ $flag }}</td>
                             <td>{{ $sublabor['nombre_sub_labor'] }}</td>
-                            <td>
+                            <td class="column_sub_labor">
                                 <div class="icheck-primary d-inline">
-                                    <input type="checkbox" id="checkboxPrimary{{ $sublabor['id_sub_labor'] }}"
-                                        value="{{ $sublabor['id_sub_labor'] }}">
-                                    <label
-                                        for="checkboxPrimary{{ $sublabor['id_sub_labor'] }}">{{ $sublabor['nombre_sub_labor'] }}</label>
+
+                                    <input type="checkbox" id="checkboxPrimary{{ $sublabor['id_sub_labor'] }}" value="{{ $sublabor['nombre_sub_labor'] }}">
+                                    <label for="checkboxPrimary{{ $sublabor['id_sub_labor'] }}">{{ $sublabor['nombre_sub_labor'] }}</label>                                   
+                                    
                                 </div>
                             </td>
-                            <td><span class="badge bg-warning">Pendiente</span></td>
+                            <td><span class="badge bg-warning" >Pendiente</span></td>
                         </tr>
 
                         @php
@@ -46,8 +46,7 @@
                 </tbody>
             </table>
 
-
-
+            <center><button class="btn btn-primary mt-3" onclick="verifyHomeWorks('{{route('historySubLabor')}}')"><i class="fa-solid fa-paper-plane" onclick=""></i>&nbsp;&nbsp;Enviar Tareas</button></center>
 
         </div>
 

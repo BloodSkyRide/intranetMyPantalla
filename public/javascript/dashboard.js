@@ -270,14 +270,119 @@ async function getShowLabors(url) {
 
 async function getShowAssists(url){
 
+    const token = localStorage.getItem("access_token");
 
     let response = await fetch(url,{
 
         headers: {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            "Authorization": `Bearer ${token}`
         }
     });
 
+
+    if(response.status){
+
+        let data = await response.json();
+        console.log("el tipo es: " + typeof data);
+
+        let element_container = document.getElementById("container_menu");
+
+        element_container.innerHTML = data.html;
+    }
+
+}
+
+
+function sendDataSet(state){
+
+
+
+    let bridge =  document.getElementById("bridge");
+
+    bridge.dataset.dataState = state;
+
+    let modal_message = document.getElementById("security");
+
+    modal_message.innerHTML = `seguro de: ${state}`;
+
+}
+
+
+async function sendModalAccept(url){
+
+
+    let data = document.getElementById("bridge").dataset.dataState;
+
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url,{
+
+        method: "POST",
+        headers:{
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+
+        },
+        body: JSON.stringify({
+
+            estado: data
+
+        })
+    });
+
+
+    if(response.status){
+
+
+        let data = await response.json();
+        console.log("el tipo es: " + typeof data);
+
+        let element_container = document.getElementById("container_menu");
+
+        element_container.innerHTML = data.html;
+
+        $('#exampleModal').modal('hide');
+
+    }
+
+}
+
+
+async function verifyHomeWorks(url){
+
+
+    let column = document.getElementById("column_sub_labor");
+
+    let result = document.querySelectorAll(`td.column_sub_labor > div.icheck-primary > input[type="checkbox"]:checked`);
+    
+    let checked = [];
+
+
+
+
+
+    result.forEach((node,index)=>{
+
+
+        checked.push(node.value);
+        console.log("depuracion"+node.value);
+    });
+
+    let response = await fetch(url,{
+        method: "POST",
+        headers:{
+
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+
+            checked
+
+        })
+
+    });
 
     if(response.status){
 

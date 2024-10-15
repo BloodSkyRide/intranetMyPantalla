@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\adminLaborsController;
 use App\Http\Controllers\subLaborsController;
 use App\Http\Controllers\laborController;
+use App\Http\Controllers\assistController;
 
 
 
@@ -34,7 +35,7 @@ Route::post('/saveUser', [dashboardController::class, 'saveUser'])->name("saveUs
 
 Route::get('/showManageLabor', [dashboardController::class, 'showManageLabor'])->name("showManageLabor"); //verificador de middleware
 
-Route::get('/showAssists', [dashboardController::class, 'getShowAssist'])->name("getShowAssist");
+Route::get('/showAssists', [dashboardController::class, 'getShowAssist'])->name("getShowAssist")->middleware(["verifyTokenHeader"]);
 
 Route::get('/showMyLabors', [dashboardController::class, 'getShowMyLabors'])->name("showMyLabors")->middleware(["verifyTokenHeader"]);
 
@@ -43,5 +44,11 @@ Route::post('/insertSubLabor', [subLaborsController::class, 'insertSubLabor'])->
 Route::delete('/Deletes', [subLaborsController::class, 'deleteSubLabors'])->name("Deletes");
 
 Route::post('/insertlabor', [laborController::class, 'insertLabor'])->name("insertlabor");
+
+
+Route::post('/historySubLabor', [subLaborsController::class, 'historySubLabor'])->name("historySubLabor");
+
+
+Route::post('/captureHour', [assistController::class, 'captureHour'])->name("captureHour")->middleware(["verifyTokenHeader"]);
 
 

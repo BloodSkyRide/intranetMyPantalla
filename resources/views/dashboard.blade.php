@@ -231,6 +231,36 @@
         </aside>
 
 
+
+
+        
+<!-- Modal de confirmación-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg bg-danger">
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;¡Seguro de realizar esta acción!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="bridge" data-state="">
+
+
+            <h4 id="security"></h4>
+  
+          <p>Una vez realizada esta acción no podrá deshacerla!</p>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa-solid fa-ban"></i>&nbsp;&nbsp;Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="sendModalAccept('{{route('captureHour')}}')"><i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="min-height: 805px;">
             <!-- Content Header (Page header) -->

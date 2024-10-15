@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\modelSubLabores;
 use App\Models\labores;
+use App\Models\historial_labores;
 use Carbon\Carbon;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class subLaborsController extends Controller
 {
@@ -94,6 +97,29 @@ class subLaborsController extends Controller
 
 
         
+
+    }
+
+
+
+
+    public function historySubLabor(Request $request){
+
+
+        $checked = $request->checked;
+
+        
+        $token_header = $request->header("Authorization");
+
+        $replace = str_replace("Bearer ","",$token_header);
+
+        $decode_token = JWTAuth::setToken($replace)->authenticate();
+        $estado = $request->estado;
+        $id_user = $decode_token["cedula"];
+
+        $fecha = date("d/m/y");
+
+
 
     }
 }
