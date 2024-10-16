@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id("id_sub_labor");
             $table->integer("id_labor");
             $table->string('nombre_sub_labor',255);
+            $table->string('estado',255);
             $table->date('fecha_creacion')->nullable();
             $table->timestamps();
         });

@@ -142,8 +142,8 @@ class dashboardController extends Controller
         $decode_token = JWTAuth::setToken($replace)->authenticate();
 
         $id_labor = $decode_token["id_labor"];
-
-        $getGroupLabors = modelSubLabores::getSubLaborsForId($id_labor);
+        $state_pending = "PENDIENTE";
+        $getGroupLabors = modelSubLabores::getSubLaborsForId($id_labor,$state_pending);
 
         if ($getGroupLabors) {
 
@@ -153,7 +153,7 @@ class dashboardController extends Controller
             return response()->json(["status" => true, "html" => $render, "token" => $decode_token]);
         }
 
-        return response()->json(["status" => false, "message" => "No se pudó acceder a la base de datos para las sub labores!"]);
+        return response()->json(["status" => false, "messagge" => "No se pudó acceder a la base de datos para las sub labores!"]);
     }
 
 
@@ -167,7 +167,7 @@ class dashboardController extends Controller
         
         $decode_token = JWTAuth::setToken($replace)->authenticate();
         $id_user = $decode_token["cedula"];
-        $fecha = date("d/m/y");
+        $fecha = Carbon::now()->format('y-m-d');
 
         $horas = modelAssits::getMyAssists($id_user,$fecha);
 

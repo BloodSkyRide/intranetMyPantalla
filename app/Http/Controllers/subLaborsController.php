@@ -12,8 +12,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class subLaborsController extends Controller
 {
-    //
-
 
     public function deleteSubLabors(Request $request){
 
@@ -31,22 +29,19 @@ class subLaborsController extends Controller
 
         }
 
-
+        
+        
         $deleted = modelSubLabores::deleteSubLabors($asocciate);
-
+        
+       
 
         if($deleted){
 
-
             $labores = labores::getLabores();
         
-
             $getSubLabores = modelSubLabores::getSubLabores();
     
-            
             $htmlContent = view("menuDashboard.manejoLabores", ["labores" => $labores, "sublabores" => $getSubLabores])->render();
-    
-    
     
             return response()->json(["status" => true, "html" => $htmlContent]);
 
@@ -70,6 +65,7 @@ class subLaborsController extends Controller
 
                 "nombre_sub_labor" => $sublabors,
                 "id_labor" => $labor_principal,
+                "estado" => "PENDIENTE",
                 "fecha_creacion" => Carbon::now()
             ]);
 
@@ -94,8 +90,6 @@ class subLaborsController extends Controller
             return response()->json(["status" => true, "html" => $htmlContent]);
 
         }
-
-
         
 
     }
@@ -114,12 +108,85 @@ class subLaborsController extends Controller
         $replace = str_replace("Bearer ","",$token_header);
 
         $decode_token = JWTAuth::setToken($replace)->authenticate();
-        $estado = $request->estado;
+
         $id_user = $decode_token["cedula"];
+        $id_labor = $decode_token["id_labor"];
 
-        $fecha = date("d/m/y");
+        $fecha = Carbon::now()->format('y-m-d');
+        
+        $hora = Carbon::now();
 
 
+        $inserts = count($checked);
+        $confirm = 0;
+
+        
+        foreach($checked as $nombre){
+            
+            $data = ["id_user" => $id_user, "id_labor" => $id_labor, "nombre_sub_labor"=> $nombre, "estado" => "REALIZADO", "fecha" => $fecha, "hora" => $hora];
+            $insert = historial_labores::insertHistory($data);
+
+            if($insert){
+
+                $state = "REALIZADO";
+                $change_state = modelSubLabores::changeStateSubLabor($id_labor,$nombre,$state);
+                $confirm++;
+            }
+
+        }
+
+        if($inserts === $confirm){
+
+            $state_pending = "PENDIENTE";
+
+            $getGroupLabors = modelSubLabores::getSubLaborsForId($id_labor,$state_pending);
+
+            if ($getGroupLabors) {
+    
+    
+                $render = view("menuDashboard.myLabors", ["sublabors" => $getGroupLabors])->render();
+    
+                return response()->json(["status" => true, "html" => $render]);
+            }
+
+        }
+
+
+        return response()->json(["status" => false, "messagge" => "No se pudó acceder a la base de datos para las sub labores!"]);
+
+        
+    }
+
+
+
+    public function rechargeSubLabors(Request $request){
+
+        $checked = $request->checked;
+
+        $state_pending = "PENDIENTE";
+
+        $asocciate = [];
+
+        foreach($checked as $item){
+
+            array_push($asocciate,[
+
+                "id_sub_labor" => $item
+
+            ]);
+
+        }
+
+        $recharge_states = modelSubLabores::rechargeSubLabors($asocciate,$state_pending);
+
+        if($recharge_states){
+
+
+            return response()->json(["status" => true]);
+        }
+
+
+        return response()->json(["status" => false]);
 
     }
 }

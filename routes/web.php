@@ -29,8 +29,6 @@ Route::get('/me', [AuthController::class, 'me'])->middleware(["verificar_token"]
 Route::get('/dashboard', [dashboardController::class, 'openView'])->name("dashboard")->middleware(["verificar_token"]);
 Route::get('/registerUser', [dashboardController::class, 'viewRegister'])->name("registroUser");
 
-
-
 Route::post('/saveUser', [dashboardController::class, 'saveUser'])->name("saveUser");
 
 Route::get('/showManageLabor', [dashboardController::class, 'showManageLabor'])->name("showManageLabor"); //verificador de middleware
@@ -45,9 +43,9 @@ Route::delete('/Deletes', [subLaborsController::class, 'deleteSubLabors'])->name
 
 Route::post('/insertlabor', [laborController::class, 'insertLabor'])->name("insertlabor");
 
+Route::post('/historySubLabor', [subLaborsController::class, 'historySubLabor'])->name("historySubLabor")->middleware(["verifyTokenHeader"]);
 
-Route::post('/historySubLabor', [subLaborsController::class, 'historySubLabor'])->name("historySubLabor");
-
+Route::put('/rechargeSubLabors', [subLaborsController::class, 'rechargeSubLabors'])->name("rechargeSubLabors")->middleware(["verifyTokenHeader"]);
 
 Route::post('/captureHour', [assistController::class, 'captureHour'])->name("captureHour")->middleware(["verifyTokenHeader"]);
 

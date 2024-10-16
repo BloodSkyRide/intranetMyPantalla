@@ -21,7 +21,7 @@ class assistController extends Controller
         $estado = $request->estado;
         $id_user = $decode_token["cedula"];
 
-        $fecha = date("d/m/y");
+        $fecha = Carbon::now()->format('y-m-d');
 
         $hora = Carbon::now();
 

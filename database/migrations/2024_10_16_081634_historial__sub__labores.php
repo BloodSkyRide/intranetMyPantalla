@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('historial_sub_labores', function (Blueprint $table) {
-            $table->id("id_historial");
-            $table->integer("id_sub_labor");
-            $table->string('id_user',255);
-            $table->date('fecha');
-            $table->string('estado')->nullable();
+            $table->id("id_historial_sublabor");
+            $table->string("id_user",255);
+            $table->string("id_labor",255);
+            $table->string('nombre_sub_labor',255);
+            $table->string('estado',255);
+            $table->date('fecha')->nullable();
+            $table->time("hora")->nullable();
             $table->timestamps();
         });
     }

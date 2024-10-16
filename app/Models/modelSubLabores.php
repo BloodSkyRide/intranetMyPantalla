@@ -12,6 +12,8 @@ class modelSubLabores extends Model
        protected $table = "sub_labores";
        protected $fillable = ["id_sub_labor", "id_labor", "nombre_sub_labor", "fecha_creacion", "created_at", "updated_at"];
 
+       protected $state_ok = "REALIZADO";
+
     public static function getSubLabores(){
 
 
@@ -35,10 +37,30 @@ class modelSubLabores extends Model
     }
 
 
-    public static function getSubLaborsForId($id){
+    public static function getSubLaborsForId($id,$state_pending){
+
+        return self::where('id_labor',$id)
+        ->where("estado",$state_pending)
+        ->get();
+
+    }
 
 
-        return self::where('id_labor',$id)->get();
+    public static function changeStateSubLabor($id_labor,$nombre_sub_labor,$state){
+
+
+        self::where("id_labor",$id_labor)
+        ->where("nombre_sub_labor",$nombre_sub_labor)
+        ->update(["estado" => $state]);
+
+    }
+
+
+    public static function rechargeSubLabors($ids,$state){
+
+
+        return self::whereIn("id_sub_labor",$ids)
+        ->update(["estado" => $state]);
 
     }
 }
