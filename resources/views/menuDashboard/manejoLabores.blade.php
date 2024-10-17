@@ -117,7 +117,10 @@
 
                   <button class="btn btn-danger m-2" onclick="delteSubLaborTable('{{ route('Deletes') }}')"><i class="fa-solid fa-trash">&nbsp;&nbsp;</i>Eliminar sub labores</button>
 
-                  <button class="btn btn-info m-2" onclick="rechargeSubLabors('{{route('rechargeSubLabors')}}')"><i class="fa-solid fa-arrows-rotate"></i>&nbsp;&nbsp;Cargar Sub Labores</button>
+                  <button class="btn btn-info m-2" onclick="rechargeSubLabors('{{route('rechargeSubLabors')}}')"><i class="fa-solid fa-arrows-rotate"></i>&nbsp;&nbsp;Renovar Sub Labores</button>
+
+                  <button class="btn btn-warning m-2" onclick="rechargeSubLabors('{{route('rechargeSubLabors')}}')"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;&nbsp;Recoger labores</button>
+
                 </div>
 
 

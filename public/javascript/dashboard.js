@@ -436,6 +436,13 @@ async function rechargeSubLabors(url){
         });
 
 
+        column_subgroups.forEach((node)=>{
+
+
+            node.checked = false;
+        })
+
+
     }else{
 
         Swal.fire({
@@ -444,8 +451,170 @@ async function rechargeSubLabors(url){
             icon: "error",
         });
 
+    }
+}
+
+
+async function getViewHistoryLabors(url){
+
+    const token = localStorage.getItem("access_token");
+    let response = await fetch(url,{
+
+        method: "GET",
+        headers: {
+
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`
+        }
+    });
+
+    if(response.status){
+
+        let data = await response.json();
+
+        console.log("el tipo es: " + typeof(response));
+
+        let element_container = document.getElementById("container_menu");
+
+        element_container.innerHTML = data.html;
+        $('#reservation').daterangepicker()
+
+        $("#history_table_searcher").DataTable({
+            responsive: true,
+            lengthChange: false,
+            autoWidth: false,
+            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            language: {
+                search: "Buscar en la tabla:",
+                lengthMenu: "Mostrar _MENU_ registros",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+                emptyTable: "No hay datos disponibles",
+            },
+        })
 
     }
 
+}
+
+
+function getRangeDatePicker(){
+
+    let range = document.getElementById("reservation").value;
+
+    return range;
+}
+
+
+async function searchForRange(url){
+
+    let range = getRangeDatePicker();
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(`${url}?range=${range}`,{
+
+        method: "GET",
+        headers: {
+
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`
+        }
+    });
+
+     let data = await response.json();
+
+
+    if(data.status){
+
+        
+        console.log("el tipo es: " + typeof(response));
+
+        let element_container = document.getElementById("container_menu");
+
+        element_container.innerHTML = data.html;
+        $('#reservation').daterangepicker()
+
+        $('#reservation').val(range);
+
+        $("#history_table_searcher").DataTable({
+            responsive: true,
+            lengthChange: false,
+            autoWidth: false,
+            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            language: {
+                search: "Buscar en la tabla:",
+                lengthMenu: "Mostrar _MENU_ registros",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+                emptyTable: "No hay datos disponibles",
+            },
+        })
+
+    }
+
+}
+
+
+async function searcherText(url){
+
+    let range = getRangeDatePicker();
+    let searcher = document.getElementById("searcherText").value;
     
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(`${url}?range=${range}&text=${searcher}`,{
+        method: "GET",
+        headers:{
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+
+    });
+
+    let data = await response.json();
+
+
+    if(data.status){
+
+        console.log("el tipo es: " + typeof(response));
+
+        let element_container = document.getElementById("container_menu");
+
+        element_container.innerHTML = data.html;
+        $('#reservation').daterangepicker()
+        $('#searcherText').val(searcher);
+        $('#searcherText').focus();
+
+        $('#reservation').val(range);
+
+        $("#history_table_searcher").DataTable({
+            responsive: true,
+            lengthChange: false,
+            autoWidth: false,
+            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            language: {
+                search: "Buscar en la tabla:",
+                lengthMenu: "Mostrar _MENU_ registros",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+                emptyTable: "No hay datos disponibles",
+            },
+        })
+    }
 }

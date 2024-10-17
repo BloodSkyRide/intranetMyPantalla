@@ -24,7 +24,7 @@ async function sendData() {
 
     try {
         const res = await $.ajax({
-            url: '/intranetMyPantalla/public/login',
+            url: './login',
             type: 'POST',
             dataType: 'json',
             data: { cedula, pass }
@@ -38,7 +38,6 @@ async function sendData() {
 
             console.log("Token a enviar: " + token);
 
-
         //   let responses =  await fetch('/reloj/public/dashboard',{
         //         method: "POST",
         //         headers: {
@@ -47,7 +46,7 @@ async function sendData() {
                 
         //     })
 
-                 window.location.href = `/intranetmypantalla/public/dashboard?token=${encodeURIComponent(token)}`;
+                 window.location.href = `./dashboard?token=${encodeURIComponent(token)}`;
             
 
             if (!res.ok) {

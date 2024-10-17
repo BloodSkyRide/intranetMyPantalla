@@ -2,7 +2,7 @@
 use App\Http\Controllers\tokenController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\adminLaborsController;
+use App\Http\Controllers\historySubLaborsController;
 use App\Http\Controllers\subLaborsController;
 use App\Http\Controllers\laborController;
 use App\Http\Controllers\assistController;
@@ -48,5 +48,9 @@ Route::post('/historySubLabor', [subLaborsController::class, 'historySubLabor'])
 Route::put('/rechargeSubLabors', [subLaborsController::class, 'rechargeSubLabors'])->name("rechargeSubLabors")->middleware(["verifyTokenHeader"]);
 
 Route::post('/captureHour', [assistController::class, 'captureHour'])->name("captureHour")->middleware(["verifyTokenHeader"]);
+
+Route::get('/historyLabors', [historySubLaborsController::class, 'getShowHistorySubLabors'])->name("getShowHistorySubLabors")->middleware(["verifyTokenHeader"]);
+Route::get('/searchForRange', [historySubLaborsController::class, 'searchForRange'])->name("searchForRange")->middleware(["verifyTokenHeader"]);
+Route::get('/searchText', [historySubLaborsController::class, 'searchText'])->name("searchText")->middleware(["verifyTokenHeader"]);
 
 

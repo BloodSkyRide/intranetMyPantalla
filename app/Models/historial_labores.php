@@ -28,4 +28,35 @@ class historial_labores extends Model
         ->get();
 
     }
+
+
+    public static function showHistory(){
+
+        return self::orderBy('fecha', 'desc')->take(20)->get();
+
+    }
+
+
+    public static function searchforDate($date_i,$date_f){
+
+        return self::whereBetween('fecha', [$date_i, $date_f])
+        ->select("id_user","nombre_sub_labor","estado","fecha","hora")
+        ->get();
+
+    }
+
+
+    public static function searcherForText($date_i,$date_f,$text){
+
+
+
+        return self::where('nombre_sub_labor', 'like', "$text%")
+        ->whereBetween('fecha', [$date_i, $date_f])
+        ->select("id_user","nombre_sub_labor","estado","fecha","hora")
+        ->get();
+
+
+
+
+    }
 }

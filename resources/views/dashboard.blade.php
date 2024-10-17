@@ -195,7 +195,8 @@
 
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link" type="button" onclick="getShowAssists('{{route('getShowAssist')}}')">
+                            <a href="#" class="nav-link" type="button"
+                                onclick="getShowAssists('{{ route('getShowAssist') }}')">
                                 <i class="fa-brands fa-creative-commons-nd"></i>&nbsp;&nbsp;
                                 <p>
                                     Asistencias
@@ -205,7 +206,8 @@
 
 
                         <li class="nav-item">
-                            <a  class="nav-link" type="button" onclick="getShowLabors('{{route('showMyLabors')}}')">
+                            <a class="nav-link" type="button"
+                                onclick="getShowLabors('{{ route('showMyLabors') }}')">
                                 <i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;
                                 <p>
                                     Mis labores
@@ -224,6 +226,17 @@
                         </li>
 
 
+                        <li class="nav-item">
+                            <a type="button" class="nav-link"
+                                onclick="getViewHistoryLabors('{{ route('getShowHistorySubLabors') }}')">
+                                <i class="fa-solid fa-list"></i>&nbsp;&nbsp;
+                                <p>
+                                    Historial de labores
+                                </p>
+                            </a>
+                        </li>
+
+
                     </ul>
                 </nav>
             </div>
@@ -233,32 +246,38 @@
 
 
 
-        
-<!-- Modal de confirmación-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg bg-danger">
-          <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;¡Seguro de realizar esta acción!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" id="bridge" data-state="">
+
+        <!-- Modal de confirmación-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg bg-danger">
+                        <h5 class="modal-title" id="exampleModalLabel"><i
+                                class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;¡Seguro de realizar esta
+                            acción!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="bridge" data-state="">
 
 
-            <h4 id="security"></h4>
-  
-          <p>Una vez realizada esta acción no podrá deshacerla!</p>
-          
+                        <h4 id="security"></h4>
+
+                        <p>Una vez realizada esta acción no podrá deshacerla!</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                class="fa-solid fa-ban"></i>&nbsp;&nbsp;Cancelar</button>
+                        <button type="button" class="btn btn-primary"
+                            onclick="sendModalAccept('{{ route('captureHour') }}')"><i
+                                class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa-solid fa-ban"></i>&nbsp;&nbsp;Cancelar</button>
-          <button type="button" class="btn btn-primary" onclick="sendModalAccept('{{route('captureHour')}}')"><i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
         <!-- Content Wrapper. Contains page content -->
@@ -309,23 +328,26 @@
     <script src="{{ asset('javascript/plugins/dist/js/adminlte.min.js') }}"></script>
     <!-- SweetAlert2 -->
     <script src="{{ asset('javascript/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+    <!-- date-range-picker -->
+    <script src="{{asset('javascript/plugins/daterangepicker/daterangepicker.js')}}"></script>
 
     {{-- DATATABLES --}}
-    <script src="{{asset('javascript/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/jszip/jszip.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/pdfmake/pdfmake.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/pdfmake/vfs_fonts.js')}}"></script>
-    <script src="{{asset('javascript/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-    <script src="{{asset('javascript/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+    <script src="{{ asset('javascript/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
     <!-- Page specific script -->
     <script src="{{ asset('javascript/dashboard.js') }}"></script>
 
 </body>
+
 </html>
