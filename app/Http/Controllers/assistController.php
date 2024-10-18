@@ -7,10 +7,20 @@ use Carbon\Carbon;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\modelAssits;
+use App\Models\modelUser;
 
 class assistController extends Controller
 {
+
+    protected $inicio_jornada = "INICIAR JORNADA LABORAL";
+    protected $inicio_jornada_A = "INICIAR JORNADA ALIMENTARIA";
+    protected $inicio_jornada_T = "INICIAR JORNADA LABORAL TARDE";
+    protected $finalizar_jornada = "FINALIZAR JORNADA LABORAL";
+
+
+
     public function captureHour(Request $request){
+
 
 
         $token_header = $request->header("Authorization");
@@ -65,10 +75,10 @@ class assistController extends Controller
             }
 
         $eventos = [
-            ["jornada" => "INICIAR JORNADA LABORAL"], 
-            ["jornada" => "INICIAR JORNADA ALIMENTARIA"],
-            ["jornada" => "INICIAR JORNADA LABORAL TARDE"],
-            ["jornada" => "FINALIZAR JORNADA LABORAL"],
+            ["jornada" => $this->inicio_jornada], 
+            ["jornada" => $this->inicio_jornada_A],
+            ["jornada" => $this->inicio_jornada_T],
+            ["jornada" => $this->finalizar_jornada],
         ];
         
         
@@ -87,6 +97,63 @@ class assistController extends Controller
             return response()->json(["status" => true, "html" => $render]);
 
         }
+
+    }
+
+
+
+    public function getShowReportAssists(){
+
+
+
+        $get_report = modelAssits::getAssists();
+
+
+
+
+
+        //$render = view("menuDashboard.reportAssits");
+
+
+
+    }
+
+
+    public function convertView($array){
+
+        $data = [];
+
+        foreach($array as $item){
+
+            $nombre = modelUser::getUserName($item->id_user);
+            $apellido = modelUser::getLastName($item->id_user);
+            $inicio_jornada = modelAssits::getHour($item->id_user,$this->inicio_jornada);
+            $inicio_jornada_a = modelAssits::getHour($item->id_user,$this->inicio_jornada_A);
+            $inicio_jornada_t = modelAssits::getHour($item->id_user,$this->inicio_jornada_T);
+            $fin = modelAssits::getHour($item->id_user,$this->finalizar_jornada);
+            $fecha = modelAssits::getDate($item->id_user,$this->inicio_jornada);
+
+
+
+
+            array_push($data, [
+
+                "cedula" => $item->id_user,
+                "nombre" =>  $nombre,
+                "apellido" =>  $apellido,
+                "Inicio_jornada" => $inicio_jornada,
+                "inicio_jornada_a" => $inicio_jornada_a,
+                "inicio_jornada_t" => $inicio_jornada_t,
+                "finalizar_jornada" => $fin,
+                "fecha" => $fecha
+
+
+
+            ]);
+
+
+        }
+
 
     }
 }

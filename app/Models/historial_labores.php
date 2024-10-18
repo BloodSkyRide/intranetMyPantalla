@@ -32,7 +32,7 @@ class historial_labores extends Model
 
     public static function showHistory(){
 
-        return self::orderBy('fecha', 'desc')->take(20)->get();
+        return self::orderBy('id_historial_sublabor', 'desc')->limit(20)->get();
 
     }
 
@@ -50,13 +50,13 @@ class historial_labores extends Model
 
 
 
-        return self::where('nombre_sub_labor', 'like', "$text%")
+        return self::where('nombre_sub_labor', $text)
         ->whereBetween('fecha', [$date_i, $date_f])
         ->select("id_user","nombre_sub_labor","estado","fecha","hora")
         ->get();
 
-
-
-
     }
+
+
+
 }

@@ -13,6 +13,9 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class subLaborsController extends Controller
 {
 
+    protected $state_pending = "PENDIENTE";
+    protected $state_realized = "REALIZADO";
+
     public function deleteSubLabors(Request $request){
 
         $array = $request->ids_deletes;
@@ -65,7 +68,7 @@ class subLaborsController extends Controller
 
                 "nombre_sub_labor" => $sublabors,
                 "id_labor" => $labor_principal,
-                "estado" => "PENDIENTE",
+                "estado" => $this->state_pending,
                 "fecha_creacion" => Carbon::now()
             ]);
 
@@ -123,13 +126,12 @@ class subLaborsController extends Controller
         
         foreach($checked as $nombre){
             
-            $data = ["id_user" => $id_user, "id_labor" => $id_labor, "nombre_sub_labor"=> $nombre, "estado" => "REALIZADO", "fecha" => $fecha, "hora" => $hora];
+            $data = ["id_user" => $id_user, "id_labor" => $id_labor, "nombre_sub_labor"=> $nombre, "estado" => $this->state_realized, "fecha" => $fecha, "hora" => $hora];
             $insert = historial_labores::insertHistory($data);
 
             if($insert){
 
-                $state = "REALIZADO";
-                $change_state = modelSubLabores::changeStateSubLabor($id_labor,$nombre,$state);
+                $change_state = modelSubLabores::changeStateSubLabor($id_labor,$nombre,$this->state_realized);
                 $confirm++;
             }
 
@@ -137,9 +139,9 @@ class subLaborsController extends Controller
 
         if($inserts === $confirm){
 
-            $state_pending = "PENDIENTE";
 
-            $getGroupLabors = modelSubLabores::getSubLaborsForId($id_labor,$state_pending);
+
+            $getGroupLabors = modelSubLabores::getSubLaborsForId($id_labor,$this->state_pending);
 
             if ($getGroupLabors) {
     
@@ -163,8 +165,6 @@ class subLaborsController extends Controller
 
         $checked = $request->checked;
 
-        $state_pending = "PENDIENTE";
-
         $asocciate = [];
 
         foreach($checked as $item){
@@ -177,7 +177,7 @@ class subLaborsController extends Controller
 
         }
 
-        $recharge_states = modelSubLabores::rechargeSubLabors($asocciate,$state_pending);
+        $recharge_states = modelSubLabores::rechargeSubLabors($asocciate,$this->state_pending);
 
         if($recharge_states){
 

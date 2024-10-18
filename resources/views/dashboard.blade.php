@@ -185,17 +185,17 @@
 
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a  class="nav-link" type="button" onclick="getShowAssists('{{ route('getShowReportAssists') }}')">
                                 <i class="fa-solid fa-person-shelter"></i>&nbsp;&nbsp;
                                 <p>
-                                    Reporte ingresos
+                                    Reporte de asistencias
                                 </p>
                             </a>
                         </li>
 
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link" type="button"
+                            <a  class="nav-link" type="button"
                                 onclick="getShowAssists('{{ route('getShowAssist') }}')">
                                 <i class="fa-brands fa-creative-commons-nd"></i>&nbsp;&nbsp;
                                 <p>

@@ -63,4 +63,21 @@ class modelSubLabores extends Model
         ->update(["estado" => $state]);
 
     }
+
+    public static function getTaskPending($pending){
+
+
+
+        return self::where("estado",$pending)
+        ->select("nombre_sub_labor")
+        ->get();
+    }
+
+    public static function changeState($pending,$unrealized){
+
+
+
+        return self::where("estado",$pending)
+        ->update(["estado" => $unrealized]);
+    }
 }

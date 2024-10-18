@@ -42,26 +42,26 @@
                                     <input type="text" class="form-control" placeholder="Nombre sub labor..."
                                         id="item_labor">
                                     <span class="input-group-append">
-                                        <button onclick="addSubLabors()" type="button"
-                                            class="btn btn-info btn-flat"><i
+                                        <button onclick="addSubLabors()" type="button" class="btn btn-info btn-flat"><i
                                                 class="fa-solid fa-plus"></i>&nbsp;&nbsp;Añadir</button>
                                     </span>
                                 </div>
-  
+
                             </div>
 
 
                             <div class="form-group">
-                              <label for="exampleInputEmail1">Editar Nombre de labor:</label>
-                              <div class="input-group input-group">
-                                  <input type="text" class="form-control" placeholder="Editar nombre de labor..." id="item_labor">
-                                  <span class="input-group-append">
-                                      <button onclick="addSubLabors()" type="button"
-                                          class="btn btn-info btn-flat"><i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;Editar</button>
-                                  </span>
-                              </div>
+                                <label for="exampleInputEmail1">Editar Nombre de labor:</label>
+                                <div class="input-group input-group">
+                                    <input type="text" class="form-control" placeholder="Editar nombre de labor..."
+                                        id="item_labor">
+                                    <span class="input-group-append">
+                                        <button onclick="addSubLabors()" type="button" class="btn btn-info btn-flat"><i
+                                                class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;Editar</button>
+                                    </span>
+                                </div>
 
-                          </div>
+                            </div>
 
 
 
@@ -95,14 +95,16 @@
                                 <div class="card-body">
                                     <div class="trash d-flex justify-content-end"><a type="button"
                                             onclick="deleteSubLaborsDashborad()" title="Borrar todo."><i
-                                                class="fa-solid fa-trash" style="color: rgb(177, 14, 14); position: absolute;"></i></a></div>
+                                                class="fa-solid fa-trash"
+                                                style="color: rgb(177, 14, 14); position: absolute;"></i></a></div>
 
                                     <div id="add_labors"></div>
 
                                 </div>
                             </div>
                             <center> <button class="btn btn-success"
-                                    onclick="sendSubLabors('{{ route('insertSubLabor') }}')"><i class="fa-solid fa-folder-plus"></i>&nbsp;&nbsp;asignar sub labores</button>
+                                    onclick="sendSubLabors('{{ route('insertSubLabor') }}')"><i
+                                        class="fa-solid fa-folder-plus"></i>&nbsp;&nbsp;asignar sub labores</button>
                             </center>
                         </div>
                     </div>
@@ -115,28 +117,25 @@
 
                 <div>
 
-                  <button class="btn btn-danger m-2" onclick="delteSubLaborTable('{{ route('Deletes') }}')"><i class="fa-solid fa-trash">&nbsp;&nbsp;</i>Eliminar sub labores</button>
+                    <button class="btn btn-danger m-2" onclick="delteSubLaborTable('{{ route('Deletes') }}')"><i
+                            class="fa-solid fa-trash">&nbsp;&nbsp;</i>Eliminar sub labores</button>
 
-                  <button class="btn btn-info m-2" onclick="rechargeSubLabors('{{route('rechargeSubLabors')}}')"><i class="fa-solid fa-arrows-rotate"></i>&nbsp;&nbsp;Renovar Sub Labores</button>
+                    <button class="btn btn-info m-2" onclick="rechargeSubLabors('{{ route('rechargeSubLabors') }}')"><i
+                            class="fa-solid fa-arrows-rotate"></i>&nbsp;&nbsp;Renovar Sub Labores</button>
 
-                  <button class="btn btn-warning m-2" onclick="rechargeSubLabors('{{route('rechargeSubLabors')}}')"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;&nbsp;Recoger labores</button>
+                    <button class="btn btn-warning m-2" data-toggle="modal" data-target="#modal_confirm"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;Recoger labores</button>
 
                 </div>
-
 
                 <div class="mt-4">
 
                     <table class="table table-striped" id="table_labors">
-                        <thead class="table-warning" style="background-color: #0f318f; color: white">
+                        <thead class="table"
+                            style="background-color: #0f318f; color: white; border-color: none!important">
                             <tr>
                                 <th scope="col">#</th>
 
-
-
                                 <th scope="col">Nombre labor</th>
-
-
-
 
                                 <th scope="col">Grupo Labores</th>
 
@@ -180,8 +179,6 @@
 
 
                                     </td>
-
-
                             </tr>
                             @endforeach
 
@@ -198,3 +195,27 @@
         </div>
 
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal_confirm">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg bg-info">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;Seguro de recoger las sub labores no realizadas?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¡Recuerda que para realizar esta operación es porque los colaboradores ya no van a laborar mas en el día de hoy!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa-solid fa-xmark"></i>&nbsp;&nbsp;Cerrar</button>
+                    <button type="button" class="btn btn-info" onclick="collectSubLabors('{{route('collectSubLabors')}}')"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

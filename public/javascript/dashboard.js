@@ -479,8 +479,14 @@ async function getViewHistoryLabors(url){
         element_container.innerHTML = data.html;
         $('#reservation').daterangepicker()
 
+        $(".select2").select2();
+        $(".select2bs4").select2({
+            theme: "bootstrap4",
+        });
+
         $("#history_table_searcher").DataTable({
             responsive: true,
+            order: [[ 4, "desc" ]],
             lengthChange: false,
             autoWidth: false,
             buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
@@ -539,10 +545,16 @@ async function searchForRange(url){
         element_container.innerHTML = data.html;
         $('#reservation').daterangepicker()
 
+        $(".select2").select2();
+        $(".select2bs4").select2({
+            theme: "bootstrap4",
+        });
+
         $('#reservation').val(range);
 
         $("#history_table_searcher").DataTable({
             responsive: true,
+            order: [[ 4, "desc" ]],
             lengthChange: false,
             autoWidth: false,
             buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
@@ -568,7 +580,7 @@ async function searchForRange(url){
 async function searcherText(url){
 
     let range = getRangeDatePicker();
-    let searcher = document.getElementById("searcherText").value;
+    let searcher = document.getElementById("labor_select").value;
     
     const token = localStorage.getItem("access_token");
 
@@ -587,19 +599,26 @@ async function searcherText(url){
 
     if(data.status){
 
+    
         console.log("el tipo es: " + typeof(response));
 
         let element_container = document.getElementById("container_menu");
 
         element_container.innerHTML = data.html;
-        $('#reservation').daterangepicker()
-        $('#searcherText').val(searcher);
-        $('#searcherText').focus();
+        $('#reservation').daterangepicker();
+
+
+        document.getElementById("labor_select").value = searcher;
+        $(".select2").select2();
+        $(".select2bs4").select2({
+            theme: "bootstrap4",
+        });
 
         $('#reservation').val(range);
 
         $("#history_table_searcher").DataTable({
             responsive: true,
+            order: [[ 4, "desc" ]],
             lengthChange: false,
             autoWidth: false,
             buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
@@ -618,3 +637,79 @@ async function searcherText(url){
         })
     }
 }
+
+
+
+async function collectSubLabors(url){
+
+    $("#modal_confirm").modal("hide");
+
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url,{
+
+        method: "POST",
+        headers: {
+
+            "Content-Type":"application/json",
+            "Authorization": `Bearer ${token}`
+
+        }
+
+
+    });
+
+
+    let data = await response.json();
+
+    if(data.status){
+
+
+        Swal.fire({
+            title: "¡Excelente!",
+            text: "¡¡Excelente las sub labores han sido recogidas de manera exitosa!!",
+            icon: "success",
+        });
+
+    }else{
+
+        Swal.fire({
+            title: "¡Uuups!",
+            text: "¡¡hubó un error, consulta con el departamento de sistemas si el error persiste!!",
+            icon: "error",
+        });
+
+
+    }
+
+}
+
+
+async function getShowReportAssists(url){
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url,{
+        method: "GET",
+        headers: {
+
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+
+    let data = await response.json();
+    
+    
+    if(data.status){
+
+
+
+        
+    }
+
+}
+
+
+

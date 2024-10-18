@@ -51,6 +51,13 @@ Route::post('/captureHour', [assistController::class, 'captureHour'])->name("cap
 
 Route::get('/historyLabors', [historySubLaborsController::class, 'getShowHistorySubLabors'])->name("getShowHistorySubLabors")->middleware(["verifyTokenHeader"]);
 Route::get('/searchForRange', [historySubLaborsController::class, 'searchForRange'])->name("searchForRange")->middleware(["verifyTokenHeader"]);
+
 Route::get('/searchText', [historySubLaborsController::class, 'searchText'])->name("searchText")->middleware(["verifyTokenHeader"]);
+
+Route::post('/collectSubLabors', [historySubLaborsController::class, 'collectSubLabors'])->name("collectSubLabors")->middleware(["verifyTokenHeader"]);
+
+
+Route::get('/getshowreportassists', [assistController::class, 'getShowReportAssists'])->name("getShowReportAssists")->middleware(["verifyTokenHeader"]);
+
 
 

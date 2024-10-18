@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\historial_labores;
+use App\Models\modelSubLabores;
 use App\Models\modelUser;
 use Carbon\Carbon;
 
@@ -12,6 +13,11 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class historySubLaborsController extends Controller
 {
+
+
+
+    protected $unrealized = "NO REALIZADO";
+    protected $pending = "PENDIENTE";
 
 
     public function searchText(Request $request){
@@ -25,14 +31,19 @@ class historySubLaborsController extends Controller
         $range_min = Carbon::parse($range_array[0])->format('Y-m-d');
 
         $range_max = Carbon::parse($range_array[1])->format('Y-m-d');
+        
 
         $serach = historial_labores::searcherForText($range_min,$range_max,$text);
         
+
         if ($serach) {
 
             $data =  self::transformHistory($serach);
 
-            $render = view("menuDashboard.historySubLabors", ["historial" => $data])->render();
+
+            $labors = modelSubLabores::getSubLabores();
+
+            $render = view("menuDashboard.historySubLabors", ["historial" => $data, "labores" => $labors])->render();
 
             return response()->json(["status" => true, "html" => $render]);
         }
@@ -60,7 +71,11 @@ class historySubLaborsController extends Controller
 
             $data =  self::transformHistory($searcherForDate);
 
-            $render = view("menuDashboard.historySubLabors", ["historial" => $data])->render();
+            $labors = modelSubLabores::getSubLabores();
+
+            
+            $render = view("menuDashboard.historySubLabors", ["historial" => $data, "labores" => $labors])->render();
+
 
             return response()->json(["status" => true, "html" => $render]);
         }
@@ -86,7 +101,9 @@ class historySubLaborsController extends Controller
 
             $data =  self::transformHistory($get_history);
 
-            $render = view("menuDashboard.historySubLabors", ["historial" => $data])->render();
+            $labors = modelSubLabores::getSubLabores();
+
+            $render = view("menuDashboard.historySubLabors", ["historial" => $data, "labores" => $labors])->render();
 
             return response()->json(["status" => true, "html" => $render]);
         }
@@ -101,13 +118,26 @@ class historySubLaborsController extends Controller
 
         foreach ($history as $item) {
 
-            $nombre_user = modelUser::getUserName($item->id_user);
-            $last_name = modelUser::getLastName($item->id_user);
+
+            if($item->id_user === "N/A"){
+
+                $nombre_user = "N/A";
+                $last_name = "N/A";
+
+            }else{
+
+                $nombre_user = modelUser::getUserName($item->id_user)->nombre;
+                $last_name = modelUser::getLastName($item->id_user)->apellido;
+
+                
+
+            }
+
 
             array_push($array_transform,[
 
-                "nombre_user" => $nombre_user->nombre,
-                "apellido" =>$last_name->apellido,
+                "nombre_user" => $nombre_user,
+                "apellido" => $last_name,
                 "sub_labor" => $item->nombre_sub_labor,
                 "hora" => $item->hora,
                 "fecha" => Carbon::parse($item->fecha)->format('d/m/Y'),
@@ -117,7 +147,56 @@ class historySubLaborsController extends Controller
 
         }
 
-
         return $array_transform;
     }
+
+
+
+    public function collectSubLabors(){
+
+
+
+        $get_pending_task = modelSubLabores::getTaskPending($this->pending);
+
+        $data = [];
+
+
+
+        if(count($get_pending_task) > 0 ){
+
+            $change_state = modelSubLabores::changeState($this->pending,$this->unrealized);
+
+            if($change_state){
+
+
+
+                
+            foreach($get_pending_task as $task){
+
+                array_push($data,[
+                    
+                    "id_user" => "N/A",
+                    "id_labor" => "N/A",
+                    "nombre_sub_labor" => $task->nombre_sub_labor,
+                    "estado" => $this->unrealized,
+                    "fecha" => date('Y-m-d'),
+                    "hora" => date('H:i:s'),
+
+                ]);
+
+
+            }
+
+            $insert_history = historial_labores::insertHistory($data);
+
+
+            return ($insert_history) ? response()->json(["status" => true]): response()->json(["status" => false]);
+            }
+
+        }
+
+
+    }
+
+
 }

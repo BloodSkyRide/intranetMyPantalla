@@ -30,4 +30,32 @@ class modelAssits extends Model
         ->get();
 
     }
+
+
+    public static function getAssists(){
+
+
+        return self::orderBy("id_historial_asistencia", "desc")->limit(20)->get();
+
+    }
+
+
+    public static function getHour($id_user,$action){
+
+
+        return self::where("id_user",$id_user)
+        ->where("estado", $action)
+        ->select("hora")
+        ->get();
+    }
+
+
+    public static function getDate($id_user,$action){
+
+
+        return self::where("id_user",$id_user)
+        ->where("estado", $action)
+        ->select("fecha")
+        ->get();
+    }
 }
