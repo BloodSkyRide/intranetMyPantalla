@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+use function Laravel\Prompts\select;
+
 class modelUser extends Authenticatable implements JWTSubject
 {
     use HasFactory;
@@ -56,6 +58,24 @@ class modelUser extends Authenticatable implements JWTSubject
         return self::where("cedula",$id_user)
         ->select("apellido")
         ->first();
+
+    }
+
+
+    public static function getAllUsers(){
+
+        return self::all();
+
+    }
+
+
+
+    public static function getUserForId($id){
+
+
+        return self::where("cedula",$id)
+        ->select("cedula","nombre","apellido", "id_labor", "rol", "direccion", "email", "telefono", "contacto_emergencia", "nombre_contacto")
+        ->get();
 
     }
 

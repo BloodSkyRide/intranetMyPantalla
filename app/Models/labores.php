@@ -25,4 +25,12 @@ class labores extends Model
         return self::insert(["nombre_labor" =>$name]);
 
     }
+
+    public static function getNameLabor($id_labor){
+
+
+        return self::where("id_labor", $id_labor)
+        ->select("nombre_labor")
+        ->first();
+    }
 }

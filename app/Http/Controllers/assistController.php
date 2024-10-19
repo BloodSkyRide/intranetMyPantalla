@@ -105,14 +105,19 @@ class assistController extends Controller
     public function getShowReportAssists(){
 
 
-
-        $get_report = modelAssits::getAssists();
-
+        $dateLessOne = date('Y-m-d', strtotime('-1 day'));
 
 
+        $get_report = modelAssits::getTableEdit($dateLessOne);
+
+        $convert_array = self::convertView($get_report);
+
+        
 
 
-        //$render = view("menuDashboard.reportAssits");
+        $render = view("menuDashboard.reportAssits",  ["history" => $convert_array])->render();
+
+        return response()->json(["status" => true, "html" => $render]);
 
 
 
@@ -127,32 +132,68 @@ class assistController extends Controller
 
             $nombre = modelUser::getUserName($item->id_user);
             $apellido = modelUser::getLastName($item->id_user);
-            $inicio_jornada = modelAssits::getHour($item->id_user,$this->inicio_jornada);
-            $inicio_jornada_a = modelAssits::getHour($item->id_user,$this->inicio_jornada_A);
-            $inicio_jornada_t = modelAssits::getHour($item->id_user,$this->inicio_jornada_T);
-            $fin = modelAssits::getHour($item->id_user,$this->finalizar_jornada);
-            $fecha = modelAssits::getDate($item->id_user,$this->inicio_jornada);
+            $inicio_jornada = Carbon::parse($item->inicio_labor)->format('H:i');
+            $inicio_jornada_a = Carbon::parse($item->inicio_alimentacion)->format('H:i');
+            $inicio_jornada_t = Carbon::parse($item->inicio_labor_tarde)->format('H:i');
+            $fin = Carbon::parse($item->fin_jornada)->format('H:i');
+            $fecha = Carbon::parse($item->fecha)->format('d/m/Y');
 
-
+            $total_laborado = self::calculateHoursData($inicio_jornada,$inicio_jornada_a,$inicio_jornada_t,$fin);
 
 
             array_push($data, [
 
                 "cedula" => $item->id_user,
-                "nombre" =>  $nombre,
-                "apellido" =>  $apellido,
-                "Inicio_jornada" => $inicio_jornada,
+                "nombre" =>  $nombre->nombre,
+                "apellido" =>  $apellido->apellido,
+                "inicio_jornada" => $inicio_jornada,
                 "inicio_jornada_a" => $inicio_jornada_a,
                 "inicio_jornada_t" => $inicio_jornada_t,
                 "finalizar_jornada" => $fin,
-                "fecha" => $fecha
-
-
+                "fecha" => $fecha,
+                "total" => $total_laborado
 
             ]);
 
 
         }
+
+
+        return $data;
+
+
+    }
+
+
+    public function calculateHoursData($inicio_jornada,$inicio_jornada_a,$inicio_jornada_t,$fin){
+
+
+        $inicio_M = strtotime($inicio_jornada);
+        $inicio_A = strtotime($inicio_jornada_a);
+        $inicio_T =strtotime($inicio_jornada_t);
+        $fin_J = strtotime($fin);
+
+        $jornada_mañana = $inicio_A - $inicio_M;
+
+        $jornada_tarde = $fin_J - $inicio_T;
+
+        $total_mañana_horas = floor($jornada_mañana / 3600); 
+
+        $total_mañana_minutos = floor(($jornada_mañana % 3600) / 60);
+
+        $total_tarde_horas = floor($jornada_tarde / 3600); 
+
+        $total_tarde_minutos = floor(($jornada_tarde % 3600) / 60);
+
+        $suma_horas = $total_mañana_horas + $total_tarde_horas;
+
+        $suma_minutos = $total_mañana_minutos + $total_tarde_minutos;
+
+        $total_laborado_dia = $suma_horas.":".$suma_minutos;
+        
+
+
+        return $total_laborado_dia;
 
 
     }

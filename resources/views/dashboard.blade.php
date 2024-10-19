@@ -166,8 +166,21 @@
                                 type="button">
                                 <i class="fa-solid fa-clipboard"></i>&nbsp;&nbsp;
                                 <p>
-                                    Manejo de labores
-                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                    Administrador de labores
+                                    
+                                </p>
+                            </a>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="getShowAdminUsers('{{ route('getShowUsers') }}')"
+                                type="button">
+                                <i class="fa-solid fa-users"></i>&nbsp;&nbsp;
+                                <p>
+                                    Administrador Usuarios
+                                    
                                 </p>
                             </a>
                         </li>

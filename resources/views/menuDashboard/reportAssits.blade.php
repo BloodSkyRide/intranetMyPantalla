@@ -15,31 +15,47 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-
             <table class="table table-striped" id="report_table">
                 <thead class="thead-dark">
             
                     <tr>
+                        <th scope="col">Cédula</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
-                        <th scope="col">Sub labor</th>
-                        <th scope="col">Hora</th>
+                        <th scope="col">Inició jornada</th>
+                        <th scope="col">Inició alimentación</th>
+                        <th scope="col">Inició jornada tarde</th>
+                        <th scope="col">Fin Jornada</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">Total laborado</th>
+
                     </tr>
             
                 </thead>
                 <tbody>
             
-                    @foreach ($historial as $item)
+                    @foreach ($history as $item)
                         <tr>
-                            <td>{{ $item['nombre_user'] }}</td>
+                            <td>{{ $item['cedula'] }}</td>
+                            <td>{{ $item['nombre'] }}</td>
                             <td>{{ $item['apellido'] }}</td>
-                            <td>{{ $item['sub_labor'] }}</td>
-                            <td>{{ $item['hora'] }}</td>
+                            <td>{{ $item['inicio_jornada'] }}</td>
+                            <td>{{ $item['inicio_jornada_a'] }}</td>
+                            <td>{{ $item['inicio_jornada_t'] }}</td>
+                            <td>{{ $item['finalizar_jornada'] }}</td>
                             <td>{{ $item['fecha'] }}</td>
                             <td>
+                                
+                                @php
 
+                                $hour = ($item['total'])[0];
+
+                                $color = ($hour >= 8) ? "success": "warning";
+                                    
+                                @endphp
+                                
+                                <span class="badge bg-{{$color}}" >{{ $item['total'] }}</span>
+                            
                             </td>
                         </tr>
                     @endforeach
@@ -51,27 +67,4 @@
         </div>
 
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modal_confirm">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg bg-info">
-                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;Seguro de recoger las sub labores no realizadas?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>¡Recuerda que para realizar esta operación es porque los colaboradores ya no van a laborar mas en el día de hoy!</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa-solid fa-xmark"></i>&nbsp;&nbsp;Cerrar</button>
-                    <button type="button" class="btn btn-info" onclick="collectSubLabors('{{route('collectSubLabors')}}')"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;Confirmar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 </div>

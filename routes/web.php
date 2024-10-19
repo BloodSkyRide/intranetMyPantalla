@@ -6,6 +6,7 @@ use App\Http\Controllers\historySubLaborsController;
 use App\Http\Controllers\subLaborsController;
 use App\Http\Controllers\laborController;
 use App\Http\Controllers\assistController;
+use App\Http\Controllers\userController;
 
 
 
@@ -30,6 +31,8 @@ Route::get('/dashboard', [dashboardController::class, 'openView'])->name("dashbo
 Route::get('/registerUser', [dashboardController::class, 'viewRegister'])->name("registroUser");
 
 Route::post('/saveUser', [dashboardController::class, 'saveUser'])->name("saveUser");
+
+
 
 Route::get('/showManageLabor', [dashboardController::class, 'showManageLabor'])->name("showManageLabor"); //verificador de middleware
 
@@ -58,6 +61,13 @@ Route::post('/collectSubLabors', [historySubLaborsController::class, 'collectSub
 
 
 Route::get('/getshowreportassists', [assistController::class, 'getShowReportAssists'])->name("getShowReportAssists")->middleware(["verifyTokenHeader"]);
+
+
+
+Route::get('/getshowusers', [dashboardController::class, 'getShowUserAdmin'])->name("getShowUsers")->middleware(["verifyTokenHeader"]);
+
+
+Route::get('/getUser', [userController::class, 'getUserForId'])->name("getUserForId")->middleware(["verifyTokenHeader"]);
 
 
 

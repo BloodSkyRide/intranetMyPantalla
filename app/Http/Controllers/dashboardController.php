@@ -222,4 +222,45 @@ class dashboardController extends Controller
 
         return response()->json(["status" => true, "html" => $render]);
     }
+
+
+
+    public function getShowUserAdmin(){
+
+        $users = modelUser::getAllUsers();
+
+        $data = [];
+
+        foreach($users as $item){
+
+            $name_labor = labores::getNameLabor($item->id_labor);
+
+
+            array_push($data,[
+
+                "cedula" => $item->cedula,
+                "nombre" => $item->nombre,
+                "apellido" => $item->apellido,
+                "nombre_labor" => $name_labor->nombre_labor,
+                "id_labor" => $item->id_labor,
+                "direccion" => $item->direccion,
+                "email" => $item->email,
+                "contacto_emergencia" => $item->contacto_emergencia,
+                "nombre_contacto" => $item->nombre_contacto,
+                "telefono" => $item->telefono,
+                "fecha_registro" => $item->fecha_registro,
+
+            ]);
+
+        }
+
+        $array_labores = labores::getLabores();
+
+        $render = view("menuDashboard.usersView", ["users" => $data, "labores" => $array_labores])->render();
+
+
+        return response()->json(["status" => true, "html" => $render]);
+
+
+    }
 }
