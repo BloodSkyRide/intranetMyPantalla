@@ -930,36 +930,100 @@ async function editNamLabor(url) {
 
     let id_labor = document.getElementById("select_labor").value;
 
-    let response = await fetch(url, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-
-        body: JSON.stringify({
-            id_labor: id_labor,
-            nombre_nuevo: name,
-        }),
-    });
-
-    let data = await response.json();
-
-    if (data.status) {
-        let element_container = document.getElementById("container_menu");
-        element_container.innerHTML = data.html;
-
-        Swal.fire({
-            title: "¡Excelente!",
-            text: "¡¡La labor fue modificada correctamente!!",
-            icon: "success",
+    if(id_labor !== "selected" && name.length > 0){
+        
+        let response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+    
+            body: JSON.stringify({
+                id_labor: id_labor,
+                nombre_nuevo: name,
+            }),
         });
-    } else {
+    
+        let data = await response.json();
+    
+        if (data.status) {
+            let element_container = document.getElementById("container_menu");
+            element_container.innerHTML = data.html;
+    
+            Swal.fire({
+                title: "¡Excelente!",
+                text: "¡¡La labor fue modificada correctamente!!",
+                icon: "success",
+            });
+        } else {
+            Swal.fire({
+                title: "¡Uuuuups!",
+                text: "¡¡La labor no pudó ser modificada correctamente, si el error persiste por favor comunicarte con el departamento de sistemas!!",
+                icon: "error",
+            });
+        }
+
+    }else{
+
+
         Swal.fire({
             title: "¡Uuuuups!",
-            text: "¡¡La labor no pudó ser modificada correctamente, si el error persiste por favor comunicarte con el departamento de sistemas!!",
+            text: "¡¡ Error: verifica que si has escrito el nombre al que deseas cambiar ó no has seleccionado la labor que deseas modificar!!",
             icon: "error",
         });
     }
+
 }
+
+
+
+function verifyInputs(){
+
+    let nombre =  document.getElementById("nombre").value;
+    let apellido =  document.getElementById("apellido").value;
+    let direccion =  document.getElementById("direccion").value;
+    let celular_emergencia =  document.getElementById("cel_emergencia").value;
+    let password =  document.getElementById("password").value;
+    let rol =  document.getElementById("rol").value;
+    let labor =  document.getElementById("labor").value;
+    let nacimiento =  document.getElementById("nacimiento").value;
+    let email =  document.getElementById("cedula").value;
+    let celular =  document.getElementById("celular").value;
+    let nombre_contacto_emergencia =  document.getElementById("contacto_emergencia").value;
+    let cedula = document.getElementById("cedula").value;
+
+    let data = [nombre, apellido, direccion, password, rol, labor,  nombre_contacto_emergencia, nacimiento, email, celular_emergencia, contacto_emergencia, celular, cedula]
+
+
+    let results = [];
+
+
+    data.forEach((element, index) => {
+
+
+        if(element.length > 0){
+
+            if(index > 8){
+
+                let number = parseInt(element);
+    
+                if(!isNaN(number)){
+
+
+                    results.push(true);
+                }
+
+    
+
+        }
+
+            
+
+    })
+    }
+
+
+
+
 

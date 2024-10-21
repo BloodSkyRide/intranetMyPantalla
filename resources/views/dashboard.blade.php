@@ -81,7 +81,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link"  role="button" type="button" title="Cerrar sesión" onclick="logout('{{route('logout')}}')">
-                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <i class="fa-solid fa-right-from-bracket" style="color: rgb(201, 32, 32)"></i>
                     </a>
                 </li>
             </ul>

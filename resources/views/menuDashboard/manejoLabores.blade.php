@@ -25,7 +25,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nombre Labor:</label>
                                 <div class="input-group input-group">
-                                    <input type="text" class="form-control" placeholder="Nombre grupo de labores..."
+                                    <input type="text" class="form-control" placeholder="Nombre grupo de labores..." autocomplete="off"
                                         id="name_labor">
                                     <span class="input-group-append">
                                         <button type="button" class="btn btn-info btn-flat"
@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nombre sub labor:</label>
                                 <div class="input-group input-group">
-                                    <input type="text" class="form-control" placeholder="Nombre sub labor..."
+                                    <input type="text" class="form-control" placeholder="Nombre sub labor..." autocomplete="off"
                                         id="item_labor">
                                     <span class="input-group-append">
                                         <button onclick="addSubLabors()" type="button" class="btn btn-info btn-flat"><i
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <label for="edit_name_labor">Editar Nombre de labor:</label>
                                 <div class="input-group input-group">
-                                    <input type="text" class="form-control" placeholder="Editar nombre de labor..." name="edit_name_labor"
+                                    <input type="text" class="form-control" placeholder="Editar nombre de labor..." name="edit_name_labor" autocomplete="off"
                                         id="edit_name_labor">
                                     <span class="input-group-append">
                                         <button onclick="editNamLabor('{{route('editLabor')}}')" type="button" class="btn btn-info btn-flat"><i
