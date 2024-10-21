@@ -23,14 +23,16 @@ Route::get('/', function () {
 Route::post('/login', [AuthController::class, 'login']);
 
 
-Route::post('/logout', [AuthController::class, 'logout'])->middleware(["verificar_token"]);
+Route::post('/logout', [AuthController::class, 'logout'])->name("logout")->middleware(["verifyTokenHeader"]);
+
+
 Route::get('/refresh', [AuthController::class, 'refresh'])->middleware(["verificar_token"]);
 
 Route::get('/me', [AuthController::class, 'me'])->middleware(["verificar_token"]);
 Route::get('/dashboard', [dashboardController::class, 'openView'])->name("dashboard")->middleware(["verificar_token"]);
-Route::get('/registerUser', [dashboardController::class, 'viewRegister'])->name("registroUser");
+Route::get('/registerUser', [dashboardController::class, 'viewRegister'])->name("registroUser")->middleware(["verifyTokenHeader"]);
 
-Route::post('/saveUser', [dashboardController::class, 'saveUser'])->name("saveUser");
+Route::post('/saveUser', [dashboardController::class, 'saveUser'])->name("saveUser")->middleware(["verifyTokenHeader"]);
 
 
 
@@ -40,11 +42,13 @@ Route::get('/showAssists', [dashboardController::class, 'getShowAssist'])->name(
 
 Route::get('/showMyLabors', [dashboardController::class, 'getShowMyLabors'])->name("showMyLabors")->middleware(["verifyTokenHeader"]);
 
-Route::post('/insertSubLabor', [subLaborsController::class, 'insertSubLabor'])->name("insertSubLabor");
+Route::post('/insertSubLabor', [subLaborsController::class, 'insertSubLabor'])->name("insertSubLabor")->middleware(["verifyTokenHeader"]);
 
-Route::delete('/Deletes', [subLaborsController::class, 'deleteSubLabors'])->name("Deletes");
+Route::delete('/Deletes', [subLaborsController::class, 'deleteSubLabors'])->name("Deletes")->middleware(["verifyTokenHeader"]);
 
-Route::post('/insertlabor', [laborController::class, 'insertLabor'])->name("insertlabor");
+Route::post('/insertlabor', [laborController::class, 'insertLabor'])->name("insertlabor")->middleware(["verifyTokenHeader"]);
+
+Route::put('/modifylabor', [laborController::class, 'editLabor'])->name("editLabor")->middleware(["verifyTokenHeader"]);
 
 Route::post('/historySubLabor', [subLaborsController::class, 'historySubLabor'])->name("historySubLabor")->middleware(["verifyTokenHeader"]);
 
@@ -68,6 +72,11 @@ Route::get('/getshowusers', [dashboardController::class, 'getShowUserAdmin'])->n
 
 
 Route::get('/getUser', [userController::class, 'getUserForId'])->name("getUserForId")->middleware(["verifyTokenHeader"]);
+
+
+Route::put('/modifyuser', [userController::class, 'modifyUser'])->name("modifyUser")->middleware(["verifyTokenHeader"]);
+
+Route::delete('/deleteuser', [userController::class, 'deleteUser'])->name("deleteUser")->middleware(["verifyTokenHeader"]);
 
 
 

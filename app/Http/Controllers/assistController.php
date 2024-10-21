@@ -9,6 +9,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\modelAssits;
 use App\Models\modelUser;
 
+
 class assistController extends Controller
 {
 
@@ -105,16 +106,16 @@ class assistController extends Controller
     public function getShowReportAssists(){
 
 
-        $dateLessOne = date('Y-m-d', strtotime('-1 day'));
+        $dateLessOne = date("y-m-d", strtotime('-1 day'));
 
-
-        $get_report = modelAssits::getTableEdit($dateLessOne);
-
-        $convert_array = self::convertView($get_report);
+        $dateLessEgith =  date('y-m-d', strtotime('-8 day'));
 
         
+        $get_report = modelAssits::getTableEdit($dateLessOne, $dateLessEgith);
+        
+        $convert_array = self::convertView($get_report);
 
-
+    
         $render = view("menuDashboard.reportAssits",  ["history" => $convert_array])->render();
 
         return response()->json(["status" => true, "html" => $render]);

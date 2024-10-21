@@ -63,24 +63,32 @@ class dashboardController extends Controller
     public function saveUser(Request $request)
     {
 
+
+
+
         try {
+
+            
 
             $validate = $request->validate([
 
                 "apellido" => "required|string|max:255",
                 "cedula" => "required|string|unique:users,cedula",
                 "contacto_emergencia" => "required|string",
-                "celular" => "required|string|max:255|unique:users,telefono",
+                "celular" => "required|string|max:255",
                 "nombre_contacto" => "required|string|max:255",
                 "direccion" => "required|string|max:255",
                 "email" => "required|email|unique:users,email",
                 "labor" => "required|string",
-                "nacimiento" => "required|date|before:" . Carbon::now()->subYears(18)->toDateString(),
+                "nacimiento" => "required|date|before:".Carbon::now()->subYears(18)->toDateString(),
                 "nombre" => "required|string|max:255",
                 "password" => "required|string",
                 "rol" => "required|string|max:255"
 
             ]);
+
+
+            
 
             $validate["password"] = Hash::make($validate["password"]);
 
@@ -241,6 +249,7 @@ class dashboardController extends Controller
                 "cedula" => $item->cedula,
                 "nombre" => $item->nombre,
                 "apellido" => $item->apellido,
+                "rol" => $item->rol,
                 "nombre_labor" => $name_labor->nombre_labor,
                 "id_labor" => $item->id_labor,
                 "direccion" => $item->direccion,

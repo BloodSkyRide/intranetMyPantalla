@@ -81,4 +81,23 @@ class modelUser extends Authenticatable implements JWTSubject
 
 
 
+    public static function modifyUser($cedula, $data){
+
+        return self::where("cedula",$cedula)->update($data);
+
+    }
+
+
+
+    public static function deleteUser($cedula){
+
+
+        return self::where("cedula",$cedula)
+        ->delete();
+
+
+    }
+
+
+
 }

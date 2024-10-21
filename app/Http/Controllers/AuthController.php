@@ -11,13 +11,15 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Payload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\modelUser; 
+use App\Models\modelUser;
+
 class AuthController extends Controller
 {
     //
 
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
         $cedula = $request->input('cedula');
         $password = $request->input('pass');
@@ -29,7 +31,7 @@ class AuthController extends Controller
         if ($validator) { // clase para validar las claves hash traidas desde el model
 
             $payload = [
-                
+
                 "nombre" => $token->nombre,
                 "cedula" => $token->cedula,
                 "apellido" => $token->apellido,
@@ -40,20 +42,42 @@ class AuthController extends Controller
                 "id_labor" => $token->id_labor
             ];
 
-            
-            
+
+
             $create_token = JWTAuth::attempt($payload);
             // $user = auth()->user();
 
             return response()->json(["access_token" => $create_token, "status" => true]);
-
         } else {
 
             print("clave erronea");
         }
 
         return response()->json(["status" => $cedula]);
+    }
 
 
+
+
+    public function logout()
+    {
+
+
+        try {
+            // Invalidar el token actual
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json([
+                "status" => true,
+                'message' => 'Cierre de sesión exitoso'
+            ], 200);
+
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            // Manejar el caso de un token inválido o expirado
+            return response()->json([
+
+                "status" => false,
+                'message' => 'Error al intentar cerrar sesión, token no válido'
+            ], 500);
+        }
     }
 }

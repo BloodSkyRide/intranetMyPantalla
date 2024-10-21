@@ -27,7 +27,7 @@
                         <th scope="col">Inició jornada tarde</th>
                         <th scope="col">Fin Jornada</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Total laborado</th>
+                        <th scope="col">Total laborado/Día</th>
 
                     </tr>
             
@@ -54,7 +54,7 @@
                                     
                                 @endphp
                                 
-                                <span class="badge bg-{{$color}}" >{{ $item['total'] }}</span>
+                                <span class="badge bg-{{$color}}" >{{ $item['total'] }} Horas</span>
                             
                             </td>
                         </tr>

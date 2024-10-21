@@ -33,4 +33,13 @@ class labores extends Model
         ->select("nombre_labor")
         ->first();
     }
+
+
+    public static function modifyName($id_labor, $name){
+
+        return  self::where("id_labor", $id_labor)
+        ->update(["nombre_labor" => $name]);
+
+
+    }
 }

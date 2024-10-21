@@ -66,48 +66,22 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                             class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
+                {{-- <li class="nav-item d-none d-sm-inline-block">
                     <a href="index3.html" class="nav-link">prueba</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">prueba</a>
-                </li>
+                </li> --}}
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Buscar"
-                                    aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
+
 
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
-                        role="button">
-                        <i class="fas fa-th-large"></i>
+                    <a class="nav-link"  role="button" type="button" title="Cerrar sesión" onclick="logout('{{route('logout')}}')">
+                        <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
                 </li>
             </ul>
@@ -160,8 +134,9 @@
                             </a>
                         </li>
 
+                        @if ($array["rol"] === "administrador")
 
-                        <li class="nav-item">
+                                                <li class="nav-item">
                             <a class="nav-link" onclick="showManageLabor('{{ route('showManageLabor') }}')"
                                 type="button">
                                 <i class="fa-solid fa-clipboard"></i>&nbsp;&nbsp;
@@ -186,6 +161,7 @@
                         </li>
 
 
+
                         <li class="nav-item">
                             <a class="nav-link" onclick="register_user('{{ route('registroUser') }}')"
                                 type="button" id="register_nav">
@@ -197,6 +173,7 @@
                         </li>
 
 
+
                         <li class="nav-item">
                             <a  class="nav-link" type="button" onclick="getShowAssists('{{ route('getShowReportAssists') }}')">
                                 <i class="fa-solid fa-person-shelter"></i>&nbsp;&nbsp;
@@ -206,6 +183,22 @@
                             </a>
                         </li>
 
+
+
+
+                        <li class="nav-item">
+                            <a type="button" class="nav-link"
+                                onclick="getViewHistoryLabors('{{ route('getShowHistorySubLabors') }}')">
+                                <i class="fa-solid fa-list"></i>&nbsp;&nbsp;
+                                <p>
+                                    Historial de labores
+                                </p>
+                            </a>
+                        </li>
+                            
+                        @endif
+
+                        @if ($array["rol"] === "usuario")
 
                         <li class="nav-item">
                             <a  class="nav-link" type="button"
@@ -228,7 +221,6 @@
                             </a>
                         </li>
 
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fa-solid fa-clock"></i>&nbsp;&nbsp;
@@ -237,18 +229,8 @@
                                 </p>
                             </a>
                         </li>
-
-
-                        <li class="nav-item">
-                            <a type="button" class="nav-link"
-                                onclick="getViewHistoryLabors('{{ route('getShowHistorySubLabors') }}')">
-                                <i class="fa-solid fa-list"></i>&nbsp;&nbsp;
-                                <p>
-                                    Historial de labores
-                                </p>
-                            </a>
-                        </li>
-
+                            
+                        @endif
 
                     </ul>
                 </nav>
@@ -304,8 +286,8 @@
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Dashboard v1</li>
+                                {{-- <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard v1</li> --}}
                             </ol>
                         </div>
                     </div>

@@ -51,12 +51,12 @@
 
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Editar Nombre de labor:</label>
+                                <label for="edit_name_labor">Editar Nombre de labor:</label>
                                 <div class="input-group input-group">
-                                    <input type="text" class="form-control" placeholder="Editar nombre de labor..."
-                                        id="item_labor">
+                                    <input type="text" class="form-control" placeholder="Editar nombre de labor..." name="edit_name_labor"
+                                        id="edit_name_labor">
                                     <span class="input-group-append">
-                                        <button onclick="addSubLabors()" type="button" class="btn btn-info btn-flat"><i
+                                        <button onclick="editNamLabor('{{route('editLabor')}}')" type="button" class="btn btn-info btn-flat"><i
                                                 class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;Editar</button>
                                     </span>
                                 </div>
@@ -74,7 +74,7 @@
                                 <label for="select_labor">Seleccionar labor:</label>
                                 <select class="form-control select2 select2-danger"
                                     data-dropdown-css-class="select2-danger" style="width: 100%;" id="select_labor">
-                                    <option selected="selected">Seleccionar labor</option>
+                                    <option selected="selected" value="selected">Seleccionar labor</option>
 
                                     @foreach ($labores as $labor)
                                         <option value="{{ $labor['id_labor'] }}">{{ $labor['nombre_labor'] }}</option>
@@ -129,61 +129,66 @@
 
                 <div class="mt-4">
 
-                    <table class="table table-striped" id="table_labors">
-                        <thead class="table"
-                            style="background-color: #0f318f; color: white; border-color: none!important">
-                            <tr>
-                                <th scope="col">#</th>
 
-                                <th scope="col">Nombre labor</th>
-
-                                <th scope="col">Grupo Labores</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $bandera = 1;
-                            @endphp
-                            <tr>
-
-                                @foreach ($labores as $labor)
-                                    <th scope="row">#{{ $bandera }}</th>
-                                    @php
-                                        $bandera++;
-                                    @endphp
-
-                                    <td>{{ $labor['nombre_labor'] }}</td>
-
-
-                                    <td>
-
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table_labors">
+                            <thead class="table"
+                                style="background-color: #0f318f; color: white; border-color: none!important">
+                                <tr>
+                                    <th scope="col">#</th>
+    
+                                    <th scope="col">Nombre labor</th>
+    
+                                    <th scope="col">Grupo Labores</th>
+    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $bandera = 1;
+                                @endphp
+                                <tr>
+    
+                                    @foreach ($labores as $labor)
+                                        <th scope="row">#{{ $bandera }}</th>
                                         @php
-                                            $flag = 0;
+                                            $bandera++;
                                         @endphp
-
-                                        @foreach ($sublabores as $sublabor)
-                                            @if ($labor['id_labor'] === $sublabor['id_labor'])
-                                                <div class="div_checknox custom-control custom-checkbox">
-                                                    <input class="custom-control-input custom-control-input-danger"
-                                                        type="checkbox" id="customCheckbox{{ $flag }}"
-                                                        value="{{ $sublabor['id_sub_labor'] }}">
-                                                    <label
-                                                        for="customCheckbox{{ $flag }}"class="custom-control-label">{{ $sublabor['nombre_sub_labor'] }}</label>
-                                                </div>
-                                            @endif
+    
+                                        <td>{{ $labor['nombre_labor'] }}</td>
+    
+    
+                                        <td>
+    
                                             @php
-                                                $flag++;
+                                                $flag = 0;
                                             @endphp
-                                        @endforeach
+    
+                                            @foreach ($sublabores as $sublabor)
+                                                @if ($labor['id_labor'] === $sublabor['id_labor'])
+                                                    <div class="div_checknox custom-control custom-checkbox">
+                                                        <input class="custom-control-input custom-control-input-danger"
+                                                            type="checkbox" id="customCheckbox{{ $flag }}"
+                                                            value="{{ $sublabor['id_sub_labor'] }}">
+                                                        <label
+                                                            for="customCheckbox{{ $flag }}"class="custom-control-label">{{ $sublabor['nombre_sub_labor'] }}</label>
+                                                    </div>
+                                                @endif
+                                                @php
+                                                    $flag++;
+                                                @endphp
+                                            @endforeach
+    
+    
+                                        </td>
+                                </tr>
+                                @endforeach
+    
+                            </tbody>
+                        </table>
+                    </div>
 
 
-                                    </td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
                 </div>
                 <!-- /.row -->
 

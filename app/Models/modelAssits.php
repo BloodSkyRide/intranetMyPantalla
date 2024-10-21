@@ -61,19 +61,20 @@ class modelAssits extends Model
     }
 
 
-    public static function getTableEdit($fecha){
+    public static function getTableEdit($fechaInicio,$fechaFin){
 
 
         return DB::table('historial_asistencia')
-        ->select('id_user')
-        ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA LABORAL' THEN hora END) AS inicio_labor")
-        ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA ALIMENTARIA' THEN hora END) AS inicio_alimentacion")
-        ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA LABORAL TARDE' THEN hora END) AS inicio_labor_tarde")
-        ->selectRaw("MAX(CASE WHEN estado = 'FINALIZAR JORNADA LABORAL' THEN hora END) AS fin_jornada")
-        ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA LABORAL' THEN fecha END) AS fecha")
-        ->groupBy('id_user')
-        ->having("fecha",$fecha)
-        ->orderByDesc('fecha')
-        ->get();
+    ->select('id_user')
+    ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA LABORAL' THEN fecha END) AS fecha")
+    ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA LABORAL' THEN hora END) AS inicio_labor")
+    ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA ALIMENTARIA' THEN hora END) AS inicio_alimentacion")
+    ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA LABORAL TARDE' THEN hora END) AS inicio_labor_tarde")
+    ->selectRaw("MAX(CASE WHEN estado = 'FINALIZAR JORNADA LABORAL' THEN hora END) AS fin_jornada")
+    ->groupBy('id_user',"fecha")
+    ->having('fecha' ,">", $fechaFin)
+    ->orderByDesc('fecha')
+    ->get();
+   // ->toSql();
     }
 }
