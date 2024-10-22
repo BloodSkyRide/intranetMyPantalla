@@ -146,7 +146,6 @@ class dashboardController extends Controller
         $token = $request->header("Authorization");
         $replace = str_replace("Bearer ", "", $token);
 
-
         $decode_token = JWTAuth::setToken($replace)->authenticate();
 
         $id_labor = $decode_token["id_labor"];
@@ -155,8 +154,10 @@ class dashboardController extends Controller
 
         if ($getGroupLabors) {
 
+            $name_labor = labores::getNameLabor($id_labor);
 
-            $render = view("menuDashboard.myLabors", ["token" => $decode_token, "sublabors" => $getGroupLabors])->render();
+            
+            $render = view("menuDashboard.myLabors", ["token" => $decode_token, "sublabors" => $getGroupLabors, "nombre_labor" => $name_labor])->render();
 
             return response()->json(["status" => true, "html" => $render, "token" => $decode_token]);
         }
@@ -271,5 +272,25 @@ class dashboardController extends Controller
         return response()->json(["status" => true, "html" => $render]);
 
 
+    }
+
+
+
+    public function changePasswordShow(){
+
+        $render = view("menuDashboard.viewChangePassword")->render();
+
+        return response()->json(["status" => true, "html" => $render]);
+
+
+    }
+
+    public function getShowNotices(){
+
+
+        $render = view("menuDashboard.notices")->render();
+
+
+        return response()->json(["status" => true, "html" => $render]);
     }
 }

@@ -157,6 +157,21 @@
                                 <label for="form_num_emergencia">Número del contacto de emergencia:</label>
                                 <input type="text" class="form-control" id="form_num_emergencia" placeholder="Número de contacto..." name="form_num_emergencia">
                             </div>
+
+
+                            <div class="form-group">
+                                <label for="new_pass">Generar nueva contraseña:</label>
+                                <div class="d-flex">
+                                    <input type="password" class="form-control" id="new_pass"
+                                        placeholder="contraseña nueva..." name="new_pass" autocomplete="off"> 
+                                        <a type="button" class="m-2" onclick="showPass(this.id, 'new_pass')" id="showpass2">
+                
+                                        <i class="fa-solid fa-eye color_eye"></i>
+                
+                                    </a>
+                                </div>
+                
+                            </div>
                         </div>
 
                     </div>

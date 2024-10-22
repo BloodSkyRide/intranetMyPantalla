@@ -36,7 +36,7 @@ Route::post('/saveUser', [dashboardController::class, 'saveUser'])->name("saveUs
 
 
 
-Route::get('/showManageLabor', [dashboardController::class, 'showManageLabor'])->name("showManageLabor"); //verificador de middleware
+Route::get('/showManageLabor', [dashboardController::class, 'showManageLabor'])->name("showManageLabor")->middleware(["verifyTokenHeader"]); //verificador de middleware
 
 Route::get('/showAssists', [dashboardController::class, 'getShowAssist'])->name("getShowAssist")->middleware(["verifyTokenHeader"]);
 
@@ -77,6 +77,14 @@ Route::get('/getUser', [userController::class, 'getUserForId'])->name("getUserFo
 Route::put('/modifyuser', [userController::class, 'modifyUser'])->name("modifyUser")->middleware(["verifyTokenHeader"]);
 
 Route::delete('/deleteuser', [userController::class, 'deleteUser'])->name("deleteUser")->middleware(["verifyTokenHeader"]);
+
+Route::put('/changePasswordShow', [dashboardController::class, 'changePasswordShow'])->name("changePasswordShow")->middleware(["verifyTokenHeader"]);
+
+Route::put('/changepassword', [userController::class, 'changePassword'])->name("changePassword")->middleware(["verifyTokenHeader"]);
+
+
+
+Route::get('/shownotices', [dashboardController::class, 'getShowNotices'])->name("getShowNotices")->middleware(["verifyTokenHeader"]);
 
 
 

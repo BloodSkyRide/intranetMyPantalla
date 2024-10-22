@@ -99,5 +99,15 @@ class modelUser extends Authenticatable implements JWTSubject
     }
 
 
+    public static function changePassword($id_user,$password){
+
+
+        return self::where("cedula", $id_user)
+        ->update(["password" => $password]);
+
+
+    }
+
+
 
 }

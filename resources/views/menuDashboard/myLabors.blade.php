@@ -12,8 +12,8 @@
                 <thead>
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>Tareas</th>
-                        <th>Acción</th>
+                        <th>Labor</th>
+                        <th>Grupo de labores</th>
                         <th style="width: 40px">Estado</th>
                     </tr>
                 </thead>
@@ -26,7 +26,7 @@
                     @foreach ($sublabors as $sublabor)
                         <tr >
                             <td>{{ $flag }}</td>
-                            <td>{{ $sublabor['nombre_sub_labor'] }}</td>
+                            <td>{{ $nombre_labor['nombre_labor'] }}</td>
                             <td class="column_sub_labor">
                                 <div class="icheck-primary d-inline">
 

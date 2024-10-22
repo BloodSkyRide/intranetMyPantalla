@@ -80,7 +80,8 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link"  role="button" type="button" title="Cerrar sesión" onclick="logout('{{route('logout')}}')">
+                    <a class="nav-link" role="button" type="button" title="Cerrar sesión"
+                        onclick="logout('{{ route('logout') }}')">
                         <i class="fa-solid fa-right-from-bracket" style="color: rgb(201, 32, 32)"></i>
                     </a>
                 </li>
@@ -125,7 +126,7 @@
                         data-accordion="false">
                         <h1 class="nav-header">MENÚ</h1>
                         <li class="nav-item">
-                            <a class="nav-link">
+                            <a class="nav-link" type="button" onclick="getShowNotices('{{route('getShowNotices')}}')">
                                 <i class="fa-regular fa-newspaper"></i>&nbsp;&nbsp;
                                 <p>
                                     Noticias
@@ -134,102 +135,111 @@
                             </a>
                         </li>
 
-                        @if ($array["rol"] === "administrador")
-
-                                                <li class="nav-item">
-                            <a class="nav-link" onclick="showManageLabor('{{ route('showManageLabor') }}')"
-                                type="button">
-                                <i class="fa-solid fa-clipboard"></i>&nbsp;&nbsp;
-                                <p>
-                                    Administrador de labores
-                                    
-                                </p>
-                            </a>
-                        </li>
-
-
-
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="getShowAdminUsers('{{ route('getShowUsers') }}')"
-                                type="button">
-                                <i class="fa-solid fa-users"></i>&nbsp;&nbsp;
-                                <p>
-                                    Administrador Usuarios
-                                    
-                                </p>
-                            </a>
-                        </li>
-
-
-
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="register_user('{{ route('registroUser') }}')"
-                                type="button" id="register_nav">
-                                <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;
-                                <p>
-                                    Registrar Usuarios
-                                </p>
-                            </a>
-                        </li>
-
-
-
-                        <li class="nav-item">
-                            <a  class="nav-link" type="button" onclick="getShowAssists('{{ route('getShowReportAssists') }}')">
-                                <i class="fa-solid fa-person-shelter"></i>&nbsp;&nbsp;
-                                <p>
-                                    Reporte de asistencias
-                                </p>
-                            </a>
-                        </li>
-
-
-
-
-                        <li class="nav-item">
-                            <a type="button" class="nav-link"
-                                onclick="getViewHistoryLabors('{{ route('getShowHistorySubLabors') }}')">
-                                <i class="fa-solid fa-list"></i>&nbsp;&nbsp;
-                                <p>
-                                    Historial de labores
-                                </p>
-                            </a>
-                        </li>
-                            
-                        @endif
-
-                        @if ($array["rol"] === "usuario")
-
-                        <li class="nav-item">
-                            <a  class="nav-link" type="button"
-                                onclick="getShowAssists('{{ route('getShowAssist') }}')">
-                                <i class="fa-brands fa-creative-commons-nd"></i>&nbsp;&nbsp;
-                                <p>
-                                    Asistencias
-                                </p>
-                            </a>
-                        </li>
 
 
                         <li class="nav-item">
                             <a class="nav-link" type="button"
-                                onclick="getShowLabors('{{ route('showMyLabors') }}')">
-                                <i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;
+                                onclick="getShowChangePassword('{{ route('changePasswordShow') }}')">
+                                <i class="fa-solid fa-key"></i>&nbsp;&nbsp;
                                 <p>
-                                    Mis labores
+                                    Cambiar contraseña
                                 </p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fa-solid fa-clock"></i>&nbsp;&nbsp;
-                                <p>
-                                    Reporte horas extras
-                                </p>
-                            </a>
-                        </li>
-                            
+                        @if ($array['rol'] === 'administrador')
+                            <li class="nav-item">
+                                <a class="nav-link" onclick="showManageLabor('{{ route('showManageLabor') }}')"
+                                    type="button">
+                                    <i class="fa-solid fa-clipboard"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Administrador de labores
+
+                                    </p>
+                                </a>
+                            </li>
+
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" onclick="getShowAdminUsers('{{ route('getShowUsers') }}')"
+                                    type="button">
+                                    <i class="fa-solid fa-users"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Administrador Usuarios
+
+                                    </p>
+                                </a>
+                            </li>
+
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" onclick="register_user('{{ route('registroUser') }}')"
+                                    type="button" id="register_nav">
+                                    <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Registrar Usuarios
+                                    </p>
+                                </a>
+                            </li>
+
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" type="button"
+                                    onclick="getShowAssists('{{ route('getShowReportAssists') }}')">
+                                    <i class="fa-solid fa-person-shelter"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Reporte de asistencias
+                                    </p>
+                                </a>
+                            </li>
+
+
+
+
+                            <li class="nav-item">
+                                <a type="button" class="nav-link"
+                                    onclick="getViewHistoryLabors('{{ route('getShowHistorySubLabors') }}')">
+                                    <i class="fa-solid fa-list"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Historial de labores
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if ($array['rol'] === 'usuario')
+                            <li class="nav-item">
+                                <a class="nav-link" type="button"
+                                    onclick="getShowAssists('{{ route('getShowAssist') }}')">
+                                    <i class="fa-brands fa-creative-commons-nd"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Asistencias
+                                    </p>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" type="button"
+                                    onclick="getShowLabors('{{ route('showMyLabors') }}')">
+                                    <i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Mis labores
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fa-solid fa-clock"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Reporte horas extras
+                                    </p>
+                                </a>
+                            </li>
                         @endif
 
                     </ul>
@@ -324,7 +334,7 @@
     <!-- SweetAlert2 -->
     <script src="{{ asset('javascript/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
     <!-- date-range-picker -->
-    <script src="{{asset('javascript/plugins/daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{ asset('javascript/plugins/daterangepicker/daterangepicker.js') }}"></script>
 
     {{-- DATATABLES --}}
     <script src="{{ asset('javascript/plugins/datatables/jquery.dataTables.min.js') }}"></script>

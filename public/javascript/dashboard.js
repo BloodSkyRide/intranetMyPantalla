@@ -3,7 +3,8 @@ $(document).ready(function () {
 });
 async function register_user(url) {
 
-    const token = localStorage.getItem("access_token");
+
+        const token = localStorage.getItem("access_token");
     $.ajax({
         url: url,
         type: "GET",
@@ -20,6 +21,7 @@ async function register_user(url) {
             element_container.innerHTML = res.html;
         }
     });
+    
 }
 
 async function sendUser(url) {
@@ -29,54 +31,57 @@ async function sendUser(url) {
 
     const token = localStorage.getItem("access_token");
 
-    form.forEach((value, key) => {
-        jsonObject[key] = value;
-    });
+    if(verifyInputs()){
 
-    let response = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        },
 
-        body: JSON.stringify(jsonObject),
-    });
-
-    if (response.ok) {
-        let data = await response.json();
-
-        if (data.status) {
-            // sweetAlert(
-            //     "success",
-            //     "Excelente!",
-            //     "El usuario fue creado de manera exitosa"
-            // );
-
-            Swal.fire({
-                title: "Excelente!",
-                text: "El usuario fue creado de manera exitosa",
-                icon: "success",
-            });
-
-            formdata.reset();
-        } else {
-            Swal.fire({
-                title: "Uuuuups!",
-                text: "El usuario no pudó ser guardado en la base de datos, por favor revisa que todos los campos esten bien formados, recuerda que el nacimiento debe ser mayor a 18 años consulta con el departamento de sistemas",
-                icon: "error",
-            });
+        form.forEach((value, key) => {
+            jsonObject[key] = value;
+        });
+    
+        let response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+    
+            body: JSON.stringify(jsonObject),
+        });
+    
+        if (response.ok) {
+            let data = await response.json();
+    
+            if (data.status) {
+    
+                Swal.fire({
+                    title: "Excelente!",
+                    text: "El usuario fue creado de manera exitosa",
+                    icon: "success",
+                });
+    
+                formdata.reset();
+            } else {
+                Swal.fire({
+                    title: "Uuuuups!",
+                    text: "El usuario no pudó ser guardado en la base de datos, por favor revisa que todos los campos esten bien formados, recuerda que el nacimiento debe ser mayor a 18 años consulta con el departamento de sistemas",
+                    icon: "error",
+                });
+            }
         }
+
     }
+
+
 }
 
 async function showManageLabor(url) {
     console.log("ruta" + url);
-
+    const token = localStorage.getItem("access_token");
     let response = await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
         },
     });
 
@@ -778,6 +783,11 @@ async function modifyUser(url) {
     let jsonObject = {};
 
     formu.forEach((value, key) => {
+        if(key === "new_pass"){
+
+            if(value === "") value = "N/A";
+
+        }
         jsonObject[key] = value;
     });
 
@@ -980,48 +990,266 @@ async function editNamLabor(url) {
 
 function verifyInputs(){
 
-    let nombre =  document.getElementById("nombre").value;
-    let apellido =  document.getElementById("apellido").value;
-    let direccion =  document.getElementById("direccion").value;
-    let celular_emergencia =  document.getElementById("cel_emergencia").value;
-    let password =  document.getElementById("password").value;
-    let rol =  document.getElementById("rol").value;
-    let labor =  document.getElementById("labor").value;
-    let nacimiento =  document.getElementById("nacimiento").value;
-    let email =  document.getElementById("cedula").value;
-    let celular =  document.getElementById("celular").value;
-    let nombre_contacto_emergencia =  document.getElementById("contacto_emergencia").value;
-    let cedula = document.getElementById("cedula").value;
+    let nombre =  document.getElementById("nombre");
+    let apellido =  document.getElementById("apellido");
+    let direccion =  document.getElementById("direccion");
+    let celular_emergencia =  document.getElementById("cel_emergencia");
+    let password =  document.getElementById("password");
+    let rol =  document.getElementById("rol");
+    let labor =  document.getElementById("labor");
+    let nacimiento =  document.getElementById("nacimiento");
+    let email =  document.getElementById("cedula");
+    let celular =  document.getElementById("celular");
+    let nombre_contacto_emergencia =  document.getElementById("contacto_emergencia");
+    let cedula = document.getElementById("cedula");
 
-    let data = [nombre, apellido, direccion, password, rol, labor,  nombre_contacto_emergencia, nacimiento, email, celular_emergencia, contacto_emergencia, celular, cedula]
+    let data = [nombre, apellido, direccion, password, rol, labor,  nombre_contacto_emergencia, nacimiento, email, celular_emergencia, celular, cedula];
 
 
     let results = [];
 
-
-    data.forEach((element, index) => {
-
-
-        if(element.length > 0){
-
-            if(index > 8){
-
-                let number = parseInt(element);
-    
-                if(!isNaN(number)){
+    let html ;
 
 
-                    results.push(true);
-                }
+    data.forEach((nodo, index) =>{
 
-    
+        let value = nodo.value;
 
-        }
+        if(value.length > 0){
 
             
+            if(index > 8){
+
+                let number = parseInt(value);
+
+                if(!isNaN(number)){
+
+                    results.push(true);
+
+                }else{
+
+                    results.push(false);
+
+                    html = nodo;
+
+                } 
+            }
+                
+                
+                results.push(true);
+
+
+        }else{
+
+
+            html = nodo;
+            
+        }
 
     })
+
+
+    if(html !== undefined){
+
+        let atribute = html.getAttribute("name");
+
+
+        Swal.fire({
+            title: "¡Uuuuups!",
+            text: `¡¡ Error: al parecer el campo de ${atribute} no esta bien diligenciado!!`,
+            icon: "error",
+        });
+
+        return false;
+
+
+
+    }else{
+
+
+
+        return true;
+
+    } 
+
+
+
+  }
+
+
+  async function getShowChangePassword(url){
+
+
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url,{
+        method: "PUT",
+        headers: {
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+
+
+    });
+
+
+    let data = await response.json();
+
+
+    if(data.status){
+
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+        
     }
+
+
+
+  }
+
+
+  async function changePassword(url){
+
+
+    let pass_old = document.getElementById("contraseña_antigua").value;
+
+    let pass_new = document.getElementById("contraseña_nueva").value;
+
+    let pass_new2 = document.getElementById("contraseña_nueva2").value;
+
+    let verificacion = verifyPasswords(pass_new, pass_new2);
+
+    if(verificacion && pass_old.length > 0){
+
+
+        const token = localStorage.getItem("access_token");
+        let response = await fetch(url,{
+    
+            method: "PUT",
+            headers:{
+    
+    
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+    
+                pass_old,
+                pass_new
+    
+            })
+    
+    
+        })
+    
+        let data = await response.json();
+    
+    
+        if(data.status){
+    
+            console.log("entro aqui en statuajhdbjasbdkjbdhb")
+            
+        localStorage.removeItem("access_token");
+
+        window.location.href = "./";
+    
+    
+        }
+
+
+    }else{
+
+
+        
+        Swal.fire({
+            title: "¡Uuuuups!",
+            text: `¡¡ parece que las contraseñas no coinciden, o no has escrito la contraseña antigua!!`,
+            icon: "error",
+        });
+
+
+
+    }
+
+
+
+  }
+
+
+function verifyPasswords(pass1, pass2){
+
+    console.log("verifico password string")
+
+    return (pass1 === pass2) ? true: false;
+
+}
+
+
+
+function showPass(id, id_input){
+
+    let eye_open = 'fa-solid fa-eye color_eye';
+    let eye_close = 'fa-solid fa-eye-slash color_eye';
+
+    let node = document.getElementById(id);
+
+    let node_children = node.querySelector("i");
+
+    let input = document.getElementById(id_input);
+
+
+    if(node_children.className === eye_close){
+
+
+        node_children.className = eye_open;
+        input.setAttribute("type","password");
+        
+
+
+    }else if(node_children.className === eye_open){
+
+
+        node_children.className = eye_close;
+        input.setAttribute("type","text");
+
+    }
+
+
+
+}
+
+
+async function getShowNotices(url){
+
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url,{
+
+        method: "GET",
+        headers:{
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+
+    });
+
+
+    let data = await response.json();
+
+
+    if(data.status){
+
+
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+
+    }
+
+}
+
+
 
 
 
