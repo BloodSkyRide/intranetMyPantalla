@@ -149,7 +149,7 @@
 
                         @if ($array['rol'] === 'administrador')
                             <li class="nav-item">
-                                <a class="nav-link" onclick="showManageLabor('{{ route('showManageLabor') }}')"
+                                <a class="nav-link menu_dashboard" onclick="showManageLabor('{{ route('showManageLabor') }}')"
                                     type="button">
                                     <i class="fa-solid fa-clipboard"></i>&nbsp;&nbsp;
                                     <p>
@@ -162,7 +162,7 @@
 
 
                             <li class="nav-item">
-                                <a class="nav-link" onclick="getShowAdminUsers('{{ route('getShowUsers') }}')"
+                                <a class="nav-link menu_dashboard" onclick="getShowAdminUsers('{{ route('getShowUsers') }}')"
                                     type="button">
                                     <i class="fa-solid fa-users"></i>&nbsp;&nbsp;
                                     <p>
@@ -175,7 +175,7 @@
 
 
                             <li class="nav-item">
-                                <a class="nav-link" onclick="register_user('{{ route('registroUser') }}')"
+                                <a class="nav-link menu_dashboard" onclick="register_user('{{ route('registroUser') }}')"
                                     type="button" id="register_nav">
                                     <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;
                                     <p>
@@ -187,7 +187,7 @@
 
 
                             <li class="nav-item">
-                                <a class="nav-link" type="button"
+                                <a class="nav-link menu_dashboard" type="button"
                                     onclick="getShowAssists('{{ route('getShowReportAssists') }}')">
                                     <i class="fa-solid fa-person-shelter"></i>&nbsp;&nbsp;
                                     <p>
@@ -200,7 +200,7 @@
 
 
                             <li class="nav-item">
-                                <a type="button" class="nav-link"
+                                <a type="button" class="nav-link menu_dashboard"
                                     onclick="getViewHistoryLabors('{{ route('getShowHistorySubLabors') }}')">
                                     <i class="fa-solid fa-list"></i>&nbsp;&nbsp;
                                     <p>
@@ -212,7 +212,7 @@
 
                         @if ($array['rol'] === 'usuario')
                             <li class="nav-item">
-                                <a class="nav-link" type="button"
+                                <a class="nav-link menu_dashboard" type="button"
                                     onclick="getShowAssists('{{ route('getShowAssist') }}')">
                                     <i class="fa-brands fa-creative-commons-nd"></i>&nbsp;&nbsp;
                                     <p>
@@ -223,7 +223,7 @@
 
 
                             <li class="nav-item">
-                                <a class="nav-link" type="button"
+                                <a class="nav-link menu_dashboard" type="button"
                                     onclick="getShowLabors('{{ route('showMyLabors') }}')">
                                     <i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;
                                     <p>
@@ -233,7 +233,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a  class="nav-link menu_dashboard">
                                     <i class="fa-solid fa-clock"></i>&nbsp;&nbsp;
                                     <p>
                                         Reporte horas extras

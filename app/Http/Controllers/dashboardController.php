@@ -149,20 +149,44 @@ class dashboardController extends Controller
         $decode_token = JWTAuth::setToken($replace)->authenticate();
 
         $id_labor = $decode_token["id_labor"];
+
+        $cedula = $decode_token->cedula;
         $state_pending = "PENDIENTE";
-        $getGroupLabors = modelSubLabores::getSubLaborsForId($id_labor,$state_pending);
 
-        if ($getGroupLabors) {
+        $state_start = "INICIAR JORNADA LABORAL";
+        $state_finish = "FINALIZAR JORNADA LABORAL";
 
-            $name_labor = labores::getNameLabor($id_labor);
+        $fecha = Carbon::now()->format('y-m-d');
+
+        $date_update = modelAssits::verifyStartAssist($fecha,$state_start,$cedula);
+
+
+        $date_finish = modelAssits::verifyStartAssist($fecha,$state_finish,$cedula);
+
+        if(count($date_update) > 0 && count($date_finish) < 1){
+
+
+            $getGroupLabors = modelSubLabores::getSubLaborsForId($id_labor,$state_pending);
+
+            if ($getGroupLabors) {
+    
+                $name_labor = labores::getNameLabor($id_labor);
+    
+                
+                $render = view("menuDashboard.myLabors", ["token" => $decode_token, "sublabors" => $getGroupLabors, "nombre_labor" => $name_labor])->render();
+    
+                return response()->json(["status" => true, "html" => $render, "token" => $decode_token]);
+            }
+    
+            return response()->json(["status" => false, "messagge" => "No se pudó acceder a la base de datos para las sub labores!"]);
 
             
-            $render = view("menuDashboard.myLabors", ["token" => $decode_token, "sublabors" => $getGroupLabors, "nombre_labor" => $name_labor])->render();
+        }else
 
-            return response()->json(["status" => true, "html" => $render, "token" => $decode_token]);
-        }
 
-        return response()->json(["status" => false, "messagge" => "No se pudó acceder a la base de datos para las sub labores!"]);
+        return response()->json(["status" => false, "messagge" => "jornada no válida!"]);
+
+
     }
 
 

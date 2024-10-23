@@ -77,4 +77,15 @@ class modelAssits extends Model
     ->get();
    // ->toSql();
     }
+
+
+    public static function verifyStartAssist($fecha,$estado,$cedula){
+
+        return self::where("id_user",$cedula)
+        ->where("estado",$estado)
+        ->where("fecha", $fecha)
+        ->get();
+
+
+    }
 }

@@ -292,14 +292,28 @@ async function getShowLabors(url) {
             Authorization: `Bearer ${token}`,
         },
     });
+    let data = await response.json();
 
-    if (response.status) {
-        let data = await response.json();
+    if (data.status) {
         console.log("el tipo es: " + typeof data);
 
         let element_container = document.getElementById("container_menu");
 
         element_container.innerHTML = data.html;
+
+
+    }else{
+
+        console.log("entro a la jornada invalida!");
+
+
+        Swal.fire({
+            title: "¡Uuuuups!",
+            text: "¡¡ Parece que no has iniciado labores o ya has finalizado tu jornada laboral!!",
+            icon: "error",
+        });
+
+
     }
 }
 
