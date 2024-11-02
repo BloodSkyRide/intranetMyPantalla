@@ -9,6 +9,20 @@ window.onload = function() {
     
 };
 
+
+const input_pass = document.getElementById("pass");
+
+input_pass.addEventListener('keypress', function(event){
+
+
+    if(event.key === 'Enter'){
+
+        sendData();
+
+    }
+
+});
+
 // Configuración de AJAX para incluir el token CSRF
 $.ajaxSetup({
     headers: {

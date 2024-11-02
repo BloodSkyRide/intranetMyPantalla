@@ -68,7 +68,7 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
-                        <button onclick="sendData()" class="btn btn-primary btn-block"><i
+                        <button onclick="sendData()"  class="btn btn-primary btn-block"><i
                                 class="fa-solid fa-user"></i>&nbsp;&nbsp; Iniciar sesión</button>
                     </div>
                     <!-- /.col -->
