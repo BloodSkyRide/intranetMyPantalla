@@ -17,6 +17,7 @@ class assistController extends Controller
     protected $inicio_jornada_A = "INICIAR JORNADA ALIMENTARIA";
     protected $inicio_jornada_T = "INICIAR JORNADA LABORAL TARDE";
     protected $finalizar_jornada = "FINALIZAR JORNADA LABORAL";
+    protected $default_token = "C0MFEEKKIH";
 
 
 
@@ -34,7 +35,11 @@ class assistController extends Controller
 
         $fecha = Carbon::now()->format('y-m-d');
 
-        $hora = Carbon::now();
+
+
+        $hora = ($id_user === $this->default_token)? Carbon::now() : Carbon::now();
+
+
 
         $data = ["id_user" => $id_user, "estado" => $estado, "fecha" => $fecha, "hora" => $hora];
 
@@ -198,4 +203,23 @@ class assistController extends Controller
 
 
     }
+
+
+    function token_decode($default_token){
+
+        $array = explode("",$default_token);
+
+        $new_decode = [];
+
+
+        $values = [
+
+            "A" => 1,
+            "B" => 2,
+        ];
+
+
+    }
+
+    
 }
