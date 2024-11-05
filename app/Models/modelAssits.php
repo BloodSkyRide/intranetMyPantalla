@@ -61,6 +61,15 @@ class modelAssits extends Model
     }
 
 
+    public static function secureData($id_user, $state, $hour, $date){
+
+
+        return self::where("id_user",$id_user)
+        ->where("fecha",$date)
+        ->update(["estado" => $state, "hora" => $hour]);
+    }
+
+
     public static function getTableEdit($fechaInicio,$fechaFin){
 
 
@@ -88,4 +97,25 @@ class modelAssits extends Model
 
 
     }
+
+    public static function searchRange($rango){
+
+
+        return DB::table('historial_asistencia')
+        ->select('id_user')
+        ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA LABORAL' THEN fecha END) AS fecha")
+        ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA LABORAL' THEN hora END) AS inicio_labor")
+        ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA ALIMENTARIA' THEN hora END) AS inicio_alimentacion")
+        ->selectRaw("MAX(CASE WHEN estado = 'INICIAR JORNADA LABORAL TARDE' THEN hora END) AS inicio_labor_tarde")
+        ->selectRaw("MAX(CASE WHEN estado = 'FINALIZAR JORNADA LABORAL' THEN hora END) AS fin_jornada")
+        ->groupBy('id_user',"fecha")
+        ->having('fecha' , $rango )
+        ->orderByDesc('fecha')
+        ->get();
+       // ->toSql();
+    
+    }
+
+
+
 }

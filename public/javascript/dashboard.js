@@ -334,6 +334,9 @@ async function getShowAssists(url) {
         let element_container = document.getElementById("container_menu");
 
         element_container.innerHTML = data.html;
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
 
         $("#report_table").DataTable({
             responsive: true,
@@ -1091,6 +1094,45 @@ function verifyInputs(){
   }
 
 
+  async function secures(url){
+
+    const token = localStorage.getItem("access_token");
+
+    let id_user = document.getElementById("id_user_secure").value;
+    let state = document.getElementById("estado_secure").value;
+    let hour = document.getElementById("hora_secure").value;
+    let date = document.getElementById("fecha_secure").value;
+
+    let response = await fetch(url, {
+
+        method: "PUT",
+        headers: {
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body:{
+
+            id_user,
+            state,
+            hour,
+            date
+        }
+    });
+
+    let data = await response.json();
+
+
+    if(data.status){
+
+        console.log("cambios realizados!");
+
+
+    }
+
+  }
+
+
   async function getShowChangePassword(url){
 
 
@@ -1258,6 +1300,78 @@ async function getShowNotices(url){
 
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
+
+    }
+
+}
+
+
+async function searchRangeAssist(){
+
+    const token = localStorage.getItem("access_token");
+
+    let rango = document.getElementById("rango_fecha").value;
+
+    console.log("el rango elegido es: "+rango);
+
+    let convert_date = new Date(rango);
+
+    let fecha_f = convert_date.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+
+
+    let format_range = fecha_f.replaceAll("/","-");
+
+    console.log("el rango elegido es2: "+format_range);
+
+    let response = await fetch("../public/showrangeassists/?rango="+format_range,{
+
+
+        method: "GET",
+        headers: {
+
+            "Content-Type" : "application/json",
+            "Authorization" : `Bearer ${token}`
+        }
+
+    });
+
+
+    let data =  await response.json();
+
+    if(data.status){
+        
+        console.log("nueva actualizacion");
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+        
+        $('#reservationdate').datetimepicker({
+            format: 'L'
+        });
+        $("#rango_fecha").val(rango);
+
+        $("#report_table").DataTable({
+            responsive: true,
+            order: [[7, "desc"]],
+            lengthChange: false,
+            autoWidth: false,
+            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            language: {
+                search: "Buscar en la tabla:",
+                lengthMenu: "Mostrar _MENU_ registros",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+                emptyTable: "No hay datos disponibles",
+            },
+        });
 
     }
 

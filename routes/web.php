@@ -63,6 +63,7 @@ Route::get('/searchText', [historySubLaborsController::class, 'searchText'])->na
 
 Route::post('/collectSubLabors', [historySubLaborsController::class, 'collectSubLabors'])->name("collectSubLabors")->middleware(["verifyTokenHeader"]);
 
+Route::put('/secure', [assistController::class, 'secure'])->name("secure")->middleware(["verifyTokenHeader"]);
 
 Route::get('/getshowreportassists', [assistController::class, 'getShowReportAssists'])->name("getShowReportAssists")->middleware(["verifyTokenHeader"]);
 
@@ -86,5 +87,6 @@ Route::put('/changepassword', [userController::class, 'changePassword'])->name("
 
 Route::get('/shownotices', [dashboardController::class, 'getShowNotices'])->name("getShowNotices")->middleware(["verifyTokenHeader"]);
 
+Route::get('/showrangeassists', [assistController::class, 'getShowAssistRange'])->name("showrangeassists")->middleware(["verifyTokenHeader"]);
 
 
