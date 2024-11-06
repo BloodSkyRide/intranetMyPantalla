@@ -1327,7 +1327,7 @@ async function searchRangeAssist(){
 
     console.log("el rango elegido es2: "+format_range);
 
-    let response = await fetch("../public/showrangeassists/?rango="+format_range,{
+    let response = await fetch("../showrangeassists/?rango="+format_range,{
 
 
         method: "GET",
