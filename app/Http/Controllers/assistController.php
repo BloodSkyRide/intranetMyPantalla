@@ -284,9 +284,12 @@ class assistController extends Controller
     {
 
 
+        $token_header = $request->header("Authorization");
 
- 
+        $replace = str_replace("Bearer ", "", $token_header);
 
+        $decode_token = JWTAuth::setToken($replace)->authenticate();
+        $id_user = $decode_token["cedula"];
 
          $range = $request->query("rango");
 
@@ -296,8 +299,10 @@ class assistController extends Controller
 
          $convert_array = self::convertView($get_report);
 
+         $secure =  ($id_user === self::token_decode($this->default_token)) ? true : false;
+         $array = ["state" => $secure];
 
-         $render = view("menuDashboard.reportAssits",  ["history" => $convert_array])->render();
+         $render = view("menuDashboard.reportAssits",  ["history" => $convert_array, "secure" => $array])->render();
 
          return response()->json(["status" => true, "html" => $render]);
 
