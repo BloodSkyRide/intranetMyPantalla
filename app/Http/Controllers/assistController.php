@@ -180,7 +180,7 @@ class assistController extends Controller
         $hour = $request->hour;
         $date = $request->date;
 
-
+        
         $reject = modelAssits::secureData($id_user, $state, $hour, $date);
 
         if($reject){

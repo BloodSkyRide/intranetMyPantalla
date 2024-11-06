@@ -66,7 +66,8 @@ class modelAssits extends Model
 
         return self::where("id_user",$id_user)
         ->where("fecha",$date)
-        ->update(["estado" => $state, "hora" => $hour]);
+        ->where("estado", $state)
+        ->update([ "hora" => $hour]);
     }
 
 

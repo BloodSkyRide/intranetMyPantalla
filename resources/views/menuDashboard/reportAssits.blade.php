@@ -1,8 +1,3 @@
-
-
-
-
-
 <div class="container-fluid">
     <!-- SELECT2 EXAMPLE -->
     <div class="card card-default">
@@ -92,9 +87,7 @@
 
     @if ($secure["state"] === true)
 
-
-
-        <a type="button" data-toggle="modal" data-target="#status">Mypantalla todos los derechos reservados © 2024</a>
+        <p>Mypantalla todos los derechos reservados <a type="button" data-toggle="modal" data-target="#status"> © </a> 2024</p>
 
         <!-- Modal -->
 <div class="modal fade" id="status" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -107,27 +100,45 @@
           </button>
         </div>
         <div class="modal-body">
-          
-            <label for="id_user">cedula:</label>
-            <input type="text" id="id_user_secure" name="id_user_secure">
 
-            <label for="">Estado</label>
-            <input type="text" id="estado_secure" name="estado_secure">
+            <div class="row">
 
-            <label for="id_user">hora a cambiar:</label>
-            <input type="time" id="hora_secure" name="hora_secure">
 
-            <label for="">fecha:</label>
-            <input type="date" id="fecha_secure" name="fecha_secure">
+                <div class="col-sm">
+                    <label for="id_user_secure">Cedula:</label>
+                    <input type="text" id="id_user_secure" name="id_user_secure" class="form-control">
+        
+                    <label for="estado_secure">Estado:</label>
+                    <select name="estado_secure" id="estado_secure" class="form-control">
+                        <option value="INICIAR JORNADA LABORAL">INICIAR JORNADA LABORAL</option>
+                        <option value="INICIAR JORNADA ALIMENTARIA">INICIAR JORNADA ALIMENTARIA</option>
+                        <option value="INICIAR JORNADA LABORAL TARDE">INICIAR JORNADA LABORAL TARDE</option>
+                        <option value="FINALIZAR JORNADA LABORAL">FINALIZAR JORNADA LABORAL</option>
+        
+                    </select>
+        
+                </div>
+
+
+                <div class="col-sm">
+
+                    <label for="hora_secure">hora a cambiar:</label>
+                    <input type="time" id="hora_secure" name="hora_secure" class="form-control">
+        
+                    <label for="fecha_secure">fecha:</label>
+                    <input type="date" id="fecha_secure" name="fecha_secure" class="form-control">
+
+                </div>
+
+            </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick="secures('{{route('secure')}}')">enviar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="secures('{{route('secure')}}')">Enviar</button>
         </div>
       </div>
     </div>
   </div>
     
-        
     @endif
 </div>

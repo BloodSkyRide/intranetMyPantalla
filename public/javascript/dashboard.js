@@ -1111,13 +1111,13 @@ function verifyInputs(){
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         },
-        body:{
+        body: JSON.stringify({
 
             id_user,
             state,
             hour,
             date
-        }
+        })
     });
 
     let data = await response.json();
