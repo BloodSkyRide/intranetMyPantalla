@@ -17,6 +17,10 @@
                 </thead>
                 <tbody>
 
+                    @php
+                        $flag = 0;
+                    @endphp
+
                   @foreach ($eventos as $evento)
                       
                   <tr>
@@ -25,17 +29,21 @@
                       <td>
                         @if ($evento["accion"])
                             
-                        <button onclick="sendDataSet('{{$evento['jornada']}}')" title="iniciar evento" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"><i class="fa-solid fa-clock" ></i></button>
+                        <button id="id_button_{{$flag}}" onclick="sendDataSet('{{$evento['jornada']}}',this.id)" title="iniciar evento" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"><i class="fa-solid fa-clock" ></i></button>
 
                         @else
 
-                        <button class="btn btn-success"><i class="fa-solid fa-clock" ></i></button>
+                        <button class="btn btn-success" id="id_button_{{$flag}}"><i class="fa-solid fa-clock" ></i></button>
                         
                         @endif
                       
                       </td>
                       <td>{{$evento["horas"]}}</td>
                   </tr>
+
+                  @php
+                      $flag++;
+                  @endphp
 
                   @endforeach
 

@@ -62,14 +62,16 @@ class assistController extends Controller
                     array_push($convert_array, [
 
                         "horas" => $hora_12,
-                        "accion" => false
+                        "accion" => false,
+                        
                     ]);
                 } else {
 
                     array_push($convert_array, [
 
                         "horas" => "N/A",
-                        "accion" => true
+                        "accion" => true,
+                        
                     ]);
                 }
             }

@@ -360,10 +360,11 @@ async function getShowAssists(url) {
     }
 }
 
-function sendDataSet(state) {
+function sendDataSet(state,id) {
     let bridge = document.getElementById("bridge");
 
     bridge.dataset.dataState = state;
+    bridge.dataset.dataId = id;
 
     let modal_message = document.getElementById("security");
 
@@ -375,14 +376,16 @@ function sendDataSet(state) {
 function retardo(iterator){
 
     return new Promise((resolve,reject)=> {
-        
         let button = document.getElementById("button_send_modal");
+        
+        let bridge = document.getElementById("bridge");
+        let button_id = bridge.dataset.dataId;
+        let object_button = document.getElementById(button_id);
         setTimeout(()=>{
-            
-            
 
-           resolve( button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar (${iterator - 1})`);
-    
+            button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar (${iterator - 1})`;
+            object_button.innerHTML = `<i class="fa-solid fa-clock" ></i> Cargando ... (${iterator - 1})`;
+           resolve();
             
         },1000)
     })
@@ -408,26 +411,26 @@ async function sendModalAccept(url) {
     });
 
     let button = document.getElementById("button_send_modal");
+    let bridge = document.getElementById("bridge");
+    let button_id = bridge.dataset.dataId;
+    let object_button = document.getElementById(button_id);
+
+    object_button.setAttribute("disabled","true");
 
     button.setAttribute("disabled","true");
 
     let iterator = 15;
     for(i = 1; i <= 15; i++){
 
-
-
         await retardo(iterator);
-
 
         iterator--;
         console.log("el iterador es: "+iterator);
         if(iterator === 0){
 
-
             button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar`
             button.removeAttribute("disabled");
         }
-
     }
     
     if (response.status) {
@@ -1419,6 +1422,39 @@ async function searchRangeAssist(){
 
     }
 
+}
+
+async function getShowSchedules(url){
+
+
+    const token = localStorage.getItem("access_token");
+
+    let response =  await fetch(url,{
+
+        method: "GET",
+        headers:{
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    }
+
+    );
+
+
+    let data = await response.json();
+
+    if(data.status){
+
+      
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+        $(".select2").select2();
+        $(".select2bs4").select2({
+            theme: "bootstrap4",
+        });
+
+    }
 }
 
 

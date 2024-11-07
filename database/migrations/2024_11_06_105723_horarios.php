@@ -18,13 +18,13 @@ return new class extends Migration
             $table->string("id_user");
             $table->string("nombre",255)->nullable();
             $table->string("apellido",255)->nullable();
-            $table->time('lunes')->nullable();
-            $table->time('martes')->nullable();
-            $table->time('miercoles')->nullable();
-            $table->time('jueves')->nullable();
-            $table->time('viernes')->nullable();
-            $table->time('sabado')->nullable();
-            $table->time('domingo')->nullable();
+            $table->string('lunes',255)->nullable();
+            $table->string('martes',255)->nullable();
+            $table->string('miercoles',255)->nullable();
+            $table->string('jueves',255)->nullable();
+            $table->string('viernes',255)->nullable();
+            $table->string('sabado',255)->nullable();
+            $table->string('domingo',255)->nullable();
             $table->timestamps();
             
         });
@@ -33,6 +33,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
+    
     public function down(): void
     {
         Schema::dropIfExists('horarios');

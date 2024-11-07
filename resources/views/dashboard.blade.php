@@ -243,6 +243,17 @@
                             </li>
                         @endif
 
+
+                        {{-- <li class="nav-item">
+                            <a class="nav-link menu_dashboard" onclick="getShowSchedules('{{route('getShowSchedule')}}')"
+                                type="button" id="register_nav">
+                                <i class="fa-solid fa-house-circle-check"></i>&nbsp;&nbsp;
+                                <p>
+                                    Horarios
+                                </p>
+                            </a>
+                        </li> --}}
+
                     </ul>
                 </nav>
             </div>
@@ -254,8 +265,7 @@
 
 
         <!-- Modal de confirmación-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModal"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg bg-danger">
@@ -266,7 +276,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" id="bridge" data-state="">
+                    <div class="modal-body" id="bridge" data-state="" data-id="">
 
 
                         <h4 id="security"></h4>

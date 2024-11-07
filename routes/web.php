@@ -7,6 +7,7 @@ use App\Http\Controllers\subLaborsController;
 use App\Http\Controllers\laborController;
 use App\Http\Controllers\assistController;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\scheduleController;
 
 
 
@@ -88,5 +89,7 @@ Route::put('/changepassword', [userController::class, 'changePassword'])->name("
 Route::get('/shownotices', [dashboardController::class, 'getShowNotices'])->name("getShowNotices")->middleware(["verifyTokenHeader"]);
 
 Route::get('/showrangeassists', [assistController::class, 'getShowAssistRange'])->name("showrangeassists")->middleware(["verifyTokenHeader"]);
+
+Route::get('/schedules', [scheduleController::class, 'getShowSchedule'])->name("getShowSchedule")->middleware(["verifyTokenHeader"]);
 
 
