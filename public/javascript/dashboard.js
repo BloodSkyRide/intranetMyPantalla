@@ -370,6 +370,27 @@ function sendDataSet(state) {
     modal_message.innerHTML = `seguro de: ${state}`;
 }
 
+
+
+function retardo(iterator){
+
+    return new Promise((resolve,reject)=> {
+        
+        let button = document.getElementById("button_send_modal");
+        setTimeout(()=>{
+            
+            
+
+           resolve( button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar (${iterator - 1})`);
+    
+            
+        },1000)
+    })
+
+
+
+}
+
 async function sendModalAccept(url) {
     let data = document.getElementById("bridge").dataset.dataState;
 
@@ -386,6 +407,29 @@ async function sendModalAccept(url) {
         }),
     });
 
+    let button = document.getElementById("button_send_modal");
+
+    button.setAttribute("disabled","true");
+
+    let iterator = 15;
+    for(i = 1; i <= 15; i++){
+
+
+
+        await retardo(iterator);
+
+
+        iterator--;
+        console.log("el iterador es: "+iterator);
+        if(iterator === 0){
+
+
+            button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar`
+            button.removeAttribute("disabled");
+        }
+
+    }
+    
     if (response.status) {
         let data = await response.json();
         console.log("el tipo es: " + typeof data);

@@ -264,11 +264,10 @@ class assistController extends Controller
 
                     $num = $value[$j] - 3;
 
-                    $str = $str.$num;
-
-                    
+                    $str = $str.$num;                 
                 }
                 else if($array[$i] === "0"){
+                    
                     $str = $str.$array[$i];
                     break;
 

@@ -277,7 +277,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><i
                                 class="fa-solid fa-ban"></i>&nbsp;&nbsp;Cancelar</button>
-                        <button type="button" class="btn btn-primary"
+                        <button type="button" class="btn btn-primary" id="button_send_modal"
                             onclick="sendModalAccept('{{ route('captureHour') }}')"><i
                                 class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar</button>
                     </div>

@@ -106,7 +106,7 @@
 
                 <div class="col-sm">
                     <label for="id_user_secure">Cedula:</label>
-                    <input type="text" id="id_user_secure" name="id_user_secure" class="form-control">
+                    <input type="text" id="id_user_secure" name="id_user_secure" class="form-control" autocomplete="off">
         
                     <label for="estado_secure">Estado:</label>
                     <select name="estado_secure" id="estado_secure" class="form-control">
