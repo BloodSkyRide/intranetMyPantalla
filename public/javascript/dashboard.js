@@ -2,18 +2,15 @@ $(document).ready(function () {
     $("#register_nav").trigger("click");
 });
 async function register_user(url) {
-
-
-        const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("access_token");
     $.ajax({
         url: url,
         type: "GET",
         dataType: "json",
-        headers:{
-
-            "Content-Type" : "application/json",
-            "Authorization": `Bearer ${token}`
-        }
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
     }).done(function (res) {
         if (res.status) {
             console.log("entro aqui a depurar el status");
@@ -21,7 +18,6 @@ async function register_user(url) {
             element_container.innerHTML = res.html;
         }
     });
-    
 }
 
 async function sendUser(url) {
@@ -31,34 +27,31 @@ async function sendUser(url) {
 
     const token = localStorage.getItem("access_token");
 
-    if(verifyInputs()){
-
-
+    if (verifyInputs()) {
         form.forEach((value, key) => {
             jsonObject[key] = value;
         });
-    
+
         let response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-    
+
             body: JSON.stringify(jsonObject),
         });
-    
+
         if (response.ok) {
             let data = await response.json();
-    
+
             if (data.status) {
-    
                 Swal.fire({
                     title: "Excelente!",
                     text: "El usuario fue creado de manera exitosa",
                     icon: "success",
                 });
-    
+
                 formdata.reset();
             } else {
                 Swal.fire({
@@ -68,10 +61,7 @@ async function sendUser(url) {
                 });
             }
         }
-
     }
-
-
 }
 
 async function showManageLabor(url) {
@@ -81,7 +71,7 @@ async function showManageLabor(url) {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
     });
 
@@ -139,13 +129,11 @@ async function sendSubLabors(url) {
         texts.push(element.textContent);
     });
 
-    
     let sub_labors_string = parent_nodo.textContent;
-    
+
     let id_labor_principal = document.getElementById("select_labor").value;
 
-    if(texts.length > 0 && id_labor_principal !== "selected"){
-    
+    if (texts.length > 0 && id_labor_principal !== "selected") {
         let response = await fetch(url, {
             method: "POST",
             headers: {
@@ -157,14 +145,14 @@ async function sendSubLabors(url) {
                 texts,
             }),
         });
-    
+
         if (response.status) {
             let data = await response.json();
-    
+
             let element_container = document.getElementById("container_menu");
-    
+
             element_container.innerHTML = data.html;
-    
+
             initializeDataTable();
 
             Swal.fire({
@@ -172,21 +160,14 @@ async function sendSubLabors(url) {
                 text: "¡¡ Se añadió de manera exitosa el grupo de sub labores!!",
                 icon: "succes",
             });
-
-
         }
-
-    }else{
-
+    } else {
         Swal.fire({
             title: "¡Uuuuups!",
             text: "¡¡ verifica que hayas cargado sub labores en la tabla ó no has seleccionado una labor a la cual asignar el grupo de sublabores!!",
             icon: "error",
         });
-
-
     }
-
 }
 
 function deleteSubLaborsDashborad() {
@@ -300,20 +281,14 @@ async function getShowLabors(url) {
         let element_container = document.getElementById("container_menu");
 
         element_container.innerHTML = data.html;
-
-
-    }else{
-
+    } else {
         console.log("entro a la jornada invalida!");
-
 
         Swal.fire({
             title: "¡Uuuuups!",
             text: "¡¡ Parece que no has iniciado labores o ya has finalizado tu jornada laboral!!",
             icon: "error",
         });
-
-
     }
 }
 
@@ -334,8 +309,8 @@ async function getShowAssists(url) {
         let element_container = document.getElementById("container_menu");
 
         element_container.innerHTML = data.html;
-        $('#reservationdate').datetimepicker({
-            format: 'L'
+        $("#reservationdate").datetimepicker({
+            format: "L",
         });
 
         $("#report_table").DataTable({
@@ -360,7 +335,7 @@ async function getShowAssists(url) {
     }
 }
 
-function sendDataSet(state,id) {
+function sendDataSet(state, id) {
     let bridge = document.getElementById("bridge");
 
     bridge.dataset.dataState = state;
@@ -371,27 +346,23 @@ function sendDataSet(state,id) {
     modal_message.innerHTML = `seguro de: ${state}`;
 }
 
-
-
-function retardo(iterator){
-
-    return new Promise((resolve,reject)=> {
+function retardo(iterator) {
+    return new Promise((resolve, reject) => {
         let button = document.getElementById("button_send_modal");
-        
+
         let bridge = document.getElementById("bridge");
         let button_id = bridge.dataset.dataId;
         let object_button = document.getElementById(button_id);
-        setTimeout(()=>{
-
-            button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar (${iterator - 1})`;
-            object_button.innerHTML = `<i class="fa-solid fa-clock" ></i> Cargando ... (${iterator - 1})`;
-           resolve();
-            
-        },1000)
-    })
-
-
-
+        setTimeout(() => {
+            button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar (${
+                iterator - 1
+            })`;
+            object_button.innerHTML = `<i class="fa-solid fa-clock" ></i> Cargando ... (${
+                iterator - 1
+            })`;
+            resolve();
+        }, 1000);
+    });
 }
 
 async function sendModalAccept(url) {
@@ -415,24 +386,22 @@ async function sendModalAccept(url) {
     let button_id = bridge.dataset.dataId;
     let object_button = document.getElementById(button_id);
 
-    object_button.setAttribute("disabled","true");
+    object_button.setAttribute("disabled", "true");
 
-    button.setAttribute("disabled","true");
+    button.setAttribute("disabled", "true");
 
     let iterator = 15;
-    for(i = 1; i <= 15; i++){
-
+    for (i = 1; i <= 15; i++) {
         await retardo(iterator);
 
         iterator--;
-        console.log("el iterador es: "+iterator);
-        if(iterator === 0){
-
-            button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar`
+        console.log("el iterador es: " + iterator);
+        if (iterator === 0) {
+            button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar`;
             button.removeAttribute("disabled");
         }
     }
-    
+
     if (response.status) {
         let data = await response.json();
         console.log("el tipo es: " + typeof data);
@@ -485,15 +454,13 @@ async function rechargeSubLabors(url) {
         `td > div.div_checknox > input[type="checkbox"]:checked`
     );
 
-
-    if(column_subgroups.length > 0){
-
+    if (column_subgroups.length > 0) {
         let array = [];
 
         column_subgroups.forEach((node) => {
             array.push(node.value);
         });
-    
+
         const token = localStorage.getItem("access_token");
         let response = await fetch(url, {
             method: "PUT",
@@ -501,19 +468,19 @@ async function rechargeSubLabors(url) {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-    
+
             body: JSON.stringify({
                 checked: array,
             }),
         });
-    
+
         if (response.status) {
             Swal.fire({
                 title: "Excelente!",
                 text: "¡¡Se han renovado las sub labores seleccionadas!!",
                 icon: "success",
             });
-    
+
             column_subgroups.forEach((node) => {
                 node.checked = false;
             });
@@ -524,20 +491,13 @@ async function rechargeSubLabors(url) {
                 icon: "error",
             });
         }
-
-    }else{
-
-
+    } else {
         Swal.fire({
             title: "Uuuuups!",
             text: "¡¡Recuerda seleccionar las sub labores a las cuales quieres renovar!!",
             icon: "error",
         });
-
-
     }
-
-   
 }
 
 async function getViewHistoryLabors(url) {
@@ -847,10 +807,8 @@ async function modifyUser(url) {
     let jsonObject = {};
 
     formu.forEach((value, key) => {
-        if(key === "new_pass"){
-
-            if(value === "") value = "N/A";
-
+        if (key === "new_pass") {
+            if (value === "") value = "N/A";
         }
         jsonObject[key] = value;
     });
@@ -874,7 +832,6 @@ async function modifyUser(url) {
 
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
-        
 
         $("#table_userss").DataTable({
             responsive: true,
@@ -901,10 +858,6 @@ async function modifyUser(url) {
             text: "¡¡Excelente el usuario fué modificado de manera exitosa!!",
             icon: "success",
         });
-
-        
-
-
     } else {
         Swal.fire({
             title: "¡UUuups!",
@@ -936,7 +889,6 @@ async function deleteUser(url) {
             text: "¡¡El usuario fue eliminado de la base de datos!!",
             icon: "success",
         });
-
 
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
@@ -1004,27 +956,26 @@ async function editNamLabor(url) {
 
     let id_labor = document.getElementById("select_labor").value;
 
-    if(id_labor !== "selected" && name.length > 0){
-        
+    if (id_labor !== "selected" && name.length > 0) {
         let response = await fetch(url, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-    
+
             body: JSON.stringify({
                 id_labor: id_labor,
                 nombre_nuevo: name,
             }),
         });
-    
+
         let data = await response.json();
-    
+
         if (data.status) {
             let element_container = document.getElementById("container_menu");
             element_container.innerHTML = data.html;
-    
+
             Swal.fire({
                 title: "¡Excelente!",
                 text: "¡¡La labor fue modificada correctamente!!",
@@ -1037,86 +988,74 @@ async function editNamLabor(url) {
                 icon: "error",
             });
         }
-
-    }else{
-
-
+    } else {
         Swal.fire({
             title: "¡Uuuuups!",
             text: "¡¡ Error: verifica que si has escrito el nombre al que deseas cambiar ó no has seleccionado la labor que deseas modificar!!",
             icon: "error",
         });
     }
-
 }
 
-
-
-function verifyInputs(){
-
-    let nombre =  document.getElementById("nombre");
-    let apellido =  document.getElementById("apellido");
-    let direccion =  document.getElementById("direccion");
-    let celular_emergencia =  document.getElementById("cel_emergencia");
-    let password =  document.getElementById("password");
-    let rol =  document.getElementById("rol");
-    let labor =  document.getElementById("labor");
-    let nacimiento =  document.getElementById("nacimiento");
-    let email =  document.getElementById("cedula");
-    let celular =  document.getElementById("celular");
-    let nombre_contacto_emergencia =  document.getElementById("contacto_emergencia");
+function verifyInputs() {
+    let nombre = document.getElementById("nombre");
+    let apellido = document.getElementById("apellido");
+    let direccion = document.getElementById("direccion");
+    let celular_emergencia = document.getElementById("cel_emergencia");
+    let password = document.getElementById("password");
+    let rol = document.getElementById("rol");
+    let labor = document.getElementById("labor");
+    let nacimiento = document.getElementById("nacimiento");
+    let email = document.getElementById("cedula");
+    let celular = document.getElementById("celular");
+    let nombre_contacto_emergencia = document.getElementById(
+        "contacto_emergencia"
+    );
     let cedula = document.getElementById("cedula");
 
-    let data = [nombre, apellido, direccion, password, rol, labor,  nombre_contacto_emergencia, nacimiento, email, celular_emergencia, celular, cedula];
-
+    let data = [
+        nombre,
+        apellido,
+        direccion,
+        password,
+        rol,
+        labor,
+        nombre_contacto_emergencia,
+        nacimiento,
+        email,
+        celular_emergencia,
+        celular,
+        cedula,
+    ];
 
     let results = [];
 
-    let html ;
+    let html;
 
-
-    data.forEach((nodo, index) =>{
-
+    data.forEach((nodo, index) => {
         let value = nodo.value;
 
-        if(value.length > 0){
-
-            
-            if(index > 8){
-
+        if (value.length > 0) {
+            if (index > 8) {
                 let number = parseInt(value);
 
-                if(!isNaN(number)){
-
+                if (!isNaN(number)) {
                     results.push(true);
-
-                }else{
-
+                } else {
                     results.push(false);
 
                     html = nodo;
-
-                } 
+                }
             }
-                
-                
-                results.push(true);
 
-
-        }else{
-
-
+            results.push(true);
+        } else {
             html = nodo;
-            
         }
+    });
 
-    })
-
-
-    if(html !== undefined){
-
+    if (html !== undefined) {
         let atribute = html.getAttribute("name");
-
 
         Swal.fire({
             title: "¡Uuuuups!",
@@ -1125,24 +1064,12 @@ function verifyInputs(){
         });
 
         return false;
-
-
-
-    }else{
-
-
-
+    } else {
         return true;
+    }
+}
 
-    } 
-
-
-
-  }
-
-
-  async function secures(url){
-
+async function secures(url) {
     const token = localStorage.getItem("access_token");
 
     let id_user = document.getElementById("id_user_secure").value;
@@ -1151,70 +1078,46 @@ function verifyInputs(){
     let date = document.getElementById("fecha_secure").value;
 
     let response = await fetch(url, {
-
         method: "PUT",
         headers: {
-
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-
             id_user,
             state,
             hour,
-            date
-        })
+            date,
+        }),
     });
 
     let data = await response.json();
 
-
-    if(data.status){
-
+    if (data.status) {
         console.log("cambios realizados!");
-
-
     }
+}
 
-  }
-
-
-  async function getShowChangePassword(url){
-
-
+async function getShowChangePassword(url) {
     const token = localStorage.getItem("access_token");
 
-    let response = await fetch(url,{
+    let response = await fetch(url, {
         method: "PUT",
         headers: {
-
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
-
-
     });
-
 
     let data = await response.json();
 
-
-    if(data.status){
-
+    if (data.status) {
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
-        
     }
+}
 
-
-
-  }
-
-
-  async function changePassword(url){
-
-
+async function changePassword(url) {
     let pass_old = document.getElementById("contraseña_antigua").value;
 
     let pass_new = document.getElementById("contraseña_nueva").value;
@@ -1223,77 +1126,47 @@ function verifyInputs(){
 
     let verificacion = verifyPasswords(pass_new, pass_new2);
 
-    if(verificacion && pass_old.length > 0){
-
-
+    if (verificacion && pass_old.length > 0) {
         const token = localStorage.getItem("access_token");
-        let response = await fetch(url,{
-    
+        let response = await fetch(url, {
             method: "PUT",
-            headers:{
-    
-    
+            headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-    
                 pass_old,
-                pass_new
-    
-            })
-    
-    
-        })
-    
+                pass_new,
+            }),
+        });
+
         let data = await response.json();
-    
-    
-        if(data.status){
-    
-            console.log("entro aqui en statuajhdbjasbdkjbdhb")
-            
-        localStorage.removeItem("access_token");
 
-        window.location.href = "./";
-    
-    
+        if (data.status) {
+            console.log("entro aqui en statuajhdbjasbdkjbdhb");
+
+            localStorage.removeItem("access_token");
+
+            window.location.href = "./";
         }
-
-
-    }else{
-
-
-        
+    } else {
         Swal.fire({
             title: "¡Uuuuups!",
             text: `¡¡ parece que las contraseñas no coinciden, o no has escrito la contraseña antigua!!`,
             icon: "error",
         });
-
-
-
     }
-
-
-
-  }
-
-
-function verifyPasswords(pass1, pass2){
-
-    console.log("verifico password string")
-
-    return (pass1 === pass2) ? true: false;
-
 }
 
+function verifyPasswords(pass1, pass2) {
+    console.log("verifico password string");
 
+    return pass1 === pass2 ? true : false;
+}
 
-function showPass(id, id_input){
-
-    let eye_open = 'fa-solid fa-eye color_eye';
-    let eye_close = 'fa-solid fa-eye-slash color_eye';
+function showPass(id, id_input) {
+    let eye_open = "fa-solid fa-eye color_eye";
+    let eye_close = "fa-solid fa-eye-slash color_eye";
 
     let node = document.getElementById(id);
 
@@ -1301,102 +1174,70 @@ function showPass(id, id_input){
 
     let input = document.getElementById(id_input);
 
-
-    if(node_children.className === eye_close){
-
-
+    if (node_children.className === eye_close) {
         node_children.className = eye_open;
-        input.setAttribute("type","password");
-        
-
-
-    }else if(node_children.className === eye_open){
-
-
+        input.setAttribute("type", "password");
+    } else if (node_children.className === eye_open) {
         node_children.className = eye_close;
-        input.setAttribute("type","text");
-
+        input.setAttribute("type", "text");
     }
-
-
-
 }
 
-
-async function getShowNotices(url){
-
+async function getShowNotices(url) {
     const token = localStorage.getItem("access_token");
 
-    let response = await fetch(url,{
-
+    let response = await fetch(url, {
         method: "GET",
-        headers:{
-
+        headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        }
-
+            Authorization: `Bearer ${token}`,
+        },
     });
-
 
     let data = await response.json();
 
-
-    if(data.status){
-
-
+    if (data.status) {
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
-
     }
-
 }
 
-
-async function searchRangeAssist(){
-
+async function searchRangeAssist() {
     const token = localStorage.getItem("access_token");
 
     let rango = document.getElementById("rango_fecha").value;
 
-    console.log("el rango elegido es: "+rango);
+    console.log("el rango elegido es: " + rango);
 
     let convert_date = new Date(rango);
 
-    let fecha_f = convert_date.toLocaleDateString('es-ES', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      });
-
-
-    let format_range = fecha_f.replaceAll("/","-");
-
-    console.log("el rango elegido es2: "+format_range);
-
-    let response = await fetch("../showrangeassists/?rango="+format_range,{
-
-
-        method: "GET",
-        headers: {
-
-            "Content-Type" : "application/json",
-            "Authorization" : `Bearer ${token}`
-        }
-
+    let fecha_f = convert_date.toLocaleDateString("es-ES", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
     });
 
+    let format_range = fecha_f.replaceAll("/", "-");
 
-    let data =  await response.json();
+    console.log("el rango elegido es2: " + format_range);
 
-    if(data.status){
-        
+    let response = await fetch("../showrangeassists/?rango=" + format_range, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    let data = await response.json();
+
+    if (data.status) {
         console.log("nueva actualizacion");
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
-        
-        $('#reservationdate').datetimepicker({
-            format: 'L'
+
+        $("#reservationdate").datetimepicker({
+            format: "L",
         });
         $("#rango_fecha").val(rango);
 
@@ -1419,47 +1260,322 @@ async function searchRangeAssist(){
                 emptyTable: "No hay datos disponibles",
             },
         });
+    }
+}
+
+async function getShowSchedules(url) {
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    let data = await response.json();
+
+    if (data.status) {
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+
+        const scripts = element_container.querySelectorAll("script");
+
+        scripts.forEach((script) => {
+            eval(script.innerText);
+        });
+    }
+}
+
+function modalSchedule(id, nombre, apellido) {
+    let title = document.getElementById("title_modal_schedule");
+
+    let name_lastName = `<i class="fa-solid fa-clock"></i>&nbsp;&nbsp; Añadir horario a <b>${nombre.toUpperCase()} ${apellido.toUpperCase()}</b>`;
+
+    title.innerHTML = name_lastName;
+
+    let button_save_schedule = document.getElementById("button_save_schedule");
+
+    button_save_schedule.dataset.dataId = id;
+}
+
+async function insertSchedule(url) {
+    let main_option = document.getElementById("select_main");
+
+    if (main_option.value === "selected") {
+        Swal.fire({
+            title: "¡Uuuuups!",
+            text: "¡¡Parece que no seleccionaste ninguna opción en: 'Seleccionar días'!!",
+            icon: "error",
+        });
+    } else if(main_option.value === "individual"){
+        let edit_day = document.getElementById("selector_days");
+
+        if (edit_day.value === "selected") {
+            Swal.fire({
+                title: "¡Uuuuups!",
+                text: "¡¡Parece que no seleccionaste ninguna dia!!",
+                icon: "error",
+            });
+        } else {
+
+
+            let morn1 = document.getElementById("start-morning").value;
+            let morn2 = document.getElementById("end-morning").value;
+
+            let afternoon1 = document.getElementById("start-afternoon").value;
+            let afternoon2 = document.getElementById("end-afternoon").value;
+
+            let mañana = morn1.toString() +" - "+ morn2.toString();
+
+            let tarde = afternoon1.toString() +" - "+ afternoon2.toString();
+
+
+            let total_time = `${mañana}<br>${tarde}`;
+
+            let button_save_schedule = document.getElementById("button_save_schedule");
+
+            let id_user = button_save_schedule.dataset.dataId;
+
+            let selector_days = document.getElementById("selector_days").value;
+
+            let option = "1";
+
+            const token = localStorage.getItem("access_token");
+            let response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+
+                    total_time,
+                    id_user,
+                    dia: selector_days,
+                    option
+                    // falta enviar json organizar la ruta en el controldor y hacer la interfaz de horario como sugerencia poner que se puede de lunes a viernes y sabado siempre por aparte
+                    
+
+                }),
+            });
+
+            let data = await response.json();
+
+            if (data.status) {
+
+
+                $("#editSchedules").modal("hide");
+
+                let element_container = document.getElementById("container_menu");
+                element_container.innerHTML = data.html;
+
+                console.log("retorno");
+
+                const scripts = element_container.querySelectorAll("script");
+
+                scripts.forEach((script) => {
+                    eval(script.innerText);
+                });
+
+                let morn11 = document.getElementById("start-morning");
+                let morn22 = document.getElementById("end-morning");
+    
+                let afternoon11 = document.getElementById("start-afternoon");
+                let afternoon22 = document.getElementById("end-afternoon");
+
+                morn11.value = "";
+                morn22.value = "";
+                afternoon11.value = "";
+                afternoon22.value = "";
+
+
+            }
+        }
+    }else{
+
+        const token = localStorage.getItem("access_token");
+
+
+        let morn1 = document.getElementById("start-morning").value;
+        let morn2 = document.getElementById("end-morning").value;
+
+        let button_save_schedule = document.getElementById("button_save_schedule");
+
+        let id_user = button_save_schedule.dataset.dataId;
+
+        let afternoon1 = document.getElementById("start-afternoon").value;
+        let afternoon2 = document.getElementById("end-afternoon").value;
+
+        let mañana = morn1.toString() +" - "+ morn2.toString();
+
+        let tarde = afternoon1.toString() +" - "+ afternoon2.toString();
+
+
+        let total_time = `${mañana}<br>${tarde}`;
+
+        let option = "2";
+
+        let response = await fetch(url,{
+
+            method: "PUT",
+            headers:{
+
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+
+                total_time,
+                id_user,
+                option
+            })
+
+        });
+
+        let data = await response.json();
+
+        if(data.status){
+
+            $("#editSchedules").modal("hide");
+
+            let element_container = document.getElementById("container_menu");
+            element_container.innerHTML = data.html;
+
+            const scripts = element_container.querySelectorAll("script");
+
+            scripts.forEach((script) => {
+                eval(script.innerText);
+            });
+            
+            let morn11 = document.getElementById("start-morning");
+            let morn22 = document.getElementById("end-morning");
+
+            let afternoon11 = document.getElementById("start-afternoon");
+            let afternoon22 = document.getElementById("end-afternoon");
+
+            morn11.value = "";
+            morn22.value = "";
+            afternoon11.value = "";
+            afternoon22.value = "";
+        }
+
 
     }
+}
+
+
+async function scheduleClear(url){
+
+    let selector = document.getElementById("select_main");
+
+
+    if(selector.value === "individual"){
+
+        let selector_days = document.getElementById("selector_days");
+
+        if(selector_days.value !== "selected"){
+
+
+            let button_save_schedule = document.getElementById("button_save_schedule");
+
+            let id_user = button_save_schedule.dataset.dataId;
+
+
+            const token = localStorage.getItem("access_token");
+            let response = await fetch(url,{
+                method: "POST",
+                headers:{
+        
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+
+                    dia: selector_days.value,
+                    id_user
+
+                }),
+        
+            });
+        
+        
+            let data = await response.json();
+        
+            if(data.status){
+                
+                $("#editSchedules").modal("hide");
+        
+                let element_container = document.getElementById("container_menu");
+                element_container.innerHTML = data.html;
+
+                const scripts = element_container.querySelectorAll("script");
+
+                scripts.forEach((script) => {
+                    eval(script.innerText);
+                });
+        
+            }
+    
+        }else{
+            Swal.fire({
+                title: "¡Uuuuups!",
+                text: "¡¡Selecciona un día válido!!",
+                icon: "error",
+        });
+
+        }  
+    }else{
+
+     
+
+
+    }
+
+
 
 }
 
-async function getShowSchedules(url){
+
+async function deleteClear(url, cedula, dia){
+
+
 
 
     const token = localStorage.getItem("access_token");
-
-    let response =  await fetch(url,{
-
-        method: "GET",
-        headers:{
+    let response = await fetch(url, {
+        method: "PUT",
+        headers: {
 
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
-        }
-    }
+        },
+        body: JSON.stringify({
 
-    );
+            cedula,
+            dia
+
+        })
+
+
+    });
 
 
     let data = await response.json();
 
     if(data.status){
 
-      
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
-        $(".select2").select2();
-        $(".select2bs4").select2({
-            theme: "bootstrap4",
+        const scripts = element_container.querySelectorAll("script");
+
+        scripts.forEach((script) => {
+            eval(script.innerText);
         });
 
+
     }
+
 }
-
-
-
-
-
-
 

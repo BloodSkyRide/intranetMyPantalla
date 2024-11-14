@@ -92,4 +92,11 @@ Route::get('/showrangeassists', [assistController::class, 'getShowAssistRange'])
 
 Route::get('/schedules', [scheduleController::class, 'getShowSchedule'])->name("getShowSchedule")->middleware(["verifyTokenHeader"]);
 
+Route::put('/insertSchedule', [scheduleController::class, 'insertSchedule'])->name("insertSchedule")->middleware(["verifyTokenHeader"]);
+
+Route::post('/scheduleclear', [scheduleController::class, 'scheduleclear'])->name("scheduleclear")->middleware(["verifyTokenHeader"]);
+
+Route::put('/deleteclear', [scheduleController::class, 'deleteclear'])->name("deleteclear")->middleware(["verifyTokenHeader"]);
+
+
 

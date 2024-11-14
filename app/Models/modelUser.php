@@ -108,6 +108,12 @@ class modelUser extends Authenticatable implements JWTSubject
 
     }
 
+    public static function getAllId(){ // se utiliza para obtener todos los id y actualizar la tabla de horarios para la update
+
+        return self::select("cedula")->get();
+
+    }
+
 
 
 }

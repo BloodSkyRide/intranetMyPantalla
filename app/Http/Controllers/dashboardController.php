@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
 use App\Models\modelAssits;
 use Carbon\Carbon;
+use App\Models\modelShedule;
 
 use function Termwind\render;
 
@@ -113,8 +114,15 @@ class dashboardController extends Controller
 
             $insert_data = modelUser::saveUser($array_request);
 
-
-            if ($insert_data) return response()->json(["status" => true]);
+            
+            
+            if ($insert_data){
+                
+                
+                $insert_register_schedule = modelShedule::insertids($request->cedula); //ingresa el registro a la tabla de horarios
+                
+                if($insert_register_schedule) return response()->json(["status" => true]);
+            }
         } catch (\Throwable $th) {
 
 
@@ -289,6 +297,8 @@ class dashboardController extends Controller
         }
 
         $array_labores = labores::getLabores();
+
+        
 
         $render = view("menuDashboard.usersView", ["users" => $data, "labores" => $array_labores])->render();
 

@@ -19,12 +19,19 @@ return new class extends Migration
             $table->string("nombre",255)->nullable();
             $table->string("apellido",255)->nullable();
             $table->string('lunes',255)->nullable();
+            $table->string('aseo-lunes',255)->nullable();
             $table->string('martes',255)->nullable();
+            $table->string('aseo-martes',255)->nullable();
             $table->string('miercoles',255)->nullable();
+            $table->string('aseo-miercoles',255)->nullable();
             $table->string('jueves',255)->nullable();
+            $table->string('aseo-jueves',255)->nullable();
             $table->string('viernes',255)->nullable();
+            $table->string('aseo-viernes',255)->nullable();
             $table->string('sabado',255)->nullable();
+            $table->string('aseo-sabado',255)->nullable();
             $table->string('domingo',255)->nullable();
+            $table->string('aseo-domingo',255)->nullable();
             $table->timestamps();
             
         });

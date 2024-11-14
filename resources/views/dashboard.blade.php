@@ -244,7 +244,7 @@
                         @endif
 
 
-                        {{-- <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link menu_dashboard" onclick="getShowSchedules('{{route('getShowSchedule')}}')"
                                 type="button" id="register_nav">
                                 <i class="fa-solid fa-house-circle-check"></i>&nbsp;&nbsp;
@@ -252,16 +252,13 @@
                                     Horarios
                                 </p>
                             </a>
-                        </li> --}}
+                        </li>
 
                     </ul>
                 </nav>
             </div>
 
         </aside>
-
-
-
 
 
         <!-- Modal de confirmación-->
