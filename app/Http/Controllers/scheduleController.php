@@ -57,15 +57,6 @@ class scheduleController extends Controller
 
                 $view = modelShedule::getShowSchedule();
 
-                $cedulas = modelUser::getAllId();
-
-                foreach($cedulas as $cedula){
-
-
-                    modelShedule::insertids($cedula["cedula"]); /// script para actualizar todos los registros de los clientes para nol meter cedulas manuales
-
-                }
-
                 $render = view("menuDashboard.schedules", ["users" => $view, "rol" => $rol])->render();
 
                 return response()->json(["status" => true, "html" => $render]);
