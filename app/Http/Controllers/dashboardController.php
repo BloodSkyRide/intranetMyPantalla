@@ -37,7 +37,7 @@ class dashboardController extends Controller
 
                 "nombre" => $decode_token->nombre,
                 "apellido" => $decode_token->apellido,
-                "cedula" => $decode_token->apellido,
+                "cedula" => $decode_token->cedula,
                 "rol" => $decode_token->rol,
                 "email" => $decode_token->email,
                 "telefono" => $decode_token->telefono,

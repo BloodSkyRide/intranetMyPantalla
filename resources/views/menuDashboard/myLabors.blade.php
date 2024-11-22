@@ -26,7 +26,7 @@
                     @foreach ($sublabors as $sublabor)
                         <tr >
                             <td>{{ $flag }}</td>
-                            <td>{{ $nombre_labor['nombre_labor'] }}</td>
+                            <td>{{ $sublabor['nombre_labor'] }}</td>
                             <td class="column_sub_labor">
                                 <div class="icheck-primary d-inline">
 

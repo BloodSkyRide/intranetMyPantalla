@@ -1309,7 +1309,7 @@ async function insertSchedule(url) {
             text: "¡¡Parece que no seleccionaste ninguna opción en: 'Seleccionar días'!!",
             icon: "error",
         });
-    } else if(main_option.value === "individual"){
+    } else if (main_option.value === "individual") {
         let edit_day = document.getElementById("selector_days");
 
         if (edit_day.value === "selected") {
@@ -1319,22 +1319,21 @@ async function insertSchedule(url) {
                 icon: "error",
             });
         } else {
-
-
             let morn1 = document.getElementById("start-morning").value;
             let morn2 = document.getElementById("end-morning").value;
 
             let afternoon1 = document.getElementById("start-afternoon").value;
             let afternoon2 = document.getElementById("end-afternoon").value;
 
-            let mañana = morn1.toString() +" - "+ morn2.toString();
+            let mañana = morn1.toString() + " - " + morn2.toString();
 
-            let tarde = afternoon1.toString() +" - "+ afternoon2.toString();
-
+            let tarde = afternoon1.toString() + " - " + afternoon2.toString();
 
             let total_time = `${mañana}<br>${tarde}`;
 
-            let button_save_schedule = document.getElementById("button_save_schedule");
+            let button_save_schedule = document.getElementById(
+                "button_save_schedule"
+            );
 
             let id_user = button_save_schedule.dataset.dataId;
 
@@ -1350,25 +1349,21 @@ async function insertSchedule(url) {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-
                     total_time,
                     id_user,
                     dia: selector_days,
-                    option
+                    option,
                     // falta enviar json organizar la ruta en el controldor y hacer la interfaz de horario como sugerencia poner que se puede de lunes a viernes y sabado siempre por aparte
-                    
-
                 }),
             });
 
             let data = await response.json();
 
             if (data.status) {
-
-
                 $("#editSchedules").modal("hide");
 
-                let element_container = document.getElementById("container_menu");
+                let element_container =
+                    document.getElementById("container_menu");
                 element_container.innerHTML = data.html;
 
                 console.log("retorno");
@@ -1381,7 +1376,7 @@ async function insertSchedule(url) {
 
                 let morn11 = document.getElementById("start-morning");
                 let morn22 = document.getElementById("end-morning");
-    
+
                 let afternoon11 = document.getElementById("start-afternoon");
                 let afternoon22 = document.getElementById("end-afternoon");
 
@@ -1389,55 +1384,47 @@ async function insertSchedule(url) {
                 morn22.value = "";
                 afternoon11.value = "";
                 afternoon22.value = "";
-
-
             }
         }
-    }else{
-
+    } else {
         const token = localStorage.getItem("access_token");
-
 
         let morn1 = document.getElementById("start-morning").value;
         let morn2 = document.getElementById("end-morning").value;
 
-        let button_save_schedule = document.getElementById("button_save_schedule");
+        let button_save_schedule = document.getElementById(
+            "button_save_schedule"
+        );
 
         let id_user = button_save_schedule.dataset.dataId;
 
         let afternoon1 = document.getElementById("start-afternoon").value;
         let afternoon2 = document.getElementById("end-afternoon").value;
 
-        let mañana = morn1.toString() +" - "+ morn2.toString();
+        let mañana = morn1.toString() + " - " + morn2.toString();
 
-        let tarde = afternoon1.toString() +" - "+ afternoon2.toString();
-
+        let tarde = afternoon1.toString() + " - " + afternoon2.toString();
 
         let total_time = `${mañana}<br>${tarde}`;
 
         let option = "2";
 
-        let response = await fetch(url,{
-
+        let response = await fetch(url, {
             method: "PUT",
-            headers:{
-
+            headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-
                 total_time,
                 id_user,
-                option
-            })
-
+                option,
+            }),
         });
 
         let data = await response.json();
 
-        if(data.status){
-
+        if (data.status) {
             $("#editSchedules").modal("hide");
 
             let element_container = document.getElementById("container_menu");
@@ -1448,7 +1435,7 @@ async function insertSchedule(url) {
             scripts.forEach((script) => {
                 eval(script.innerText);
             });
-            
+
             let morn11 = document.getElementById("start-morning");
             let morn22 = document.getElementById("end-morning");
 
@@ -1460,54 +1447,42 @@ async function insertSchedule(url) {
             afternoon11.value = "";
             afternoon22.value = "";
         }
-
-
     }
 }
 
-
-async function scheduleClear(url){
-
+async function scheduleClear(url) {
     let selector = document.getElementById("select_main");
 
-
-    if(selector.value === "individual"){
-
+    if (selector.value === "individual") {
         let selector_days = document.getElementById("selector_days");
 
-        if(selector_days.value !== "selected"){
-
-
-            let button_save_schedule = document.getElementById("button_save_schedule");
+        if (selector_days.value !== "selected") {
+            let button_save_schedule = document.getElementById(
+                "button_save_schedule"
+            );
 
             let id_user = button_save_schedule.dataset.dataId;
 
-
             const token = localStorage.getItem("access_token");
-            let response = await fetch(url,{
+            let response = await fetch(url, {
                 method: "POST",
-                headers:{
-        
+                headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-
                     dia: selector_days.value,
-                    id_user
-
+                    id_user,
                 }),
-        
             });
-        
-        
+
             let data = await response.json();
-        
-            if(data.status){
-                
+
+            if (data.status) {
                 $("#editSchedules").modal("hide");
-        
-                let element_container = document.getElementById("container_menu");
+
+                let element_container =
+                    document.getElementById("container_menu");
                 element_container.innerHTML = data.html;
 
                 const scripts = element_container.querySelectorAll("script");
@@ -1515,57 +1490,35 @@ async function scheduleClear(url){
                 scripts.forEach((script) => {
                     eval(script.innerText);
                 });
-        
             }
-    
-        }else{
+        } else {
             Swal.fire({
                 title: "¡Uuuuups!",
                 text: "¡¡Selecciona un día válido!!",
                 icon: "error",
-        });
-
-        }  
-    }else{
-
-     
-
-
+            });
+        }
+    } else {
     }
-
-
-
 }
 
-
-async function deleteClear(url, cedula, dia){
-
-
-
-
+async function deleteClear(url, cedula, dia) {
     const token = localStorage.getItem("access_token");
     let response = await fetch(url, {
         method: "PUT",
         headers: {
-
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-
             cedula,
-            dia
-
-        })
-
-
+            dia,
+        }),
     });
-
 
     let data = await response.json();
 
-    if(data.status){
-
+    if (data.status) {
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
         const scripts = element_container.querySelectorAll("script");
@@ -1573,9 +1526,159 @@ async function deleteClear(url, cedula, dia){
         scripts.forEach((script) => {
             eval(script.innerText);
         });
+    }
+}
 
+async function getShowPayroll(url) {
+    const token = localStorage.getItem("access_token");
+
+    console.log("depuracion aca: " + url);
+
+    let response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    let data = await response.json();
+
+    if (data.status) {
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+
+        $("#table_payroll").DataTable({
+            responsive: true,
+            lengthChange: false,
+            autoWidth: false,
+            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            language: {
+                search: "Buscar en la tabla:",
+                lengthMenu: "Mostrar _MENU_ registros",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+                emptyTable: "No hay datos disponibles",
+            },
+        });
+    }
+}
+
+async function getHistoryPayRoll(url, cedula) {
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url + `/?cedula=${cedula}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    let data = await response.json();
+
+    if (data.status) {
+
+
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
 
     }
+}
+
+async function sendPdf(url, iterations) {
+    let pdfs = collectPayRolls(iterations);
+
+    const token = localStorage.getItem("access_token");
+
+    let form = new FormData();
+
+    pdfs.forEach((element) => {
+        form.append(`user_${element.cedula}`, element.pdf);
+    });
+
+    let response = await fetch(url, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: form,
+    });
+
+    let data = await response.json();
+
+    if (data.status) {
+        Swal.fire({
+            title: "¡Excelente!",
+            text: "¡¡Todas las nominas fuerón cargadas correctamente!!",
+            icon: "success",
+        });
+
+        limpiar(iterations);
+    }
+
+    function limpiar(iterations) {
+        for (let i = 0; i < iterations; i++) {
+            let elemento = document.getElementById(`input_pdf${i}`);
+            elemento.value = "";
+        }
+    }
+
+    function collectPayRolls(iterations) {
+        console.log("las iteraciones son: " + iterations);
+
+        let array = [];
+
+        for (let i = 0; i < iterations; i++) {
+            let elemento = document.getElementById(`input_pdf${i}`);
+                       
+            if(elemento.files.length > 0){
+                
+                let element = elemento.files[0];
+                let data = elemento.dataset.code;
+                
+                array.push({
+                    cedula: data,
+                    pdf: element,
+                });
+            }
+
+        }
+
+
+        return array;
+    }
+}
+
+async function downloadPdf(url, url_download){
+
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url + `/?url_download=${url_download}`, {
+
+        method: "GET",
+        headers: {
+
+            'Accept': 'application/pdf',
+            "Authorization": `Bearer ${token}`
+        }
+
+
+    });
+
+let data = await response.json();
+
+
+    if(data.ok){
+
+        let download = response.blob();
 
 }
 
+
+}

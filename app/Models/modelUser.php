@@ -62,6 +62,15 @@ class modelUser extends Authenticatable implements JWTSubject
     }
 
 
+    public static function getName($id_user){
+
+        return self::where("cedula",$id_user)
+        ->select("nombre")
+        ->first();
+
+    }
+
+
     public static function getAllUsers(){
 
         return self::all();

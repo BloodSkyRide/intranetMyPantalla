@@ -8,6 +8,7 @@ use App\Http\Controllers\laborController;
 use App\Http\Controllers\assistController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\scheduleController;
+use App\Http\Controllers\payrollController;
 
 
 
@@ -96,7 +97,16 @@ Route::put('/insertSchedule', [scheduleController::class, 'insertSchedule'])->na
 
 Route::post('/scheduleclear', [scheduleController::class, 'scheduleclear'])->name("scheduleclear")->middleware(["verifyTokenHeader"]);
 
+
 Route::put('/deleteclear', [scheduleController::class, 'deleteclear'])->name("deleteclear")->middleware(["verifyTokenHeader"]);
+Route::get('/getshowpayroll', [payrollController::class, 'getshowpayroll'])->name("getshowpayroll")->middleware(["verifyTokenHeader"]);
+
+
+Route::get('/getHistoryPayRoll', [payrollController::class, 'getHistoryPayRoll'])->name("getHistoryPayRoll")->middleware(["verifyTokenHeader"]);
+
+Route::post('/insertpdf', [payrollController::class, 'insertsPdfs'])->name("insertsPdfs")->middleware(["verifyTokenHeader"]);
+
+Route::get('/downloadPdf/{nombre_archivo}', [payrollController::class, 'downloadPdf'])->name("downloadPdf")->middleware(["verifyTokenHeader"]);
 
 
 

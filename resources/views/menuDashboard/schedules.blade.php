@@ -37,13 +37,13 @@
                         @foreach ($users as $key => $user)
 
                         @php
-                            $lunes = ($user['aseo-lunes']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet'></i>" : "";
-                            $martes = ($user['aseo-martes']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet'></i>" : "";
-                            $miercoles = ($user['aseo-miercoles']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet'></i>" : "";
-                            $jueves = ($user['aseo-jueves']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet'></i>" : "";
-                            $viernes = ($user['aseo-viernes']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet'></i>" : "";
-                            $sabado = ($user['aseo-sabado']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet'></i>" : "";
-                            $domingo = ($user['aseo-domingo']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet'></i>" : "";
+                            $lunes = ($user['aseo-lunes']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $martes = ($user['aseo-martes']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $miercoles = ($user['aseo-miercoles']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $jueves = ($user['aseo-jueves']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $viernes = ($user['aseo-viernes']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet > style='color: #1c8266'</i>" : "";
+                            $sabado = ($user['aseo-sabado']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $domingo = ($user['aseo-domingo']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
 
 
                         @endphp
@@ -53,7 +53,7 @@
                                 <th scope="row">
                                     
                                     @if ($rol === "administrador")
-                                    <a type="button" title="Editar o modificar horario" onclick="modalSchedule('{{ $user['cedula'] }}', '{{ $user['nombre'] }}', '{{ $user['apellido'] }}')" data-toggle="modal" data-target="#editSchedules"><i class="fa-solid fa-clock text-secondary"></i>&nbsp;&nbsp;<span class="badge bg-success">{{ $user['cedula'] }}</span></a>
+                                    <a type="button" title="Editar o modificar horario" onclick="modalSchedule('{{ $user['cedula'] }}', '{{ $user['nombre'] }}', '{{ $user['apellido'] }}')" data-toggle="modal" data-target="#editSchedules"><i class="fa-solid fa-clock text-dark"></i>&nbsp;&nbsp;<span class="badge bg-success">{{ $user['cedula'] }}</span></a>
                                         
                                     @else
                                     <span class="badge bg-success">{{ $user['cedula'] }}</span>
@@ -64,23 +64,23 @@
                                 @if ($rol === "administrador")
                                     
                                 <td>{{ $user['nombre'] }} {{ $user['apellido'] }}</td>
-                                <td><span class="badge bg-info">{!! $user['lunes'] !!} </span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-lunes')">{!! $lunes !!}</a></td>
-                                <td><span class="badge bg-info">{!! $user['martes'] !!} </span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-martes')">{!! $martes !!}</a></td>
-                                <td><span class="badge bg-info">{!! $user['miercoles'] !!} </span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-miercoles')">{!! $miercoles !!}</a></td>
-                                <td><span class="badge bg-info">{!! $user['jueves'] !!} </span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-jueves')">{!! $jueves !!}</a></td>
-                                <td><span class="badge bg-info">{!! $user['viernes'] !!} </span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-viernes')">{!! $viernes !!}</a></td>
-                                <td><span class="badge bg-info">{!! $user['sabado'] !!} </span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-sabado')">{!! $sabado !!}</a></td>
-                                <td><span class="badge bg-info">{!! $user['domingo'] !!} </span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-domingo')">{!! $domingo !!}</a></td>
+                                <td><span class="badge bg-info">{!! $user['lunes'] !!}</span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-lunes')">{!! $lunes !!}</a></td>
+                                <td><span class="badge bg-info">{!! $user['martes'] !!}</span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-martes')">{!! $martes !!}</a></td>
+                                <td><span class="badge bg-info">{!! $user['miercoles'] !!}</span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-miercoles')">{!! $miercoles !!}</a></td>
+                                <td><span class="badge bg-info">{!! $user['jueves'] !!}</span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-jueves')">{!! $jueves !!}</a></td>
+                                <td><span class="badge bg-info">{!! $user['viernes'] !!}</span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-viernes')">{!! $viernes !!}</a></td>
+                                <td><span class="badge bg-info">{!! $user['sabado'] !!}</span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-sabado')">{!! $sabado !!}</a></td>
+                                <td><span class="badge bg-info">{!! $user['domingo'] !!}</span>&nbsp;&nbsp; <a type="button" onclick="deleteClear('{{route('deleteclear')}}','{{$user['cedula'] }}', 'aseo-domingo')">{!! $domingo !!}</a></td>
                                 @else
 
                                                                 <td>{{ $user['nombre'] }} {{ $user['apellido'] }}</td>
-                                <td><span class="badge bg-info">{!! $user['lunes'] !!} </span>&nbsp;&nbsp; {!! $lunes !!}</td>
-                                <td><span class="badge bg-info">{!! $user['martes'] !!} </span>&nbsp;&nbsp; {!! $martes !!}</td>
-                                <td><span class="badge bg-info">{!! $user['miercoles'] !!} </span>&nbsp;&nbsp; {!! $miercoles !!}</td>
-                                <td><span class="badge bg-info">{!! $user['jueves'] !!} </span>&nbsp;&nbsp; {!! $jueves !!}</td>
-                                <td><span class="badge bg-info">{!! $user['viernes'] !!} </span>&nbsp;&nbsp; {!! $viernes !!}</td>
-                                <td><span class="badge bg-info">{!! $user['sabado'] !!} </span>&nbsp;&nbsp; {!! $sabado !!}</td>
-                                <td><span class="badge bg-info">{!! $user['domingo'] !!} </span>&nbsp;&nbsp; {!! $domingo !!}</td>
+                                <td><span class="badge bg-info">{!! $user['lunes'] !!}</span>&nbsp;&nbsp; {!! $lunes !!}</td>
+                                <td><span class="badge bg-info">{!! $user['martes'] !!}</span>&nbsp;&nbsp; {!! $martes !!}</td>
+                                <td><span class="badge bg-info">{!! $user['miercoles'] !!}</span>&nbsp;&nbsp; {!! $miercoles !!}</td>
+                                <td><span class="badge bg-info">{!! $user['jueves'] !!}</span>&nbsp;&nbsp; {!! $jueves !!}</td>
+                                <td><span class="badge bg-info">{!! $user['viernes'] !!}</span>&nbsp;&nbsp; {!! $viernes !!}</td>
+                                <td><span class="badge bg-info">{!! $user['sabado'] !!}</span>&nbsp;&nbsp; {!! $sabado !!}</td>
+                                <td><span class="badge bg-info">{!! $user['domingo'] !!}</span>&nbsp;&nbsp; {!! $domingo !!}</td>
 
                                 @endif
     
@@ -147,8 +147,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                         <button type="button" onclick="scheduleClear('{{route('scheduleclear')}}')" class="btn btn-info" data-dismiss="modal"><i class="fa-solid fa-broom"></i>&nbsp;&nbsp;Asignar Aseo</button>
-                        <button type="button" onclick="insertSchedule('{{route('insertSchedule')}}')" class="btn btn-primary" id="button_save_schedule" data-id=""><i
-                                class="fa-solid fa-paper-plane"></i>&nbsp;&nbsp;Guardar</button>
+                        <button type="button" onclick="insertSchedule('{{route('insertSchedule')}}')" class="btn btn-primary" id="button_save_schedule" data-id=""><i class="fa-solid fa-clock"></i>&nbsp;&nbsp;Asignar horario</button>
                     </div>
                 </div>
             </div>

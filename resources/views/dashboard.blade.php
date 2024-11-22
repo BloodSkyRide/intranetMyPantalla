@@ -254,6 +254,33 @@
                             </a>
                         </li>
 
+
+                        @if ($array['rol'] === "administrador")
+                            
+                        <li class="nav-item">
+                            <a class="nav-link menu_dashboard" onclick="getShowPayroll('{{route('getshowpayroll')}}')"
+                                type="button" id="payroll_nav">
+                                <i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;
+                                <p>
+                                    Nomina
+                                </p>
+                            </a>
+                        </li>
+
+                        @else
+
+                        <li class="nav-item">
+                            <a class="nav-link menu_dashboard" onclick="getHistoryPayRoll('{{ route('getHistoryPayRoll') }}','{{ $array['cedula'] }}')"
+                                type="button" id="payroll_nav">
+                                <i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;
+                                <p>
+                                    Nomina
+                                </p>
+                            </a>
+                        </li>
+
+                        @endif
+
                     </ul>
                 </nav>
             </div>
