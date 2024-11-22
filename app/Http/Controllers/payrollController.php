@@ -113,7 +113,8 @@ class payrollController extends Controller
         try {
             
             foreach($array_pdf as $user => $pdf){
-            
+                
+                print("depuracion de foreach");
                 $file_name = $pdf->getClientOriginalName(); //se extrae el nombre del archivo
                 $base_name = pathinfo($file_name, PATHINFO_FILENAME);
     
