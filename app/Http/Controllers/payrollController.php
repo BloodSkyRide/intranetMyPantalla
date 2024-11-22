@@ -35,21 +35,21 @@ class payrollController extends Controller
         $cedula = $request->query("cedula");
 
 
-        // $token_header = $request->header("Authorization");
+        $token_header = $request->header("Authorization");
 
-        // $replace = str_replace("Bearer ","",$token_header);
+        $replace = str_replace("Bearer ","",$token_header);
 
-        // $decode_token = JWTAuth::setToken($replace)->authenticate();
+        $decode_token = JWTAuth::setToken($replace)->authenticate();
 
-        // $id_user = $decode_token["cedula"];
-        // $id_labor = $decode_token["id_labor"];
+        $rol = $decode_token["rol"];
+
 
         $history = modelPayRoll::getHistoryPayRoll($cedula);
 
 
         $nombre = modelUser::getName($cedula)->nombre;
         $apellido = modelUser::getLastName($cedula)->apellido;
-        $render = view("menuDashboard.payRollHistory", ["history" => $history, "nombre" => $nombre, "apellido" => $apellido])->render();
+        $render = view("menuDashboard.payRollHistory", ["history" => $history, "nombre" => $nombre, "apellido" => $apellido, "rol" => $rol])->render();
 
         return response()->json(["status" => true, "html" => $render]);
 

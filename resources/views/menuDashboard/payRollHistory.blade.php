@@ -11,6 +11,11 @@
         <!-- /.card-header -->
         <div class="card-body">
 
+            @if ($rol === "administrador")
+                
+            <a type="button" onclick="getShowPayroll('{{route('getshowpayroll')}}')"><i class="fa-solid fa-arrow-left text-danger"></i>&nbsp;&nbsp;Regresar</a>
+            @endif
+
             <center>
                 <h3>Historial de nomina</h3>
             </center>

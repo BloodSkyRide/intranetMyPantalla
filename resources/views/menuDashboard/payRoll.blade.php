@@ -10,7 +10,6 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-
             <center>
                 <h3>Nomina</h3>
             </center>
