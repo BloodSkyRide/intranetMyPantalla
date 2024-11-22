@@ -88,17 +88,17 @@ class payrollController extends Controller
 
         $pdfs = $request->allFiles();
 
-         self::savePdf($pdfs);
+        $names_pdfs_array = self::savePdf($pdfs);
 
 
-        // if($names_pdfs_array){
+        if($names_pdfs_array){
 
 
-        //     return response()->json(["status" => true]);
-        // }
+            return response()->json(["status" => true]);
+        }
 
 
-        // return response()->json(["status" => false]);
+        return response()->json(["status" => false]);
 
     }
 
@@ -114,7 +114,7 @@ class payrollController extends Controller
             
             foreach($array_pdf as $user => $pdf){
                 
-                print("depuracion de foreach");
+                
                 $file_name = $pdf->getClientOriginalName(); //se extrae el nombre del archivo
                 $base_name = pathinfo($file_name, PATHINFO_FILENAME);
     
@@ -140,14 +140,14 @@ class payrollController extends Controller
                         
                         
                         $validation ++;
-                        print("llegue a la validacion");
+                        
                     }
     
                 }
 
-                print("la validacion es: ".$validation);
+                
 
-                //return ($validation ===  count($array_pdf)) ? true: false;
+                return ($validation ===  count($array_pdf)) ? true: false;
             }
         } catch (\Exception $e) {
             
