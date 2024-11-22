@@ -88,17 +88,17 @@ class payrollController extends Controller
 
         $pdfs = $request->allFiles();
 
-        $names_pdfs_array = self::savePdf($pdfs);
+         self::savePdf($pdfs);
 
 
-        if($names_pdfs_array){
+        // if($names_pdfs_array){
 
 
-            return response()->json(["status" => true]);
-        }
+        //     return response()->json(["status" => true]);
+        // }
 
 
-        return response()->json(["status" => false]);
+        // return response()->json(["status" => false]);
 
     }
 
