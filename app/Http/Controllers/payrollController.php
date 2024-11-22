@@ -142,6 +142,8 @@ class payrollController extends Controller
     
                 }
 
+                print("la validacion es: ".$validation);
+
                 return ($validation ===  count($array_pdf)) ? true: false;
             }
         } catch (\Exception $e) {
