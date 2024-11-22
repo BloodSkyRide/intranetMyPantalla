@@ -19,7 +19,9 @@
             <button class="btn btn-primary" onclick="sendPdf('{{route('insertsPdfs')}}','{{ count($users) }}')"><i
                     class="fa-solid fa-file-invoice-dollar"></i>&nbsp;&nbsp;Cargar nomina</button>
 
-            <div class="table-responsive">
+                    
+                    <div class="table-responsive">
+                <span class="text-secondary d-flex justify-content-start mt-2">Solo se aceptan documentos PDF (.pdf) con peso máximo de 5mb.</span>
 
                 <table class="table" id="table_payroll">
                     <thead class="thead-dark">
