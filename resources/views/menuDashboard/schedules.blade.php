@@ -37,13 +37,13 @@
                         @foreach ($users as $key => $user)
 
                         @php
-                            $lunes = ($user['aseo-lunes']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
-                            $martes = ($user['aseo-martes']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
-                            $miercoles = ($user['aseo-miercoles']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
-                            $jueves = ($user['aseo-jueves']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
-                            $viernes = ($user['aseo-viernes']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet > style='color: #1c8266'</i>" : "";
-                            $sabado = ($user['aseo-sabado']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
-                            $domingo = ($user['aseo-domingo']) ? "<i title='Realizar aseo' <i class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $lunes = ($user['aseo-lunes']) ? "<i title='Realizar aseo' class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $martes = ($user['aseo-martes']) ? "<i title='Realizar aseo' class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $miercoles = ($user['aseo-miercoles']) ? "<i title='Realizar aseo' class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $jueves = ($user['aseo-jueves']) ? "<i title='Realizar aseo' class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $viernes = ($user['aseo-viernes']) ? "<i title='Realizar aseo' class='fa-solid fa-toilet > style='color: #1c8266'</i>" : "";
+                            $sabado = ($user['aseo-sabado']) ? "<i title='Realizar aseo' class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
+                            $domingo = ($user['aseo-domingo']) ? "<i title='Realizar aseo' class='fa-solid fa-toilet' style='color: #1c8266'></i>" : "";
 
 
                         @endphp
