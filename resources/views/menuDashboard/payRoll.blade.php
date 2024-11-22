@@ -23,7 +23,7 @@
                     <div class="table-responsive">
                 <span class="text-secondary d-flex justify-content-start mt-2">Solo se aceptan documentos PDF (.pdf) con peso máximo de 5mb.</span>
 
-                <table class="table" id="table_payroll">
+                <table class="table table-striped" id="table_payroll">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">
