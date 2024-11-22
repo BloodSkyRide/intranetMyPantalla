@@ -73,7 +73,7 @@ class modelUser extends Authenticatable implements JWTSubject
 
     public static function getAllUsers(){
 
-        return self::all();
+        return self::orderBy('id', 'asc')->get();
 
     }
 

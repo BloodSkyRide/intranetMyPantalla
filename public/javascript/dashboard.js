@@ -1548,24 +1548,24 @@ async function getShowPayroll(url) {
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
 
-        $("#table_payroll").DataTable({
-            responsive: true,
-            lengthChange: false,
-            autoWidth: false,
-            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            language: {
-                search: "Buscar en la tabla:",
-                lengthMenu: "Mostrar _MENU_ registros",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                paginate: {
-                    first: "Primero",
-                    last: "Último",
-                    next: "Siguiente",
-                    previous: "Anterior",
-                },
-                emptyTable: "No hay datos disponibles",
-            },
-        });
+        // $("#table_payroll").DataTable({
+        //     responsive: true,
+        //     lengthChange: false,
+        //     autoWidth: false,
+        //     buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        //     language: {
+        //         search: "Buscar en la tabla:",
+        //         lengthMenu: "Mostrar _MENU_ registros",
+        //         info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+        //         paginate: {
+        //             first: "Primero",
+        //             last: "Último",
+        //             next: "Siguiente",
+        //             previous: "Anterior",
+        //         },
+        //         emptyTable: "No hay datos disponibles",
+        //     },
+        // });
     }
 }
 
@@ -1638,7 +1638,7 @@ async function sendPdf(url, iterations) {
             let elemento = document.getElementById(`input_pdf${i}`);
                        
             if(elemento.files.length > 0){
-                
+                console.log("hola mundo");
                 let element = elemento.files[0];
                 let data = elemento.dataset.code;
                 
