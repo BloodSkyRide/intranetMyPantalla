@@ -26,6 +26,9 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">
+                                <center>#</center>
+                            </th>
+                            <th scope="col">
                                 <center>Cédula</center>
                             </th>
                             <th scope="col">
@@ -34,9 +37,7 @@
                             <th scope="col">
                                 <center>Apellido</center>
                             </th>
-                            <th scope="col">
-                                <center>Fecha</center>
-                            </th>
+
 
                             <th scope="col">
                                 <center>Cargar</center>
@@ -54,19 +55,23 @@
 
                         @foreach ($users as $user)
 
-
-
                             <tr>
                                 <th scope="row">
+                                    <center><b>{{ $user['id'] }}</b></center>
+                                </th>
+
+                                <th >
                                     <center><span class="badge bg-success">{{ $user['cedula'] }}</span></center>
                                 </th>
-                                <td>{{ $user['nombre'] }}</td>
+
+                                <td>
+                                    <center>{{ $user['nombre'] }}</center>
+                                </td>
+
                                 <td>
                                     <center>{{ $user['apellido'] }}</center>
                                 </td>
-                                <td>
-                                    <center>{{ $user['cedula'] }}</center>
-                                </td>
+
                                 <td>
                                     <center>
 
@@ -76,12 +81,14 @@
 
                                     </center>
                                 </td>
+
                                 <td>
                                     <center><a type="button" id="button_history{{ $flagg }}"
                                             title="Ver historico de usuario"><i class="fa-regular fa-eye text-danger"
                                                 onclick="getHistoryPayRoll('{{ route('getHistoryPayRoll') }}','{{ $user['cedula'] }}')"></i></a>
                                     </center>
                                 </td>
+
                             </tr>
 
                             @php

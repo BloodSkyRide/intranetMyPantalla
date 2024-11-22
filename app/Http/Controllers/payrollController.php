@@ -106,37 +106,49 @@ class payrollController extends Controller
     public function savePdf($array_pdf){
 
         $hoy = Carbon::now()->format('Y-m-d');
-        foreach($array_pdf as $user => $pdf){
+
+        $validation = 0;
+
+
+        try {
             
-            $file_name = $pdf->getClientOriginalName(); //se extrae el nombre del archivo
-            $base_name = pathinfo($file_name, PATHINFO_FILENAME);
-
-            $user_id = str_replace('user_', '', $user); // extraemos de la clave la cedula de cada usuario
-
-            $name_final = $base_name."_".$user_id."_".$hoy; // concatenamos el nombre del archivo con el id del user y la fecha en la que fue cargada
-
-            $root_path = 'storage/nominas';
-
-            $path = $pdf->storeAs("nominas", $name_final.".pdf", "public");
-
+            foreach($array_pdf as $user => $pdf){
             
-            if($path){
-
-                $nombre = modelUser::getName($user_id);
-                $apellido = modelUser::getLastName($user_id);
-
-                $data = ["id_user" => $user_id, "nombre" => $nombre->nombre, "apellido" => $apellido->apellido, "url" => $root_path."/".$name_final.".pdf", "fecha" => $hoy];
-
-                $insert = modelPayRoll::insertPDF($data);
-
-                if($insert){
-                    
+                $file_name = $pdf->getClientOriginalName(); //se extrae el nombre del archivo
+                $base_name = pathinfo($file_name, PATHINFO_FILENAME);
+    
+                $user_id = str_replace('user_', '', $user); // extraemos de la clave la cedula de cada usuario
+    
+                $name_final = $base_name."_".$user_id."_".$hoy; // concatenamos el nombre del archivo con el id del user y la fecha en la que fue cargada
+    
+                $root_path = 'storage/nominas';
+    
+                $path = $pdf->storeAs("nominas", $name_final.".pdf", "public");
+    
+                
+                if($path){
+    
+                    $nombre = modelUser::getName($user_id);
+                    $apellido = modelUser::getLastName($user_id);
+    
+                    $data = ["id_user" => $user_id, "nombre" => $nombre->nombre, "apellido" => $apellido->apellido, "url" => $root_path."/".$name_final.".pdf", "fecha" => $hoy];
+    
+                    $insert = modelPayRoll::insertPDF($data);
+    
+                    if($insert){
+                        
+                        $validation ++;
+                    }
+    
                 }
 
+                return ($validation ===  count($array_pdf)) ? true: false;
             }
-        }
+        } catch (\Exception $e) {
+            
 
-        return true;
+            return response()->json(["error" => $e->getMessage()]);
+        }
 
     }
 }
