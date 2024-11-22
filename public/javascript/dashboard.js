@@ -1549,6 +1549,9 @@ async function getShowPayroll(url) {
         element_container.innerHTML = data.html;
 
         $("#table_payroll").DataTable({
+            deferRender: true, // Carga los datos en el DOM sin ocultarlos
+            paging: false,     // Desactiva la paginación para mostrar todos los nodos
+            info: false,
             responsive: true,
             order: [[0, 'asc']],
             lengthChange: false,
