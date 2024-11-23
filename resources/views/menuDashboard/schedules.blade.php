@@ -91,6 +91,49 @@
                 </table>
             </div>
 
+            <!-- Modal -->
+        <div class="modal fade" id="editSchedules" aria-labelledby="editSchedules" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg bg-primary">
+                        <h5 class="modal-title" id="title_modal_schedule"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="select_labor">Seleccionar Días:</label>
+                            <select class="form-control " data-dropdown-css-class="select2-danger" id="select_main">
+                                <option selected="selected" value="selected">Seleccionar opción:</option>
+                                <option value="individual">Día A Día</option>
+                                <option value="lunesviernes">Lunes a viernes</option>
+                            </select>
+                            <div class="mt-2 mb-2" id="container_options"></div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="">Jornada - mañana</label>
+                                    <input type="time" class="form-control m-1" id="start-morning">
+                                    <input type="time" class="form-control m-1" id="end-morning">
+                                </div>
+                                <div class="col-sm">
+                                    <label for="">Jornada - tarde</label>
+                                    <input type="time" class="form-control m-1" id="start-afternoon">
+                                    <input type="time" class="form-control m-1" id="end-afternoon">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        <button type="button" onclick="scheduleClear('{{route('scheduleclear')}}')" class="btn btn-info" data-dismiss="modal"><i class="fa-solid fa-broom"></i>&nbsp;&nbsp;Asignar Aseo</button>
+                        <button type="button" onclick="insertSchedule('{{route('insertSchedule')}}')" class="btn btn-primary" id="button_save_schedule" data-id=""><i class="fa-solid fa-clock"></i>&nbsp;&nbsp;Asignar horario</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
         </div>
