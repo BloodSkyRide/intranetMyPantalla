@@ -1549,9 +1549,8 @@ async function getShowPayroll(url) {
         element_container.innerHTML = data.html;
 
         $("#table_payroll").DataTable({
-            deferRender: true, // Carga los datos en el DOM sin ocultarlos
-            paging: false,     // Desactiva la paginación para mostrar todos los nodos
-            info: false,
+   // Desactiva la paginación para mostrar todos los nodos
+            info: true,
             responsive: true,
             order: [[0, 'asc']],
             lengthChange: false,
@@ -1595,8 +1594,12 @@ async function getHistoryPayRoll(url, cedula) {
     }
 }
 
-async function sendPdf(url, iterations) {
-    let pdfs = collectPayRolls(iterations);
+async function sendPdf(url) {
+
+
+    let nodes_renderized = verifyNodes();
+
+    let pdfs = collectPayRolls(nodes_renderized);
 
     const token = localStorage.getItem("access_token");
 
@@ -1659,30 +1662,26 @@ async function sendPdf(url, iterations) {
     }
 }
 
-async function downloadPdf(url, url_download){
+function verifyNodes(){
 
-    const token = localStorage.getItem("access_token");
+    let table = document.getElementById("table_payroll");
+    let inputs = table.querySelectorAll("input.input_lenght").length;
 
-    let response = await fetch(url + `/?url_download=${url_download}`, {
-
-        method: "GET",
-        headers: {
-
-            'Accept': 'application/pdf',
-            "Authorization": `Bearer ${token}`
-        }
-
-
-    });
-
-let data = await response.json();
-
-
-    if(data.ok){
-
-        let download = response.blob();
+    console.log("la cantidad de nodos renderizados son: "+inputs);
 
 }
 
 
+function selectAllSubLabors(){
+
+
+    let column_subgroups = document.querySelectorAll(
+        `td > div.div_checknox > input[type="checkbox"]:not(:checked)`
+    );
+
+    column_subgroups.forEach((element)=>{
+    
+        element.checked = true;
+
+    });
 }

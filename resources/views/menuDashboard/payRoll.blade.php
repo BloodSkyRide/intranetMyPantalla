@@ -16,7 +16,7 @@
 
             <hr>
 
-            <button class="btn btn-primary" onclick="sendPdf('{{route('insertsPdfs')}}','{{ count($users) }}')"><i
+            <button class="btn btn-primary" onclick="sendPdf('{{route('insertsPdfs')}}')"><i
                     class="fa-solid fa-file-invoice-dollar"></i>&nbsp;&nbsp;Cargar nomina</button>
 
                     
@@ -58,7 +58,7 @@
 
                             <tr>
                                 <th scope="row">
-                                    <center><b>{{ $user['id'] }}</b></center>
+                                    <center><b>{{ $flagg + 1; }}</b></center>
                                 </th>
 
                                 <th >
@@ -77,7 +77,7 @@
                                     <center>
 
                                             
-                                            <input type="file" accept="application/pdf" class="form-control"
+                                            <input type="file" accept="application/pdf" class="form-control input_lenght"
                                                 id="input_pdf{{ $flagg }}"  data-code="{{$user['cedula']}}">
 
                                     </center>

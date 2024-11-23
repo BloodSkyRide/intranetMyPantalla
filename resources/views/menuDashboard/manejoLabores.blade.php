@@ -125,6 +125,9 @@
 
                     <button class="btn btn-warning m-2" data-toggle="modal" data-target="#modal_confirm"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;Recoger labores</button>
 
+                    
+                    <button class="btn btn-primary" onclick="selectAllSubLabors()"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;Seleccionar todo</button>
+
                 </div>
 
                 <div class="mt-4">
