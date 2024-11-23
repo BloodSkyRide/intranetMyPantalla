@@ -125,7 +125,6 @@ class payrollController extends Controller
                 $root_path = 'storage/nominas';
     
                 $path = $pdf->storeAs("nominas", $name_final.".pdf", "public");
-                print("depuracion de guardado".$path);
                 
                 if($path){
     
