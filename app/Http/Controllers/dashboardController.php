@@ -14,11 +14,22 @@ use PhpParser\Node\Stmt\TryCatch;
 use App\Models\modelAssits;
 use Carbon\Carbon;
 use App\Models\modelShedule;
-
+use App\Events\RealtimeEvent;
 use function Termwind\render;
 
 class dashboardController extends Controller
 {
+
+
+    public function emitirEvento()
+    {
+
+        // evento y se le envia como parametro al constructor el string
+
+        broadcast(new RealtimeEvent('¡Este es un mensaje en tiempo real!'));
+        return response()->json(["status" => "evento emitido satisfactoriamente"]);
+    }
+
 
 
     public function openView(Request $request)
@@ -326,5 +337,15 @@ class dashboardController extends Controller
 
 
         return response()->json(["status" => true, "html" => $render]);
+    }
+
+    public function getShowOverTime(Request $request){
+
+
+        $render = view("menuDashboard.overTimeAdmin")->render();
+
+        return response()->json(["status"=> true, "html" => $render]);
+
+
     }
 }

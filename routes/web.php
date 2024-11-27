@@ -110,3 +110,15 @@ Route::get('/downloadPdf/{nombre_archivo}', [payrollController::class, 'download
 
 
 
+/////////////////////////////////prueba de rutas para websockets
+
+Route::get('/emitir-evento', [dashboardController::class, 'emitirEvento']);// ruta de prueba disparador de evento
+
+
+Route::get('/getShowOverTime', [dashboardController::class, 'getShowOverTime'])->name("getShowOverTime")->middleware(["verifyTokenHeader"]);
+
+
+
+
+
+

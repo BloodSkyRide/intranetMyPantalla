@@ -1,3 +1,23 @@
+Pusher.logToConsole = true;
+
+// Ahora se inicializa Echo
+var echo = new Echo({
+    broadcaster: "pusher",
+    cluster: 'mt1',
+    key: "p91ggxwl09aprwmrkr38",
+    wsHost: "localhost",
+    wsPort: 8080,
+    forceTLS: false,
+});
+
+echo.channel("realtime-channel") // El nombre del canal debe coincidir con lo que usas en el backend
+    .listen(".eventNotifications", function (data) {
+
+  
+        console.log("Evento recibido:", data.message);
+        alert(data.message); // Muestra el mensaje recibido
+    });
+
 $(document).ready(function () {
     $("#register_nav").trigger("click");
 });
@@ -1549,10 +1569,10 @@ async function getShowPayroll(url) {
         element_container.innerHTML = data.html;
 
         $("#table_payroll").DataTable({
-   // Desactiva la paginación para mostrar todos los nodos
+            // Desactiva la paginación para mostrar todos los nodos
             info: true,
             responsive: true,
-            order: [[0, 'asc']],
+            order: [[0, "asc"]],
             lengthChange: false,
             autoWidth: false,
             buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
@@ -1586,17 +1606,12 @@ async function getHistoryPayRoll(url, cedula) {
     let data = await response.json();
 
     if (data.status) {
-
-
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
-
     }
 }
 
 async function sendPdf(url) {
-
-
     let nodes_renderized = verifyNodes();
 
     let pdfs = collectPayRolls(nodes_renderized);
@@ -1643,45 +1658,67 @@ async function sendPdf(url) {
 
         for (let i = 0; i < iterations; i++) {
             let elemento = document.getElementById(`input_pdf${i}`);
-                       
-            if(elemento.files.length > 0){
+
+            if (elemento.files.length > 0) {
                 console.log("hola mundo");
                 let element = elemento.files[0];
                 let data = elemento.dataset.code;
-                
+
                 array.push({
                     cedula: data,
                     pdf: element,
                 });
             }
-
         }
-
 
         return array;
     }
 }
 
-function verifyNodes(){
-
+function verifyNodes() {
     let table = document.getElementById("table_payroll");
     let inputs = table.querySelectorAll("input.input_lenght").length;
 
-    console.log("la cantidad de nodos renderizados son: "+inputs);
-
+    console.log("la cantidad de nodos renderizados son: " + inputs);
 }
 
-
-function selectAllSubLabors(){
-
-
+function selectAllSubLabors() {
     let column_subgroups = document.querySelectorAll(
         `td > div.div_checknox > input[type="checkbox"]:not(:checked)`
     );
 
-    column_subgroups.forEach((element)=>{
-    
+    column_subgroups.forEach((element) => {
         element.checked = true;
+    });
+}
+
+
+async function getShowOverTime(url){
+
+
+    const token = localStorage.getItem("access_token");
+    let response = await fetch(url, {
+
+        headers: {
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
 
     });
+
+
+    let data = await response.json();
+
+    if(data.status){
+
+    
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+    
+
+    }
+
+
+
 }

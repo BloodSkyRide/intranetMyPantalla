@@ -255,6 +255,10 @@
                         </li>
 
 
+
+
+
+
                         @if ($array['rol'] === "administrador")
                             
                         <li class="nav-item">
@@ -267,7 +271,27 @@
                             </a>
                         </li>
 
+                        
+                        <li class="nav-item">
+                            <a  class="nav-link menu_dashboard" type="button" onclick="getShowOverTime('{{route('getShowOverTime')}}')">
+                                <i class="fa-solid fa-bell"></i></i>&nbsp;&nbsp;
+                                <p>
+                                    Reporte horas extras
+                                </p>
+                            </a>
+                        </li>
+
                         @else
+
+
+                        <li class="nav-item">
+                            <a  class="nav-link menu_dashboard" type="button" onclick="getShowOverTime('{{route('getShowOverTime')}}')">
+                                <i class="fa-solid fa-bell"></i></i>&nbsp;&nbsp;
+                                <p>
+                                    Reporte horas extras
+                                </p>
+                            </a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link menu_dashboard" onclick="getHistoryPayRoll('{{ route('getHistoryPayRoll') }}','{{ $array['cedula'] }}')"
@@ -384,6 +408,11 @@
     <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- Pusher -->
+<script src="{{asset('javascript/echo.iife.js')}}"></script>
+
+<!-- Laravel Echo -->
+<script src="{{asset('javascript/pusher.min.js')}}"></script>
 
     <!-- Page specific script -->
     <script src="{{ asset('javascript/dashboard.js') }}"></script>
