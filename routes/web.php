@@ -9,6 +9,7 @@ use App\Http\Controllers\assistController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\scheduleController;
 use App\Http\Controllers\payrollController;
+use App\Http\Controllers\overTimeController;
 
 
 
@@ -116,6 +117,13 @@ Route::get('/emitir-evento', [dashboardController::class, 'emitirEvento']);// ru
 
 
 Route::get('/getShowOverTime', [dashboardController::class, 'getShowOverTime'])->name("getShowOverTime")->middleware(["verifyTokenHeader"]);
+
+
+Route::post('/sendOverTime', [overTimeController::class, 'sendOverTime'])->name("sendOverTime")->middleware(["verifyTokenHeader"]);
+
+Route::get('/getShowOverTimeAdmin', [overTimeController::class, 'getShowOverTimeAdmin'])->name("getShowOverTimeAdmin")->middleware(["verifyTokenHeader"]);
+
+Route::put('/changeStateOverTime', [overTimeController::class, 'changeStateOverTime'])->name("changeStateOverTime")->middleware(["verifyTokenHeader"]);
 
 
 

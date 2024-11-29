@@ -51,6 +51,9 @@
     {{-- SweetAlert2 --}}
 
     <link rel="stylesheet" href="{{ asset('javascript/plugins/sweetalert2/sweetalert2.min.css') }}">
+    
+      <!-- Toastr -->
+  <link rel="stylesheet" href="{{asset('javascript/plugins/toastr/toastr.min.css')}}">
 
 </head>
 
@@ -58,7 +61,7 @@
 
     <div class="wrapper">
 
-
+        <audio id="notificationSound" src="{{asset('notification/notification.mp3')}}"></audio>
 
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
@@ -273,7 +276,7 @@
 
                         
                         <li class="nav-item">
-                            <a  class="nav-link menu_dashboard" type="button" onclick="getShowOverTime('{{route('getShowOverTime')}}')">
+                            <a  class="nav-link menu_dashboard" type="button" onclick="getShowOverTime('{{route('getShowOverTimeAdmin')}}')">
                                 <i class="fa-solid fa-bell"></i></i>&nbsp;&nbsp;
                                 <p>
                                     Reporte horas extras
@@ -282,13 +285,13 @@
                         </li>
 
                         @else
-
+    
 
                         <li class="nav-item">
-                            <a  class="nav-link menu_dashboard" type="button" onclick="getShowOverTime('{{route('getShowOverTime')}}')">
-                                <i class="fa-solid fa-bell"></i></i>&nbsp;&nbsp;
+                            <a  class="nav-link menu_dashboard" type="button" onclick="getShowHistoryOverTime('{{route('getShowOverTime')}}')">
+                                <i class="fa-solid fa-person-circle-plus"></i>&nbsp;&nbsp;
                                 <p>
-                                    Reporte horas extras
+                                    Solicitar horas extras
                                 </p>
                             </a>
                         </li>
@@ -351,7 +354,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Dashboard {{ $array['rol'] }}</h1>
+                            <h1 class="m-0" id="role_h1">{{ $array['rol'] }}</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -394,6 +397,9 @@
     <script src="{{ asset('javascript/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
     <!-- date-range-picker -->
     <script src="{{ asset('javascript/plugins/daterangepicker/daterangepicker.js') }}"></script>
+
+    <!-- Toastr -->
+    <script src="{{ asset('javascript/plugins/toastr/toastr.min.js')}}"></script>
 
     {{-- DATATABLES --}}
     <script src="{{ asset('javascript/plugins/datatables/jquery.dataTables.min.js') }}"></script>

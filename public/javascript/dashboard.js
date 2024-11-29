@@ -1,6 +1,6 @@
 Pusher.logToConsole = true;
 
-// Ahora se inicializa Echo
+// sistema de escucha de eventos para notificaciones en tiempo real
 var echo = new Echo({
     broadcaster: "pusher",
     cluster: 'mt1',
@@ -13,10 +13,34 @@ var echo = new Echo({
 echo.channel("realtime-channel") // El nombre del canal debe coincidir con lo que usas en el backend
     .listen(".eventNotifications", function (data) {
 
-  
-        console.log("Evento recibido:", data.message);
-        alert(data.message); // Muestra el mensaje recibido
+        let role = document.getElementById("role_h1").textContent;
+
+        if(role === "administrador"){
+
+                playNotificationSound();
+                $(document).Toasts('create', {
+                  class: 'bg-info',
+                  title: 'Solicitud hora extra',
+                  subtitle: 'Notificación',
+                  body: data.message
+                })
+              
+
+        }
     });
+
+
+    function playNotificationSound() {
+        const audio = document.getElementById('notificationSound');
+        if (audio) {
+            audio.play().catch(error => {
+                console.error("Error reproduciendo el sonido: ", error);
+            });
+        }
+    }
+
+
+    //////////////////////////////////////////////////////////////////////
 
 $(document).ready(function () {
     $("#register_nav").trigger("click");
@@ -1627,7 +1651,8 @@ async function sendPdf(url) {
     let response = await fetch(url, {
         method: "POST",
         headers: {
-            Authorization: `Bearer ${token}`,
+
+            "Authorization": `Bearer ${token}`,
         },
         body: form,
     });
@@ -1719,6 +1744,134 @@ async function getShowOverTime(url){
 
     }
 
+
+
+}
+
+
+async function requestOverTime(url){
+
+    const token = localStorage.getItem("access_token");
+
+    let motivo = document.getElementById("motivo");
+
+    let fecha = document.getElementById("fecha");
+
+    let hora_i = document.getElementById("h_i");
+
+    let hora_f = document.getElementById("h_f");
+
+    let response  = await fetch(url,{
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+
+            motivo: motivo.value,
+            fecha: fecha.value,
+            hora_i: hora_i.value,
+            hora_f: hora_f.value
+
+        })
+
+    });
+
+
+    let data = await response.json();
+
+
+    if(data.status){
+
+
+        Swal.fire({
+            title: "¡Excelente!",
+            text: "¡¡Solicitud enviada correctamente!!",
+            icon: "success",
+        });
+
+        motivo.value = "";
+        fecha.value = "";
+        hora_i.value = "";
+        hora_f.value = "";
+
+    }
+
+
+}
+
+async function getShowHistoryOverTime(url){
+
+    const token = localStorage.getItem("access_token");
+    let response = await fetch(url,{
+
+        method: "GET",
+        headers:{
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+
+    });
+
+
+    let data = await response.json();
+
+    if(data.status){
+
+
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+    }
+
+
+}
+
+
+function openModalState(nombre, apellido,id_notification){
+
+    $("#modal_state").modal("show");
+
+    let text = document.getElementById("content_modal_state");
+
+    text.innerHTML = `¿Qué deseas hacer para el usuario <b>${nombre} ${apellido}</b>?`
+
+    text.dataset.dataId = id_notification;
+}
+
+
+async function changeStateNotification(url,state){
+
+
+    let id_notification =  document.getElementById("content_modal_state").dataset.dataId;
+    const token = localStorage.getItem("access_token");
+    let response = await fetch(url,{
+        method: "put",
+        headers:{
+
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+
+        },
+        body: JSON.stringify({
+            state,
+            id_notification
+        })
+
+    });
+
+
+    let data =  await response.json();
+
+    if(data.state){
+
+        $("#modal_state").modal("hide");
+
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+
+    }
 
 
 }
