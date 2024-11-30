@@ -55,7 +55,7 @@
                                 else $span = "badge badge-danger";
                             @endphp
 
-                            <td><a type="button" data-toggle="modal" onclick="openModalState(`{{$notification['nombre']}}`, `{{$notification['apellido']}}`, `{{$notification['id_notificacion']}}`)"><span class="{{$span}}">{{$notification["estado"]}}</span></a></td>
+                            <td><a type="button" data-toggle="modal" onclick="openModalState(`{{$notification['nombre']}}`, `{{$notification['apellido']}}`, `{{$notification['id_notificacion']}}`, `{{$notification['id_user']}}`)"><span class="{{$span}}">{{$notification["estado"]}}</span></a></td>
                           </tr>
                           <tr>
                             
@@ -73,7 +73,7 @@
     </div>
 
     <!-- Modal -->
-<div class="modal fade" id="modal_state" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_state" tabindex="-1" aria-labelledby="exampleModalLabel" >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-info">

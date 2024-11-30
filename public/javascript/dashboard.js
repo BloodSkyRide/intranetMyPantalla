@@ -30,6 +30,24 @@ echo.channel("realtime-channel") // El nombre del canal debe coincidir con lo qu
     });
 
 
+
+    function startChannelPrivate(id_user){
+
+        echo.connector.pusher.config.auth = {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        };
+
+        echo.private(`user-${id_user}`)
+        .listen('responseAdmin', (event) => {
+            alert(event.message);  
+        });
+
+    }
+
+
+
     function playNotificationSound() {
         const audio = document.getElementById('notificationSound');
         if (audio) {
@@ -1749,7 +1767,7 @@ async function getShowOverTime(url){
 }
 
 
-async function requestOverTime(url){
+async function requestOverTime(url, self_id){
 
     const token = localStorage.getItem("access_token");
 
@@ -1796,6 +1814,8 @@ async function requestOverTime(url){
         hora_i.value = "";
         hora_f.value = "";
 
+        startChannelPrivate(self_id);
+
     }
 
 
@@ -1829,7 +1849,7 @@ async function getShowHistoryOverTime(url){
 }
 
 
-function openModalState(nombre, apellido,id_notification){
+function openModalState(nombre, apellido,id_notification, id_user){
 
     $("#modal_state").modal("show");
 
@@ -1838,6 +1858,8 @@ function openModalState(nombre, apellido,id_notification){
     text.innerHTML = `¿Qué deseas hacer para el usuario <b>${nombre} ${apellido}</b>?`
 
     text.dataset.dataId = id_notification;
+
+    text.dataset.dataState = id_user;
 }
 
 
@@ -1845,6 +1867,7 @@ async function changeStateNotification(url,state){
 
 
     let id_notification =  document.getElementById("content_modal_state").dataset.dataId;
+    
     const token = localStorage.getItem("access_token");
     let response = await fetch(url,{
         method: "put",
@@ -1866,10 +1889,12 @@ async function changeStateNotification(url,state){
 
     if(data.state){
 
+        let id_user =  document.getElementById("content_modal_state").dataset.dataState;
         $("#modal_state").modal("hide");
 
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
+        
 
     }
 

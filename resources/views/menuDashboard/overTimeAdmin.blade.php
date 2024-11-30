@@ -58,7 +58,7 @@
                     <!-- /.card-body -->
 
 
-                    <center><button class="btn btn-primary" onclick="requestOverTime('{{ route('sendOverTime') }}')"><i
+                    <center><button class="btn btn-primary" onclick="requestOverTime('{{ route('sendOverTime') }}', '{{$id_user}}')"><i
                                 class="fa-solid fa-bell-concierge"></i>&nbsp;&nbsp;Solicitar</button></center>
 
 

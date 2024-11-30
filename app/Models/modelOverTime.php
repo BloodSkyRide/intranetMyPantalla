@@ -9,7 +9,7 @@ class modelOverTime extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["id_notificacion", "id_user", "nombre", "apellido", "fecha_solicitud", "hora_solicitud", "hora_inicio", "hora_final", "fecha_notificacion", "motivo", "estado", "crteated_at", "updated_at"];
+    protected $fillable = ["id_notificacion", "id_user", "nombre", "apellido", "fecha_solicitud", "hora_solicitud", "hora_inicio", "hora_final", "fecha_notificacion", "motivo", "estado", "created_at", "updated_at"];
     protected $table = "historial_notificaciones";
 
 
@@ -23,15 +23,25 @@ class modelOverTime extends Model
 
     public static function getAllNotifications(){
 
-        return  self::orderBy("fecha_solicitud", "asc")->get();
+        return  self::orderBy("fecha_solicitud", "desc")->get();
 
     }
 
-    public static function changeState($state,$id_user){
+    public static function changeState($state,$id_notification){
 
 
-        return self::where("id_user", $id_user)
+        return self::where("id_notificacion", $id_notification)
         ->update(["estado" => $state]);
+
+    }
+
+
+    public static function getId_user($id_notification){
+
+
+        return self::where("id_notificacion", $id_notification)
+        ->select("id_user")
+        ->get();
 
     }
 

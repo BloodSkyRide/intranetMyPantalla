@@ -5,39 +5,47 @@ namespace App\Events;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class RealtimeEvent implements ShouldBroadcast
+class responseAdmin
 {
-
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $data;
+    protected $mesagge;
+    protected $id_user;
 
-    public function __construct($data)
+    public function __construct($mesagge, $id_user)
     {
-        $this->data = $data;
+        $this->mesagge = $mesagge;
+        $this->id_user = $id_user;
     }
 
-    // Define el canal en el que se transmitirá el evento
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return array<int, \Illuminate\Broadcasting\Channel>
+     */
     public function broadcastOn(): Channel
     {
-        return new Channel('realtime-channel');  // Aquí defines el canal
+        
+          return  new PrivateChannel('user-'.$this->id_user);
+
     }
 
-    // Opcional: Define el nombre del evento que se escuchará en el frontend
+
     public function broadcastAs()
     {
-        return 'eventNotifications';
+        return 'responseAdmin';
     }
 
     public function broadcastWith()
     {   // aqui definimos los datos que seran enviados al frontend
         return [
             
-            'message' => $this->data,
+            'message' => $this->mesagge,
         ];
     }
 }

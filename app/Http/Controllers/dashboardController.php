@@ -333,7 +333,8 @@ class dashboardController extends Controller
     public function getShowNotices(){
 
 
-        $render = view("menuDashboard.notices")->render();
+
+        $render = view("menuDashboard.notices",)->render();
 
 
         return response()->json(["status" => true, "html" => $render]);
@@ -341,8 +342,15 @@ class dashboardController extends Controller
 
     public function getShowOverTime(Request $request){
 
+        $token_header = $request->header("Authorization");
 
-        $render = view("menuDashboard.overTimeAdmin")->render();
+        $replace = str_replace("Bearer ", "", $token_header);
+        
+        $decode_token = JWTAuth::setToken($replace)->authenticate();
+        $id_user = $decode_token["cedula"];
+
+
+        $render = view("menuDashboard.overTimeAdmin",["id_user" => $id_user])->render();
 
         return response()->json(["status"=> true, "html" => $render]);
 

@@ -8,6 +8,8 @@ use App\Models\modelOverTime;
 use Carbon\Carbon;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Events\RealtimeEvent;
+use App\Events\ResponseAdmin;
+
 
 class overTimeController extends Controller
 {
@@ -84,19 +86,24 @@ class overTimeController extends Controller
 
 
         $state = $request->state;
-        $id_user = $request->id_user;
+        $id_notification = $request->id_notification;
 
         $state_final = ($state === "Aceptar") ? $this->accepted : $this->rejected;
 
 
-        $change = modelOverTime::changeState($state_final, $id_user);
-
+        $change = modelOverTime::changeState($state_final, $id_notification);
 
         if($change){
 
             $notifications = modelOverTime::getAllNotifications();
 
+            $message = "Tu solicitud de horas extras fué $state_final!";
+            $id_user = modelOverTime::getId_user($id_notification);
+
+            broadcast(new responseAdmin($message, $id_user));
+
             $render = view("menuDashboard.historyOverTime",["notifications" => $notifications])->render();
+            
             return response()->json(["state" => true, "html" => $render]);
 
         }

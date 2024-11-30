@@ -9,3 +9,8 @@ Broadcast::channel('realtime-channel', function ($user) {
 
     return true;
 });
+
+Broadcast::channel('user-{id}', function ($user, $id) {
+    // Asegúrate de que la cédula del usuario coincida con el ID
+    return (int) $user->cedula == (int) $id;
+}, ['middleware' => ['auth:api']]);
