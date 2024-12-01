@@ -41,7 +41,7 @@ class modelOverTime extends Model
 
         return self::where("id_notificacion", $id_notification)
         ->select("id_user")
-        ->get();
+        ->first();
 
     }
 

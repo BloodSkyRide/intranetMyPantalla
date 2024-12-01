@@ -10,24 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class responseAdmin
+class responseAdmin implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     protected $mesagge;
     protected $id_user;
+    protected $state;
 
-    public function __construct($mesagge, $id_user)
+    public function __construct($mesagge, $id_user, $state)
     {
         $this->mesagge = $mesagge;
         $this->id_user = $id_user;
+        $this->state = $state;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
+ 
     public function broadcastOn(): Channel
     {
         
@@ -46,6 +44,7 @@ class responseAdmin
         return [
             
             'message' => $this->mesagge,
+            'state' => $this->state,
         ];
     }
 }

@@ -4,10 +4,16 @@ Pusher.logToConsole = true;
 var echo = new Echo({
     broadcaster: "pusher",
     cluster: 'mt1',
-    key: "p91ggxwl09aprwmrkr38",
+    key: "qnh5zkasidqvifg4qjzd", // cambiar por la key generada en el archivo .env REVERB_APP_KEY
     wsHost: "localhost",
     wsPort: 8080,
     forceTLS: false,
+    auth: {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`, // Reemplaza con tu token real
+        },
+    },
+    
 });
 
 echo.channel("realtime-channel") // El nombre del canal debe coincidir con lo que usas en el backend
@@ -40,8 +46,17 @@ echo.channel("realtime-channel") // El nombre del canal debe coincidir con lo qu
         };
 
         echo.private(`user-${id_user}`)
-        .listen('responseAdmin', (event) => {
-            alert(event.message);  
+        .listen('.responseAdmin', (data) => {
+            playNotificationSound();
+
+            let text_class = (data.state === 'Aceptado') ? "bg-success" : "bg-danger";
+            console.log(text_class);
+            $(document).Toasts('create', {
+              class: text_class,
+              title: 'Respuesta de administración',
+              subtitle: '',
+              body: data.message
+            }) 
         });
 
     }

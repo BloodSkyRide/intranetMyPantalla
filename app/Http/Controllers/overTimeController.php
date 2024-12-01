@@ -90,17 +90,16 @@ class overTimeController extends Controller
 
         $state_final = ($state === "Aceptar") ? $this->accepted : $this->rejected;
 
-
         $change = modelOverTime::changeState($state_final, $id_notification);
 
         if($change){
-
+            
             $notifications = modelOverTime::getAllNotifications();
 
             $message = "Tu solicitud de horas extras fué $state_final!";
-            $id_user = modelOverTime::getId_user($id_notification);
+            $id_user = modelOverTime::getId_user($id_notification)->id_user;
 
-            broadcast(new responseAdmin($message, $id_user));
+            broadcast(new responseAdmin($message, $id_user,$state_final));
 
             $render = view("menuDashboard.historyOverTime",["notifications" => $notifications])->render();
             
