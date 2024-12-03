@@ -46,4 +46,14 @@ class modelOverTime extends Model
     }
 
 
+    public static function getMyRequest($id_user, $fecha){
+
+
+        return self::where('id_user', $id_user)
+        ->where('fecha_solicitud', '>', $fecha)
+        ->get();
+
+    }
+
+
 }

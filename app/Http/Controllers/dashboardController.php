@@ -14,6 +14,7 @@ use PhpParser\Node\Stmt\TryCatch;
 use App\Models\modelAssits;
 use Carbon\Carbon;
 use App\Models\modelShedule;
+use App\Models\modelOverTime;
 use App\Events\RealtimeEvent;
 use function Termwind\render;
 
@@ -349,8 +350,12 @@ class dashboardController extends Controller
         $decode_token = JWTAuth::setToken($replace)->authenticate();
         $id_user = $decode_token["cedula"];
 
+        $date_searcher =  Carbon::now()->subDays(7)->format('Y-m-d');
 
-        $render = view("menuDashboard.overTimeAdmin",["id_user" => $id_user])->render();
+        $data = modelOverTime::getMyRequest($id_user, $date_searcher);
+
+
+        $render = view("menuDashboard.overTimeAdmin",["id_user" => $id_user, "request" => $data])->render();
 
         return response()->json(["status"=> true, "html" => $render]);
 

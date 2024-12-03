@@ -73,12 +73,12 @@
     </div>
 
     <!-- Modal -->
-<div class="modal fade" id="modal_state" tabindex="-1" aria-labelledby="exampleModalLabel" >
+<div class="modal fade" id="modal_state" tabindex="-1" >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-info">
           <h5 class="modal-title" id="exampleModalLabel">Solicitud de hora extra</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

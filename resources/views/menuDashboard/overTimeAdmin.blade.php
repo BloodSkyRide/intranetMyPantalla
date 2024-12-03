@@ -61,7 +61,42 @@
                     <center><button class="btn btn-primary" onclick="requestOverTime('{{ route('sendOverTime') }}', '{{$id_user}}')"><i
                                 class="fa-solid fa-bell-concierge"></i>&nbsp;&nbsp;Solicitar</button></center>
 
+                                <hr>
 
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                      <tr>
+                                        <th scope="col">Fecha Solicitud</th>
+                                        <th scope="col">Fecha a realizar</th>
+                                        <th scope="col">Estado solicitud</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        @foreach ($request as $item)
+
+                                        @php
+
+                                        $class = "";
+                                            if($item['estado'] === "Pendiente") $class = "badge badge-warning";
+                                            elseif($item['estado'] === "Aceptado") $class = "badge badge-success";
+                                            else $class = "badge badge-danger";
+                                        @endphp
+                                            
+                                        <tr>
+                                          <th scope="row">{{ $item['fecha_solicitud']}}</th>
+                                          <td>{{ $item['fecha_notificacion']}}</td>
+                                          <td>
+                                            
+                                            <span class="{{$class}}">{{ $item['estado']}}</span>
+                                        
+                                        </td>
+
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                  </table>
 
                 </div>
 

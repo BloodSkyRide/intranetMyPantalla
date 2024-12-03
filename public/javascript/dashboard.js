@@ -4,7 +4,7 @@ Pusher.logToConsole = true;
 var echo = new Echo({
     broadcaster: "pusher",
     cluster: 'mt1',
-    key: "qnh5zkasidqvifg4qjzd", // cambiar por la key generada en el archivo .env REVERB_APP_KEY
+    key: "p91ggxwl09aprwmrkr38", // cambiar por la key generada en el archivo .env REVERB_APP_KEY
     wsHost: "localhost",
     wsPort: 8080,
     forceTLS: false,
