@@ -99,7 +99,7 @@ class overTimeController extends Controller
             $message = "Tu solicitud de horas extras fué $state_final!";
             $id_user = modelOverTime::getId_user($id_notification)->id_user;
 
-            broadcast(new responseAdmin($message, $id_user,$state_final));
+            broadcast(new ResponseAdmin($message, $id_user,$state_final));
 
             $render = view("menuDashboard.historyOverTime",["notifications" => $notifications])->render();
             
