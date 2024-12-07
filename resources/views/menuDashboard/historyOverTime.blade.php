@@ -53,9 +53,11 @@
                                 if($notification["estado"] === "Pendiente") $span = "badge badge-warning";
                                 elseif($notification["estado"] === "Aceptado") $span = "badge badge-success";
                                 else $span = "badge badge-danger";
+
+                                $function = ($notification["estado"] === "Pendiente") ? false : true;
                             @endphp
 
-                            <td><a type="button" data-toggle="modal" onclick="openModalState(`{{$notification['nombre']}}`, `{{$notification['apellido']}}`, `{{$notification['id_notificacion']}}`, `{{$notification['id_user']}}`)"><span class="{{$span}}">{{$notification["estado"]}}</span></a></td>
+                            <td><a type="button" data-toggle="modal" onclick="openModalState(`{{$notification['nombre']}}`, `{{$notification['apellido']}}`, `{{$notification['id_notificacion']}}`, `{{$notification['id_user']}}`, `{{$function}}`)"><span class="{{$span}}">{{$notification["estado"]}}</span></a></td>
                           </tr>
                           <tr>
                             

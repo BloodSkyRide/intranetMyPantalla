@@ -4,11 +4,11 @@ Pusher.logToConsole = true;
 var echo = new Echo({
     broadcaster: "pusher",
     cluster: 'mt1',
-    key: "bpdvgnj5xhzhmryrmd2t", // cambiar por la key generada en el archivo .env REVERB_APP_KEY
+    key: "p91ggxwl09aprwmrkr38", // cambiar por la key generada en el archivo .env REVERB_APP_KEY, si se desea cambiar se puede usar php artisan reverb:install
     wsHost: "localhost",
-    wsPort: 8081,
+    wsPort: 8080,
     forceTLS: false,
-    enabledTransports: ['ws', 'wss'], // Solo WebSockets
+    enabledTransports: ['ws', 'wss'], // Solo WebSockets ws:http wss: https
     disabledTransports: ['xhr_polling', 'xhr_streaming'], // Deshabilita otras opciones y evita el cors
     auth: {
         headers: {
@@ -1865,17 +1865,25 @@ async function getShowHistoryOverTime(url){
 }
 
 
-function openModalState(nombre, apellido,id_notification, id_user){
+function openModalState(nombre, apellido,id_notification, id_user, funcion){
 
-    $("#modal_state").modal("show");
 
-    let text = document.getElementById("content_modal_state");
+    if(!funcion){
 
-    text.innerHTML = `¿Qué deseas hacer para el usuario <b>${nombre} ${apellido}</b>?`
 
-    text.dataset.dataId = id_notification;
+        $("#modal_state").modal("show");
+    
+        let text = document.getElementById("content_modal_state");
+    
+        text.innerHTML = `¿Qué deseas hacer para el usuario <b>${nombre} ${apellido}</b>?`
+    
+        text.dataset.dataId = id_notification;
+    
+        text.dataset.dataState = id_user;
 
-    text.dataset.dataState = id_user;
+
+    }
+
 }
 
 
