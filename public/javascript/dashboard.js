@@ -4,9 +4,9 @@ Pusher.logToConsole = true;
 var echo = new Echo({
     broadcaster: "pusher",
     cluster: 'mt1',
-    key: "p91ggxwl09aprwmrkr38", // cambiar por la key generada en el archivo .env REVERB_APP_KEY, si se desea cambiar se puede usar php artisan reverb:install
-    wsHost: "localhost",
-    wsPort: 8080,
+    key: "bpdvgnj5xhzhmryrmd2t", // cambiar por la key generada en el archivo .env REVERB_APP_KEY, si se desea cambiar se puede usar php artisan reverb:install
+    wsHost: "3.142.123.202",
+    wsPort: 8081,
     forceTLS: false,
     enabledTransports: ['ws', 'wss'], // Solo WebSockets ws:http wss: https
     disabledTransports: ['xhr_polling', 'xhr_streaming'], // Deshabilita otras opciones y evita el cors
@@ -1738,7 +1738,7 @@ function verifyNodes() {
     let table = document.getElementById("table_payroll");
     let inputs = table.querySelectorAll("input.input_lenght").length;
 
-    console.log("la cantidad de nodos renderizados son: " + inputs);
+    return inputs;
 }
 
 function selectAllSubLabors() {
@@ -1921,6 +1921,5 @@ async function changeStateNotification(url,state){
         
 
     }
-
 
 }
