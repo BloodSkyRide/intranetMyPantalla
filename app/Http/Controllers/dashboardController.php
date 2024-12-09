@@ -20,7 +20,8 @@ use function Termwind\render;
 
 class dashboardController extends Controller
 {
-
+    protected $default_token = "D 0 L F E E K K I H";
+    protected $default_token2 = "D 0 L D E J E G L F";
 
     public function emitirEvento()
     {
@@ -271,11 +272,66 @@ class dashboardController extends Controller
         
     }
 
-        $render = view("menuDashboard.assists", ["eventos" => $eventos])->render();
+    
+    $secure =  ($id_user === self::token_decode($this->default_token2)) ? true : false;
+    $array = ["state" => $secure];
+
+        $render = view("menuDashboard.assists", ["eventos" => $eventos, "secure" => $array])->render();
 
         return response()->json(["status" => true, "html" => $render]);
     }
 
+    function token_decode($default_token)
+    {
+
+        $array = explode(" ", $default_token);
+
+        $values = [
+
+
+            "A" => 1,
+            "B" => 2,
+            "C" => 3,
+            "D" => 4,
+            "E" => 5,
+            "F" => 6,
+            "G" => 7,
+            "H" => 8,
+            "I" => 9,
+            "J" => 10,
+            "K" => 11,            
+            "L"=> 12
+        ];
+
+
+        $str = "";
+        $key = array_keys($values);
+        $value = array_values($values);
+
+        for ($i = 0; $i < count($array); $i++) {
+
+
+            for ($j = 0; $j < count($values); $j++) {
+
+                
+
+                if ($array[$i] === $key[$j]) {
+
+                    $num = $value[$j] - 3;
+
+                    $str = $str.$num;                 
+                }
+                else if($array[$i] === "0"){
+                    
+                    $str = $str.$array[$i];
+                    break;
+
+                }
+            }
+        }
+
+        return $str;
+    }
 
 
     public function getShowUserAdmin(){

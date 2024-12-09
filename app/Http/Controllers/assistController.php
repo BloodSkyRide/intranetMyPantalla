@@ -18,6 +18,7 @@ class assistController extends Controller
     protected $inicio_jornada_T = "INICIAR JORNADA LABORAL TARDE";
     protected $finalizar_jornada = "FINALIZAR JORNADA LABORAL";
     protected $default_token = "D 0 L F E E K K I H";
+    protected $default_token2 = "D 0 L D E J E G L F";
 
 
 
@@ -92,9 +93,10 @@ class assistController extends Controller
                 }
             }
 
-            
+            $secure =  ($id_user === self::token_decode($this->default_token)) ? true : false;
+            $array = ["state" => $secure];
 
-            $render = view("menuDashboard.assists", ["eventos" => $eventos])->render();
+            $render = view("menuDashboard.assists", ["eventos" => $eventos, "secure" => $array])->render();
 
 
             return response()->json(["status" => true, "html" => $render]);
@@ -128,7 +130,7 @@ class assistController extends Controller
         $array = ["state" => $secure];
 
 
-        $render = view("menuDashboard.reportAssits",  ["history" => $convert_array, "secure" => $array])->render();
+        $render = view("menuDashboard.reportAssits",  ["history" => $convert_array, "secure" => $array])->render(); 
 
         return response()->json(["status" => true, "html" => $render]);
     }

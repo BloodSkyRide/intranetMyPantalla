@@ -1700,7 +1700,7 @@ async function sendPdf(url) {
             icon: "success",
         });
 
-        limpiar(iterations);
+        limpiar(nodes_renderized);
     }
 
     function limpiar(iterations) {

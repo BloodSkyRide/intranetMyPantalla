@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -51,9 +51,9 @@
     {{-- SweetAlert2 --}}
 
     <link rel="stylesheet" href="{{ asset('javascript/plugins/sweetalert2/sweetalert2.min.css') }}">
-    
-      <!-- Toastr -->
-  <link rel="stylesheet" href="{{asset('javascript/plugins/toastr/toastr.min.css')}}">
+
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('javascript/plugins/toastr/toastr.min.css') }}">
 
 </head>
 
@@ -61,7 +61,7 @@
 
     <div class="wrapper">
 
-        <audio id="notificationSound" src="{{asset('notification/notification.mp3')}}"></audio>
+        <audio id="notificationSound" src="{{ asset('notification/notification.mp3') }}"></audio>
 
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
@@ -130,7 +130,8 @@
                         data-accordion="false">
                         <h1 class="nav-header">MENÚ</h1>
                         <li class="nav-item">
-                            <a class="nav-link" type="button" onclick="getShowNotices('{{route('getShowNotices')}}')">
+                            <a class="nav-link" type="button"
+                                onclick="getShowNotices('{{ route('getShowNotices') }}')">
                                 <i class="fa-regular fa-newspaper"></i>&nbsp;&nbsp;
                                 <p>
                                     Noticias
@@ -153,8 +154,8 @@
 
                         @if ($array['rol'] === 'administrador')
                             <li class="nav-item">
-                                <a class="nav-link menu_dashboard" onclick="showManageLabor('{{ route('showManageLabor') }}')"
-                                    type="button">
+                                <a class="nav-link menu_dashboard"
+                                    onclick="showManageLabor('{{ route('showManageLabor') }}')" type="button">
                                     <i class="fa-solid fa-clipboard"></i>&nbsp;&nbsp;
                                     <p>
                                         Administrador de labores
@@ -166,8 +167,8 @@
 
 
                             <li class="nav-item">
-                                <a class="nav-link menu_dashboard" onclick="getShowAdminUsers('{{ route('getShowUsers') }}')"
-                                    type="button">
+                                <a class="nav-link menu_dashboard"
+                                    onclick="getShowAdminUsers('{{ route('getShowUsers') }}')" type="button">
                                     <i class="fa-solid fa-users"></i>&nbsp;&nbsp;
                                     <p>
                                         Administrador Usuarios
@@ -179,8 +180,9 @@
 
 
                             <li class="nav-item">
-                                <a class="nav-link menu_dashboard" onclick="register_user('{{ route('registroUser') }}')"
-                                    type="button" id="register_nav">
+                                <a class="nav-link menu_dashboard"
+                                    onclick="register_user('{{ route('registroUser') }}')" type="button"
+                                    id="register_nav">
                                     <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;
                                     <p>
                                         Registrar Usuarios
@@ -237,7 +239,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a  class="nav-link menu_dashboard">
+                                <a class="nav-link menu_dashboard">
                                     <i class="fa-solid fa-clock"></i>&nbsp;&nbsp;
                                     <p>
                                         Reporte horas extras
@@ -248,8 +250,9 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link menu_dashboard" onclick="getShowSchedules('{{route('getShowSchedule')}}')"
-                                type="button" id="register_nav">
+                            <a class="nav-link menu_dashboard"
+                                onclick="getShowSchedules('{{ route('getShowSchedule') }}')" type="button"
+                                id="register_nav">
                                 <i class="fa-solid fa-house-circle-check"></i>&nbsp;&nbsp;
                                 <p>
                                     Horarios
@@ -262,51 +265,64 @@
 
 
 
-                        @if ($array['rol'] === "administrador")
-                            
-                        <li class="nav-item">
-                            <a class="nav-link menu_dashboard" onclick="getShowPayroll('{{route('getshowpayroll')}}')"
-                                type="button" id="payroll_nav">
-                                <i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;
-                                <p>
-                                    Nomina
-                                </p>
-                            </a>
-                        </li>
+                        @if ($array['rol'] === 'administrador')
+                            <li class="nav-item">
+                                <a class="nav-link menu_dashboard"
+                                    onclick="getShowPayroll('{{ route('getshowpayroll') }}')" type="button"
+                                    id="payroll_nav">
+                                    <i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Nomina
+                                    </p>
+                                </a>
+                            </li>
 
-                        
-                        <li class="nav-item">
-                            <a  class="nav-link menu_dashboard" type="button" onclick="getShowOverTime('{{route('getShowOverTimeAdmin')}}')">
-                                <i class="fa-solid fa-bell"></i></i>&nbsp;&nbsp;
-                                <p>
-                                    Reporte horas extras
-                                </p>
-                            </a>
-                        </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link menu_dashboard" type="button"
+                                    onclick="getShowOverTime('{{ route('getShowOverTimeAdmin') }}')">
+                                    <i class="fa-solid fa-bell"></i></i>&nbsp;&nbsp;
+                                    <p>
+                                        Reporte horas extras
+                                    </p>
+                                </a>
+                            </li>
                         @else
-    
+                            <li class="nav-item">
+                                <a class="nav-link menu_dashboard" type="button"
+                                    onclick="getShowHistoryOverTime('{{ route('getShowOverTime') }}')">
+                                    <i class="fa-solid fa-person-circle-plus"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Solicitar horas extras
+                                    </p>
+                                </a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a  class="nav-link menu_dashboard" type="button" onclick="getShowHistoryOverTime('{{route('getShowOverTime')}}')">
-                                <i class="fa-solid fa-person-circle-plus"></i>&nbsp;&nbsp;
-                                <p>
-                                    Solicitar horas extras
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu_dashboard"
+                                    onclick="getHistoryPayRoll('{{ route('getHistoryPayRoll') }}','{{ $array['cedula'] }}')"
+                                    type="button" id="payroll_nav">
+                                    <i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Nomina
+                                    </p>
+                                </a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link menu_dashboard" onclick="getHistoryPayRoll('{{ route('getHistoryPayRoll') }}','{{ $array['cedula'] }}')"
-                                type="button" id="payroll_nav">
-                                <i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;
-                                <p>
-                                    Nomina
-                                </p>
-                            </a>
-                        </li>
 
                         @endif
+
+
+                        <li class="nav-item">
+                            <a class="nav-link menu_dashboard"
+                                onclick="getHistoryPayRoll('{{ route('getHistoryPayRoll') }}','{{ $array['cedula'] }}')"
+                                type="button" id="payroll_nav">
+                                <i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;
+                                <p>
+                                    Efectividad
+                                </p>
+                            </a>
+                        </li>
 
                     </ul>
                 </nav>
@@ -316,7 +332,8 @@
 
 
         <!-- Modal de confirmación-->
-        <div class="modal fade" id="exampleModal"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg bg-danger">
@@ -399,7 +416,7 @@
     <script src="{{ asset('javascript/plugins/daterangepicker/daterangepicker.js') }}"></script>
 
     <!-- Toastr -->
-    <script src="{{ asset('javascript/plugins/toastr/toastr.min.js')}}"></script>
+    <script src="{{ asset('javascript/plugins/toastr/toastr.min.js') }}"></script>
 
     {{-- DATATABLES --}}
     <script src="{{ asset('javascript/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -414,11 +431,11 @@
     <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('javascript/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-<!-- Pusher -->
-<script src="{{asset('javascript/echo.iife.js')}}"></script>
+    <!-- Pusher -->
+    <script src="{{ asset('javascript/echo.iife.js') }}"></script>
 
-<!-- Laravel Echo -->
-<script src="{{asset('javascript/pusher.min.js')}}"></script>
+    <!-- Laravel Echo -->
+    <script src="{{ asset('javascript/pusher.min.js') }}"></script>
 
     <!-- Page specific script -->
     <script src="{{ asset('javascript/dashboard.js') }}"></script>
