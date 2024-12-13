@@ -10,6 +10,7 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\scheduleController;
 use App\Http\Controllers\payrollController;
 use App\Http\Controllers\overTimeController;
+use App\Http\Controllers\effectivenessController;
 
 
 
@@ -124,6 +125,12 @@ Route::post('/sendOverTime', [overTimeController::class, 'sendOverTime'])->name(
 Route::get('/getShowOverTimeAdmin', [overTimeController::class, 'getShowOverTimeAdmin'])->name("getShowOverTimeAdmin")->middleware(["verifyTokenHeader"]);
 
 Route::put('/changeStateOverTime', [overTimeController::class, 'changeStateOverTime'])->name("changeStateOverTime")->middleware(["verifyTokenHeader"]);
+
+Route::get('/getShowEffectiveness', [effectivenessController::class, 'getShowEffectiveness'])->name("getShowEffectiveness")->middleware(["verifyTokenHeader"]);
+
+Route::post('/insertAtribute', [effectivenessController::class, 'insertAtribute'])->name("insertAtribute")->middleware(["verifyTokenHeader"]);
+
+Route::post('/saveAtribute', [effectivenessController::class, 'saveDay'])->name("saveAtribute")->middleware(["verifyTokenHeader"]);
 
 
 

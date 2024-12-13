@@ -238,16 +238,7 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link menu_dashboard">
-                                    <i class="fa-solid fa-clock"></i>&nbsp;&nbsp;
-                                    <p>
-                                        Reporte horas extras
-                                    </p>
-                                </a>
-                            </li>
                         @endif
-
 
                         <li class="nav-item">
                             <a class="nav-link menu_dashboard"
@@ -259,11 +250,6 @@
                                 </p>
                             </a>
                         </li>
-
-
-
-
-
 
                         @if ($array['rol'] === 'administrador')
                             <li class="nav-item">
@@ -315,7 +301,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link menu_dashboard"
-                                onclick="getHistoryPayRoll('{{ route('getHistoryPayRoll') }}','{{ $array['cedula'] }}')"
+                                onclick="getShowEffectiveness('{{route('getShowEffectiveness')}}')"
                                 type="button" id="payroll_nav">
                                 <i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;
                                 <p>

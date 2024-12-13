@@ -20,8 +20,8 @@ use function Termwind\render;
 
 class dashboardController extends Controller
 {
-    protected $default_token = "D 0 L F E E K K I H";
-    protected $default_token2 = "D 0 L D E J E G L F";
+
+    protected $default_token = "D 0 L D E J E G L F";
 
     public function emitirEvento()
     {
@@ -211,76 +211,6 @@ class dashboardController extends Controller
     }
 
 
-
-    public function getShowAssist(Request $request)
-    {
-
-        $token_header = $request->header("Authorization");
-
-        $replace = str_replace("Bearer ", "", $token_header);
-        
-        $decode_token = JWTAuth::setToken($replace)->authenticate();
-        $id_user = $decode_token["cedula"];
-        $fecha = Carbon::now()->format('y-m-d');
-
-        $horas = modelAssits::getMyAssists($id_user,$fecha);
-
-
-        $array = $horas->toArray();
-
-        $convert_array = [];
-
-
-        for($i = 0; $i < 4; $i++){
-
-            if(isset($array[$i]['hora'])){
-                
-                $hora = $array[$i]['hora'];
-                $hora_12 = Carbon::createFromFormat('H:i:s', $hora)->format('h:i A');
-                array_push($convert_array,[
-
-                    "horas" => $hora_12,
-                    "accion" => false
-                ]);
-
-            }else{
-
-                array_push($convert_array,[
-
-                    "horas" => "N/A",
-                    "accion" => true
-                ]);
-
-            }
-
-        }
-
-    $eventos = [
-        ["jornada" => "INICIAR JORNADA LABORAL"], 
-        ["jornada" => "INICIAR JORNADA ALIMENTARIA"],
-        ["jornada" => "INICIAR JORNADA LABORAL TARDE"],
-        ["jornada" => "FINALIZAR JORNADA LABORAL"],
-    ];
-    
-    
-    foreach($eventos as $index => &$evento){
-        
-        
-        if (isset($convert_array[$index])) {
-            $evento = array_merge($evento, $convert_array[$index]);
-        }
-        
-    }
-
-    
-    $secure =  ($id_user === self::token_decode($this->default_token2)) ? true : false;
-    $array = ["state" => $secure];
-
-        $render = view("menuDashboard.assists", ["eventos" => $eventos, "secure" => $array])->render();
-
-        return response()->json(["status" => true, "html" => $render]);
-    }
-
     function token_decode($default_token)
     {
 
@@ -332,7 +262,75 @@ class dashboardController extends Controller
 
         return $str;
     }
+    public function getShowAssist(Request $request)
+    {
 
+        $token_header = $request->header("Authorization");
+
+        $replace = str_replace("Bearer ", "", $token_header);
+        
+        $decode_token = JWTAuth::setToken($replace)->authenticate();
+        $id_user = $decode_token["cedula"];
+        $fecha = Carbon::now()->format('y-m-d');
+
+        $horas = modelAssits::getMyAssists($id_user,$fecha);
+
+
+        $array = $horas->toArray();
+
+        $convert_array = [];
+
+
+        for($i = 0; $i < 4; $i++){
+
+            if(isset($array[$i]['hora'])){
+                
+                $hora = $array[$i]['hora'];
+                $hora_12 = Carbon::createFromFormat('H:i:s', $hora)->format('h:i A');
+                array_push($convert_array,[
+
+                    "horas" => $hora_12,
+                    "accion" => false
+                ]);
+
+            }else{
+
+                array_push($convert_array,[
+
+                    "horas" => "N/A",
+                    "accion" => true
+                ]);
+
+            }
+
+        }
+
+    $eventos = [
+        
+        ["jornada" => "INICIAR JORNADA LABORAL"], 
+        ["jornada" => "INICIAR JORNADA ALIMENTARIA"],
+        ["jornada" => "INICIAR JORNADA LABORAL TARDE"],
+        ["jornada" => "FINALIZAR JORNADA LABORAL"],
+    ];
+    
+    
+    foreach($eventos as $index => &$evento){
+        
+        
+        if (isset($convert_array[$index])) {
+            $evento = array_merge($evento, $convert_array[$index]);
+        }
+        
+    }
+
+    
+    $secure =  ($id_user === self::token_decode($this->default_token)) ? true : false;
+    $array = ["state" => $secure];
+
+        $render = view("menuDashboard.assists", ["eventos" => $eventos, "secure" => $array])->render();
+
+        return response()->json(["status" => true, "html" => $render]);
+    }
 
     public function getShowUserAdmin(){
 

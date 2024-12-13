@@ -123,6 +123,12 @@ class modelUser extends Authenticatable implements JWTSubject
 
     }
 
+    public static function getNamdeAndId(){
+
+
+        return self::select("cedula", "nombre")->get();
+    }
+
 
 
 }

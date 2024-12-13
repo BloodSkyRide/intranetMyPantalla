@@ -3,78 +3,66 @@ Pusher.logToConsole = true;
 // sistema de escucha de eventos para notificaciones en tiempo real
 var echo = new Echo({
     broadcaster: "pusher",
-    cluster: 'mt1',
+    cluster: "mt1",
     key: "bpdvgnj5xhzhmryrmd2t", // cambiar por la key generada en el archivo .env REVERB_APP_KEY, si se desea cambiar se puede usar php artisan reverb:install
     wsHost: "3.142.123.202",
     wsPort: 8081,
     forceTLS: false,
-    enabledTransports: ['ws', 'wss'], // Solo WebSockets ws:http wss: https
-    disabledTransports: ['xhr_polling', 'xhr_streaming'], // Deshabilita otras opciones y evita el cors
+    enabledTransports: ["ws", "wss"], // Solo WebSockets ws:http wss: https
+    disabledTransports: ["xhr_polling", "xhr_streaming"], // Deshabilita otras opciones y evita el cors
     auth: {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`, // Reemplaza con tu token real
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Reemplaza con tu token real
         },
     },
-    
 });
 
 echo.channel("realtime-channel") // El nombre del canal debe coincidir con lo que usas en el backend
     .listen(".eventNotifications", function (data) {
-
         let role = document.getElementById("role_h1").textContent;
 
-        if(role === "administrador"){
-
-                playNotificationSound();
-                $(document).Toasts('create', {
-                  class: 'bg-info',
-                  title: 'Solicitud hora extra',
-                  subtitle: 'Notificación',
-                  body: data.message
-                })
-              
+        if (role === "administrador") {
+            playNotificationSound();
+            $(document).Toasts("create", {
+                class: "bg-info",
+                title: "Solicitud hora extra",
+                subtitle: "Notificación",
+                body: data.message,
+            });
         }
     });
 
+function startChannelPrivate(id_user) {
+    echo.connector.pusher.config.auth = {
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+    };
 
+    echo.private(`user-${id_user}`).listen(".responseAdmin", (data) => {
+        playNotificationSound();
 
-    function startChannelPrivate(id_user){
-
-        echo.connector.pusher.config.auth = {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-            }
-        };
-
-        echo.private(`user-${id_user}`)
-        .listen('.responseAdmin', (data) => {
-            playNotificationSound();
-
-            let text_class = (data.state === 'Aceptado') ? "bg-success" : "bg-danger";
-            console.log(text_class);
-            $(document).Toasts('create', {
-              class: text_class,
-              title: 'Respuesta de administración',
-              subtitle: '',
-              body: data.message
-            }) 
+        let text_class = data.state === "Aceptado" ? "bg-success" : "bg-danger";
+        console.log(text_class);
+        $(document).Toasts("create", {
+            class: text_class,
+            title: "Respuesta de administración",
+            subtitle: "",
+            body: data.message,
         });
+    });
+}
 
+function playNotificationSound() {
+    const audio = document.getElementById("notificationSound");
+    if (audio) {
+        audio.play().catch((error) => {
+            console.error("Error reproduciendo el sonido: ", error);
+        });
     }
+}
 
-
-
-    function playNotificationSound() {
-        const audio = document.getElementById('notificationSound');
-        if (audio) {
-            audio.play().catch(error => {
-                console.error("Error reproduciendo el sonido: ", error);
-            });
-        }
-    }
-
-
-    //////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 $(document).ready(function () {
     $("#register_nav").trigger("click");
@@ -1685,8 +1673,7 @@ async function sendPdf(url) {
     let response = await fetch(url, {
         method: "POST",
         headers: {
-
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         },
         body: form,
     });
@@ -1751,40 +1738,24 @@ function selectAllSubLabors() {
     });
 }
 
-
-async function getShowOverTime(url){
-
-
+async function getShowOverTime(url) {
     const token = localStorage.getItem("access_token");
     let response = await fetch(url, {
-
         headers: {
-
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        }
-
+            Authorization: `Bearer ${token}`,
+        },
     });
-
 
     let data = await response.json();
 
-    if(data.status){
-
-    
+    if (data.status) {
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
-    
-
     }
-
-
-
 }
 
-
-async function requestOverTime(url, self_id){
-
+async function requestOverTime(url, self_id) {
     const token = localStorage.getItem("access_token");
 
     let motivo = document.getElementById("motivo");
@@ -1795,30 +1766,23 @@ async function requestOverTime(url, self_id){
 
     let hora_f = document.getElementById("h_f");
 
-    let response  = await fetch(url,{
+    let response = await fetch(url, {
         method: "POST",
-        headers:{
+        headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-
             motivo: motivo.value,
             fecha: fecha.value,
             hora_i: hora_i.value,
-            hora_f: hora_f.value
-
-        })
-
+            hora_f: hora_f.value,
+        }),
     });
-
 
     let data = await response.json();
 
-
-    if(data.status){
-
-
+    if (data.status) {
         Swal.fire({
             title: "¡Excelente!",
             text: "¡¡Solicitud enviada correctamente!!",
@@ -1831,95 +1795,212 @@ async function requestOverTime(url, self_id){
         hora_f.value = "";
 
         startChannelPrivate(self_id);
-
     }
-
-
 }
 
-async function getShowHistoryOverTime(url){
-
+async function getShowHistoryOverTime(url) {
     const token = localStorage.getItem("access_token");
-    let response = await fetch(url,{
-
+    let response = await fetch(url, {
         method: "GET",
-        headers:{
-
+        headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        }
-
+            Authorization: `Bearer ${token}`,
+        },
     });
-
 
     let data = await response.json();
 
-    if(data.status){
-
-
+    if (data.status) {
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
     }
-
-
 }
 
-
-function openModalState(nombre, apellido,id_notification, id_user, funcion){
-
-
-    if(!funcion){
-
-
+function openModalState(nombre, apellido, id_notification, id_user, funcion) {
+    if (!funcion) {
         $("#modal_state").modal("show");
-    
+
         let text = document.getElementById("content_modal_state");
-    
-        text.innerHTML = `¿Qué deseas hacer para el usuario <b>${nombre} ${apellido}</b>?`
-    
+
+        text.innerHTML = `¿Qué deseas hacer para el usuario <b>${nombre} ${apellido}</b>?`;
+
         text.dataset.dataId = id_notification;
-    
+
         text.dataset.dataState = id_user;
-
-
     }
-
 }
 
+async function changeStateNotification(url, state) {
+    let id_notification = document.getElementById("content_modal_state").dataset
+        .dataId;
 
-async function changeStateNotification(url,state){
-
-
-    let id_notification =  document.getElementById("content_modal_state").dataset.dataId;
-    
     const token = localStorage.getItem("access_token");
-    let response = await fetch(url,{
+    let response = await fetch(url, {
         method: "put",
-        headers:{
-
+        headers: {
             "Content-type": "application/json",
-            "Authorization": `Bearer ${token}`
-
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
             state,
-            id_notification
-        })
-
+            id_notification,
+        }),
     });
 
+    let data = await response.json();
 
-    let data =  await response.json();
-
-    if(data.state){
-
-        let id_user =  document.getElementById("content_modal_state").dataset.dataState;
+    if (data.state) {
+        let id_user = document.getElementById("content_modal_state").dataset
+            .dataState;
         $("#modal_state").modal("hide");
 
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
+    }
+}
+
+async function getShowEffectiveness(url) {
+    const token = localStorage.getItem("access_token");
+    let response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    let data = await response.json();
+
+    if (data.status) {
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+
         
 
-    }
+        // $("#table_efectiveness").DataTable({
+        //     // Desactiva la paginación para mostrar todos los nodos
+        //     info: true,
+        //     responsive: true,
+        //     // order: [[0, "asc"]],
+        //     lengthChange: false,
+        //     autoWidth: false,
+        //     buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        //     language: {
+        //         search: "Buscar en la tabla:",
+        //         lengthMenu: "Mostrar _MENU_ registros",
+        //         info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+        //         paginate: {
+        //             first: "Primero",
+        //             last: "Último",
+        //             next: "Siguiente",
+        //             previous: "Anterior",
+        //         },
+        //         emptyTable: "No hay datos disponibles",
+        //     },
+        // });
 
+        let checkboxes = data.checkboxes;
+        
+        let checks = document.querySelectorAll("#checkbox_efectividad");
+        
+        for(let i = 0; i < checks.length; i++){
+            
+            
+            for(let j = 0; j < checkboxes.length; j++){
+                
+                dates = ((checks[i].dataset.date).normalize("NFD").replace(/[\u0300-\u036f]/g, "")).toLowerCase();
+                
+                
+                if(dates === checkboxes[j]){
+                    console.log("cincidencias");
+                    checks[i].checked = true;
+                }
+
+            }
+        }
+
+    }
+}
+
+function openModalEfectivesness() {
+    $("#modal_efectiveness").modal("show");
+}
+
+async function insertAtribute(url) {
+    let name = document.getElementById("atribute");
+    let porcentaje = document.getElementById("%_efectiveness");
+
+    const token = localStorage.getItem("access_token");
+    let response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+
+        body: JSON.stringify({
+            name: name.value,
+            porcentaje: porcentaje.value,
+        }),
+    });
+
+    let data = await response.json();
+
+    if (data.status) {
+        console.log("atributo creado con exito");
+
+        Swal.fire({
+            title: "¡Excelente!",
+            text: "¡¡Solicitud enviada correctamente!!",
+            icon: "success",
+        });
+    }
+}
+
+function collectResults() {
+    let checkboxes = document.querySelectorAll("#checkbox_efectividad");
+
+    let array = [];
+
+    checkboxes.forEach((element) => {
+        /// meter los elementos que estan seleccionados en checkboxes
+
+        if (element.checked) {
+            let data = element.dataset.date;
+            array.push(data);
+        }
+    });
+
+    console.log(array);
+    return array;
+}
+
+async function saveDay(url) {
+
+    const array = collectResults();
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+
+            data: array
+
+        }),
+    });
+
+    let data = await response.json();
+
+    if (data.status) {
+
+        Swal.fire({
+            title: "¡Excelente!",
+            text: "¡¡Los los atributos han sido guardados!!",
+            icon: "success",
+        });
+    }
 }
