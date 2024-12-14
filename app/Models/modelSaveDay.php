@@ -70,4 +70,7 @@ class modelSaveDay extends Model
         return DB::table('guardado_diario')->truncate();
     }
 
+
+
+
 }

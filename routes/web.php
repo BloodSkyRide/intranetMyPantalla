@@ -132,6 +132,13 @@ Route::post('/insertAtribute', [effectivenessController::class, 'insertAtribute'
 
 Route::post('/saveAtribute', [effectivenessController::class, 'saveDay'])->name("saveAtribute")->middleware(["verifyTokenHeader"]);
 
+Route::delete('/reset', [effectivenessController::class, 'resetPonderados'])->name("resetPonderados")->middleware(["verifyTokenHeader"]);
+
+Route::delete('/deleteAtribute', [effectivenessController::class, 'deleteAtribute'])->name("deleteAtribute")->middleware(["verifyTokenHeader"]);
+
+Route::put('/editponderado', [effectivenessController::class, 'editPorcentaje'])->name("editPorcentaje")->middleware(["verifyTokenHeader"]);
+
+
 
 
 

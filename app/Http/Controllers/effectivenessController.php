@@ -5,6 +5,7 @@ use App\Models\modelUser;
 use App\Models\modelAtributes;
 use App\Models\modelSaveDay;
 use App\Models\modelPonderado;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 use Illuminate\Http\Request;
 
@@ -22,8 +23,6 @@ class effectivenessController extends Controller
             
 
             foreach($registers as $register){
-
-                
 
                 $flag = 0;
 
@@ -57,17 +56,17 @@ class effectivenessController extends Controller
                 $number_format = number_format($final_calculate, 2);
 
                 
-                $verify_registers = modelPonderado::verifyRegisters($id_user);
+                $verify_registers = modelPonderado::verifyRegisters($id_user,$column); // obtiene todos los registros con el id del user y la columna en la que esta iterando
 
                 
                 
-                 if(count($verify_registers) < count($array_columns)){
+                 if(count($verify_registers) < 1){ // aca verifica que si no existe ningun registro entonces lo crea
 
                      $data_insert = ["id_user" => $id_user, "nombre_user" => $nombre_user, "id_atributo" => $id_atributo, "nombre_atributo_ponderado" => $nombre_atributo_ponderado, "ponderado" => $number_format];
      
                      $insert = modelPonderado::insertDataPonderado($data_insert);
 
-                 }else {
+                 }else { // sino entonces actualiza el que ya haya existente
 
                     $edit = modelPonderado::editExists($id_user, $column, $number_format);
                  }
@@ -82,6 +81,8 @@ class effectivenessController extends Controller
     private function savePonderados(){
         // funcion que obtiene todo lo que hay en la tabla y organiza en un array por columnas los atributos
         $data = self::getDataBaseDate();
+
+        
 
         $data_atributes = modelAtributes::getColumnsAtributes();
 
@@ -116,7 +117,7 @@ class effectivenessController extends Controller
 
         
         
-        
+        // dd($array_columns);
         self::separateAndSave($array_columns);
         
 }
@@ -165,14 +166,21 @@ class effectivenessController extends Controller
 
     public function getShowEffectiveness(Request $request){
 
+        $token = $request->header("Authorization");
+
+        $replace = str_replace("Bearer ", "", $token);
+
+        $decode_token = JWTAuth::setToken($replace)->authenticate();
+
+        $rol = $decode_token["rol"];
+
         $ponderados = modelPonderado::getAllPonderados();
         
-
         $get_columns = modelAtributes::getColumnsAtributes();
         
         $users = modelUser::getNamdeAndId();
         
-        $render = view("menuDashboard.effectiveness", ["atributos" => $get_columns, "users" => $users, "ponderados" => $ponderados])->render();
+        $render = view("menuDashboard.effectiveness", ["atributos" => $get_columns, "users" => $users, "ponderados" => $ponderados, "rol" => $rol])->render();
 
         $checkboxes = self::getDataBaseDate();
 
@@ -209,39 +217,38 @@ class effectivenessController extends Controller
 
         $data = ["nombre_atributo" => $name_atribute, "porcentaje_efectividad" => $porcentaje, "fecha" => $today];
 
-
         $insert = modelAtributes::insertAtribute($data);
 
-        if($insert){
-
-            return response()->json(["status" => true]);
-
-        }
+        if($insert) return self::getShowEffectiveness($request);
+        else return response()->json(["status" => false]);
 
     }
 
 
     public function saveDay(Request $request){
 
-
         $data = $request->data;
 
         $result = self::insertDataDay($data);
 
-        //self::savePonderados();
         self::savePonderados();
 
-        return response()->json(["status" => $result]);
+        if($result) return self::getShowEffectiveness($request);
+        else return response()->json(["status" => $result]);
+        
     }
 
     function insertDataDay($data){
 
         $long = count($data);
+
         $flagg = 0;
-        $truncate_table = modelSaveDay::truncateTable();
+
+        modelSaveDay::truncateTable();
+
         foreach ($data as $date) {
 
-            //este array tiene  posiciones [dia,id_atributo,id_user, nombre_atributo] TENERLO EN CUENTA OJO!
+            //este array tiene 4 posiciones [dia,id_atributo,id_user, nombre_atributo] TENERLO EN CUENTA OJO!
             
             $array = explode("-", $date);
             $dia1 = strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $array[0])) ;
@@ -291,6 +298,43 @@ class effectivenessController extends Controller
         
 
         return ($flagg === $long) ? true : false;
+
+    }
+
+
+    public function resetPonderados(Request $request){
+
+         modelSaveDay::truncateTable();
+
+         modelPonderado::truncateTable();
+         
+         return self::getShowEffectiveness($request);
+        
+    }
+
+    public function deleteAtribute(Request $request){
+
+        $id_atribute = $request->id_atribute;
+
+        $delete = modelAtributes::deleteAtribute($id_atribute);
+        modelPonderado::deletePonderadosForId($id_atribute);
+
+        if($delete) return self::getShowEffectiveness($request);
+        else return response()->json(["status" => false]);
+
+    }
+
+
+    public function editPorcentaje(Request $request){
+
+
+        $id_atribute = $request->id_atribute;
+        $porcentaje_ponderado = $request->porcentaje;
+
+        $edit = modelAtributes::editAtributes($id_atribute, $porcentaje_ponderado);
+
+        if($edit) return self::getShowEffectiveness($request);
+        else return response()->json(["status" => false]);
 
     }
 }

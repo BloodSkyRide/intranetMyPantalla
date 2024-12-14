@@ -303,7 +303,7 @@
                             <a class="nav-link menu_dashboard"
                                 onclick="getShowEffectiveness('{{route('getShowEffectiveness')}}')"
                                 type="button" id="payroll_nav">
-                                <i class="fa-solid fa-dollar-sign"></i>&nbsp;&nbsp;
+                                <i class="fa-solid fa-chart-pie"></i>&nbsp;&nbsp;
                                 <p>
                                     Efectividad
                                 </p>

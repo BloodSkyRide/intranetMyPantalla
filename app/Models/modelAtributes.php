@@ -43,4 +43,20 @@ class modelAtributes extends Model
         ->select("id_atributo")
         ->first();
     }
+
+
+    public static function deleteAtribute($id_atribute){
+
+        return self::where("id_atributo", $id_atribute)
+        ->delete();
+
+    }
+
+
+    public static function editAtributes($id_atribute, $porcentaje){
+
+
+        return self::where("id_atributo", $id_atribute)
+        ->update([ "porcentaje_efectividad" => $porcentaje]);
+    }
 }

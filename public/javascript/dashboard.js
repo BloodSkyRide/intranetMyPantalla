@@ -4,21 +4,21 @@ Pusher.logToConsole = true;
 var echo = new Echo({
     broadcaster: "pusher",
     cluster: "mt1",
-    key: "bpdvgnj5xhzhmryrmd2t", // cambiar por la key generada en el archivo .env REVERB_APP_KEY, si se desea cambiar se puede usar php artisan reverb:install
-    wsHost: "3.142.123.202",
-    wsPort: 8081,
+    key: "bpdvgnj5xhzhmryrmd2t", // cambiar por la key generada en el archivo .env REVERB_APP_KEY, si se desea cambiar se puede usar php artisan reverb:install, php artisan reverb:start/ php artisan reverb queue:work
+    wsHost: "3.142.123.202", // ip de donde esta alojado el servidor
+    wsPort: 8081, // puerto en el que esta escuchando los eventos, por defecto viene 8080 se cambio a 8081, ya que el servidor utiliza ese puerto para otro servicio
     forceTLS: false,
-    enabledTransports: ["ws", "wss"], // Solo WebSockets ws:http wss: https
+    enabledTransports: ["ws", "wss"], // Solo WebSockets ws:http wss: https depende de la configuracion del server usar uno u otro segun la seguruidad de las peticion http
     disabledTransports: ["xhr_polling", "xhr_streaming"], // Deshabilita otras opciones y evita el cors
     auth: {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Reemplaza con tu token real
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Reemplazar con el token guardado en el navegador, si se usa token sino no es necesario el auth
         },
     },
 });
 
 echo.channel("realtime-channel") // El nombre del canal debe coincidir con lo que usas en el backend
-    .listen(".eventNotifications", function (data) {
+    .listen(".eventNotifications", function (data) { // tener en cuenta que al utilizar el nombre del canal, siempre deben llamarse atecedidos por el punto, sino no funcionara
         let role = document.getElementById("role_h1").textContent;
 
         if (role === "administrador") {
@@ -62,7 +62,7 @@ function playNotificationSound() {
     }
 }
 
-//////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////// LOGICA APLICACION
 
 $(document).ready(function () {
     $("#register_nav").trigger("click");
@@ -1946,14 +1946,12 @@ async function insertAtribute(url) {
 
     let data = await response.json();
 
-    if (data.status) {
-        console.log("atributo creado con exito");
 
-        Swal.fire({
-            title: "¡Excelente!",
-            text: "¡¡Solicitud enviada correctamente!!",
-            icon: "success",
-        });
+    if (data.status) {
+        $("#modal_efectiveness").modal("hide");
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+        checkboxesEfectiveness(data);
     }
 }
 
@@ -1997,10 +1995,139 @@ async function saveDay(url) {
 
     if (data.status) {
 
+
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+
         Swal.fire({
             title: "¡Excelente!",
             text: "¡¡Los los atributos han sido guardados!!",
             icon: "success",
         });
+
+        checkboxesEfectiveness(data);
+    }
+}
+
+async function resetPonderados(url){
+
+    const token = localStorage.getItem("access_token");
+    let response = await fetch(url,{
+
+        method: "DELETE",
+        headers:{
+
+            "Content-Type": "Application/json",
+            "Authorization": `Bearer ${token}`
+        }
+
+    });
+
+    let data = await response.json();
+
+
+    if(data.status){
+
+        $("#modal_answer").modal("hide");
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+
+    }
+
+}
+
+
+async function deleteAtribute(url){
+
+    let selector = document.getElementById("selector_atribute");
+
+
+    const token = localStorage.getItem("access_token");
+
+    let response = await fetch(url,{
+        method: "Delete",
+        headers:{
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+
+            id_atribute: selector.value
+
+        })
+
+    })
+
+    let data = await response.json();
+
+    if(data.status){
+
+        $("#modal_efectiveness").modal("hide");
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+        checkboxesEfectiveness(data);
+    }
+
+}
+
+async function editAtriubte(url){
+
+    const  token = localStorage.getItem("access_token");
+    let selector = document.getElementById("selector_atribute");
+    let porcentaje = document.getElementById("%_efectiveness");
+
+    let response  = await fetch(url,{
+
+        method: "PUT",
+        headers: {
+
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+
+            id_atribute: selector.value,
+            porcentaje: porcentaje.value
+
+        })
+    });
+
+
+    let data = await response.json();
+
+
+    if(data.status){
+
+        $("#modal_efectiveness").modal("hide");
+        let element_container = document.getElementById("container_menu");
+        element_container.innerHTML = data.html;
+        checkboxesEfectiveness(data);
+
+    }
+}
+
+
+function checkboxesEfectiveness(data){
+
+
+    let checkboxes = data.checkboxes;
+        
+    let checks = document.querySelectorAll("#checkbox_efectividad");
+    
+    for(let i = 0; i < checks.length; i++){
+        
+        
+        for(let j = 0; j < checkboxes.length; j++){
+            
+            dates = ((checks[i].dataset.date).normalize("NFD").replace(/[\u0300-\u036f]/g, "")).toLowerCase();
+            
+            
+            if(dates === checkboxes[j]){
+
+                checks[i].checked = true;
+            }
+
+        }
     }
 }
