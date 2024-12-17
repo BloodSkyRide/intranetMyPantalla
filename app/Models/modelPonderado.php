@@ -60,4 +60,11 @@ class modelPonderado extends Model
         ->delete();
 
     }
+
+    public static function getPorcentageUser($id_user){
+
+        return self::where("id_user", $id_user)
+        ->get();
+
+    }
 }

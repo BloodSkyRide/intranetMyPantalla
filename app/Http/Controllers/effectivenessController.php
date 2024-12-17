@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 use App\Models\modelUser;
 use App\Models\modelAtributes;
-use App\Models\modelSaveDay;
 use App\Models\modelPonderado;
+use App\Models\modelSaveDay;
+use App\Models\modelPonderadoFinal;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -13,14 +15,11 @@ class effectivenessController extends Controller
 {
 
 
-
     private function separateAndSave($array_columns){
-
+        
         $registers = modelSaveDay::getIdUser();
 
         foreach($array_columns as $column => $values){
-
-            
 
             foreach($registers as $register){
 
@@ -48,6 +47,7 @@ class effectivenessController extends Controller
 
                 }
 
+
                 $calculate_unit = ($porcentaje_ponderado / 7);
 
                 
@@ -57,18 +57,16 @@ class effectivenessController extends Controller
 
                 
                 $verify_registers = modelPonderado::verifyRegisters($id_user,$column); // obtiene todos los registros con el id del user y la columna en la que esta iterando
-
-                
                 
                  if(count($verify_registers) < 1){ // aca verifica que si no existe ningun registro entonces lo crea
 
                      $data_insert = ["id_user" => $id_user, "nombre_user" => $nombre_user, "id_atributo" => $id_atributo, "nombre_atributo_ponderado" => $nombre_atributo_ponderado, "ponderado" => $number_format];
      
-                     $insert = modelPonderado::insertDataPonderado($data_insert);
+                     modelPonderado::insertDataPonderado($data_insert);
 
                  }else { // sino entonces actualiza el que ya haya existente
 
-                    $edit = modelPonderado::editExists($id_user, $column, $number_format);
+                     modelPonderado::editExists($id_user, $column, $number_format);
                  }
 
             }
@@ -81,8 +79,6 @@ class effectivenessController extends Controller
     private function savePonderados(){
         // funcion que obtiene todo lo que hay en la tabla y organiza en un array por columnas los atributos
         $data = self::getDataBaseDate();
-
-        
 
         $data_atributes = modelAtributes::getColumnsAtributes();
 
@@ -115,11 +111,7 @@ class effectivenessController extends Controller
 
         }
 
-        
-        
-        // dd($array_columns);
-        self::separateAndSave($array_columns);
-        
+        self::separateAndSave($array_columns);   
 }
 
     private function getDataBaseDate(){
@@ -136,10 +128,11 @@ class effectivenessController extends Controller
         $aux_jueves = explode("/", $dato["jueves"]);
         $aux_viernes = explode("/", $dato["viernes"]);
         $aux_sabado = explode("/", $dato["sabado"]);
-        $aux_viernes = explode("/", $dato["viernes"]);
+        $aux_domingo = explode("/", $dato["domingo"]);
 
-        $aux_array = [$aux_lunes, $aux_martes, $aux_miercoles, $aux_jueves, $aux_viernes, $aux_sabado, $aux_viernes]; // metemos los 7 arrays de los 7 dias de la semana en otro array
+        $aux_array = [$aux_lunes, $aux_martes, $aux_miercoles, $aux_jueves, $aux_viernes, $aux_sabado, $aux_domingo]; // metemos los 7 arrays de los 7 dias de la semana en otro array
 
+        
         for($i = 0; $i < count($aux_array); $i++){ // ahora empezamos un bucle que vaya de 0 a a la longitud del array que contiene los arrays de los dias, es decir 7
 
             if(!isset($aux_array[$i])) continue; // preguntamos si alguno de esos array es null ya que si empeza el lunes los demas dias seran null, si es null entonces salta a la siguiente iteracion, sino salta al siguiente bucle
@@ -177,10 +170,11 @@ class effectivenessController extends Controller
         $ponderados = modelPonderado::getAllPonderados();
         
         $get_columns = modelAtributes::getColumnsAtributes();
-        
+        $fecha = Carbon::now()->subDays(30)->format("Y-m-d");
         $users = modelUser::getNamdeAndId();
+        $porcentages_end = modelPonderadoFinal::getAllDataForDate($fecha);
         
-        $render = view("menuDashboard.effectiveness", ["atributos" => $get_columns, "users" => $users, "ponderados" => $ponderados, "rol" => $rol])->render();
+        $render = view("menuDashboard.effectiveness", ["atributos" => $get_columns, "users" => $users, "ponderados" => $ponderados, "rol" => $rol, "finales" => $porcentages_end])->render();
 
         $checkboxes = self::getDataBaseDate();
 
@@ -208,11 +202,34 @@ class effectivenessController extends Controller
     }
 
 
-    public function insertAtribute(Request $request){
+    private function calculateLimitPorcentaje(){
 
+        $porcentages = modelAtributes::getColumnsAtributes();
+
+        $total_porcentages = 0;
+
+        foreach($porcentages as $porcentage){
+
+            $total_porcentages += $porcentage['porcentaje_efectividad'];
+
+        }
+
+        $free = 100 - $total_porcentages;
+
+        return $free;
+
+    }
+
+    public function insertAtribute(Request $request){
+        
+       $porcentaje = $request->porcentaje;
+       $verify_porcentage =  self::calculateLimitPorcentaje();
+
+
+
+       if($porcentaje <= $verify_porcentage){
 
         $name_atribute = $request->name;
-        $porcentaje = $request->porcentaje;
         $today = date("Y-m-d");
 
         $data = ["nombre_atributo" => $name_atribute, "porcentaje_efectividad" => $porcentaje, "fecha" => $today];
@@ -222,6 +239,11 @@ class effectivenessController extends Controller
         if($insert) return self::getShowEffectiveness($request);
         else return response()->json(["status" => false]);
 
+       }else{
+
+        return response()->json(["status" => "limit", "message" => "El total de atributos supera el 100%, actualmente hay disponible ".$verify_porcentage."%"]);
+
+       }
     }
 
 
@@ -302,13 +324,50 @@ class effectivenessController extends Controller
     }
 
 
+    private function savePorcentagesEnd(){
+
+        $all_users_porcentages = modelSaveDay::getAllUsersPorcentages();
+        $hoy = date("Y-m-d");
+        $flagg = 0;
+
+        foreach($all_users_porcentages as $item){
+            $flagg ++;
+            $id_user = $item['id_user'];
+            $user_porcentage = modelPonderado::getPorcentageUser($id_user);
+            $sum = 0;
+            $name_user = modelUser::getName($id_user)->nombre;
+            $last_name = modelUser::getLastName($id_user)->apellido;
+
+
+            foreach($user_porcentage as $end){
+                
+                $sum += $end['ponderado'];
+                
+            }
+            
+            $data_insert = ["id_user" => $id_user, "nombre_user" => $name_user, "apellido_user" => $last_name, "ponderado_final" => $sum, "fecha" => $hoy];
+
+            modelPonderadoFinal::insertDataEnd($data_insert);
+
+        }
+
+        return ($flagg === count($all_users_porcentages)) ? true : false;
+
+    }
+
+
     public function resetPonderados(Request $request){
+        $final_porcentage = self::savePorcentagesEnd();
 
-         modelSaveDay::truncateTable();
+        if($final_porcentage){
 
-         modelPonderado::truncateTable();
-         
-         return self::getShowEffectiveness($request);
+            modelSaveDay::truncateTable();
+
+            modelPonderado::truncateTable();
+            
+            return self::getShowEffectiveness($request);
+        }else return response()->json(["message" => "no se pudo guardar el ponderado final"]);
+
         
     }
 

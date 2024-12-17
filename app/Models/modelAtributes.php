@@ -55,7 +55,6 @@ class modelAtributes extends Model
 
     public static function editAtributes($id_atribute, $porcentaje){
 
-
         return self::where("id_atributo", $id_atribute)
         ->update([ "porcentaje_efectividad" => $porcentaje]);
     }

@@ -10,13 +10,15 @@ use App\Models\modelUser;
 use App\Models\modelSubLabores;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
-use PhpParser\Node\Stmt\TryCatch;
 use App\Models\modelAssits;
 use Carbon\Carbon;
 use App\Models\modelShedule;
 use App\Models\modelOverTime;
 use App\Events\RealtimeEvent;
-use function Termwind\render;
+use App\Models\modelAtributes;
+use App\Models\modelPonderado;
+use App\Models\modelSaveDay;
+use App\Models\modelPonderadoFinal;
 
 class dashboardController extends Controller
 {
@@ -385,14 +387,105 @@ class dashboardController extends Controller
 
     }
 
-    public function getShowNotices(){
+    private function getDataBaseDate(){
+
+        $data =  modelSaveDay::getAtributes(); // se obtiene todos los registros que hay en base de datos, es decir de cada persona, de lunes a domingo
+ 
+        $array = [];
+ 
+        foreach($data as $dato){ // se recorre cada registros
+ 
+         $aux_lunes = explode("/", $dato["lunes"]); // en cada variable separamos en un array con el separador "/" 
+         $aux_martes = explode("/", $dato["martes"]);
+         $aux_miercoles = explode("/", $dato["miercoles"]);
+         $aux_jueves = explode("/", $dato["jueves"]);
+         $aux_viernes = explode("/", $dato["viernes"]);
+         $aux_sabado = explode("/", $dato["sabado"]);
+         $aux_domingo = explode("/", $dato["domingo"]);
+ 
+         $aux_array = [$aux_lunes, $aux_martes, $aux_miercoles, $aux_jueves, $aux_viernes, $aux_sabado, $aux_domingo]; // metemos los 7 arrays de los 7 dias de la semana en otro array
+ 
+         
+         for($i = 0; $i < count($aux_array); $i++){ // ahora empezamos un bucle que vaya de 0 a a la longitud del array que contiene los arrays de los dias, es decir 7
+ 
+             if(!isset($aux_array[$i])) continue; // preguntamos si alguno de esos array es null ya que si empeza el lunes los demas dias seran null, si es null entonces salta a la siguiente iteracion, sino salta al siguiente bucle
+ 
+ 
+             for($j = 0; $j < count($aux_array[$i]); $j++){ //como el dia que itero no es null, entonces iteramos por la cantidad de particiones que tiene el array de arrays
+ 
+                 // print($aux_array[$j]);
+ 
+                 if($aux_array[$i][$j] === "") continue; // al utilizar la funcion explode nos va a crear un elemento vacio, por eso preguntamos si dentro de ese array de arrays esta vacio entonces salta a la siguiente iteracion
+ 
+                 array_push($array, $aux_array[$i][$j]); // si el elemento no esta vacio añade el string al array final
+ 
+             }
+ 
+         }
+ 
+        }
+ 
+        return $array;
+ 
+     }
 
 
+     private function savePorcentagesEnd(){
 
-        $render = view("menuDashboard.notices",)->render();
+        $all_users_porcentages = modelSaveDay::getAllUsersPorcentages();
+        $array = [];
+
+        foreach($all_users_porcentages as $item){
+
+            $id_user = $item['id_user'];
+            $user_porcentage = modelPonderado::getPorcentageUser($id_user);
+            $sum = 0;
 
 
-        return response()->json(["status" => true, "html" => $render]);
+            foreach($user_porcentage as $end){
+                
+                $sum += $end['ponderado'];
+                
+            }
+
+
+            array_push($array,[
+
+                "id_user" => $id_user,
+                "ponderado_suma" => $sum
+            ]);
+
+        }
+
+        return $array;
+    }
+
+
+    public function getShowNotices(Request $request){
+
+        $token = $request->header("Authorization");
+
+        $replace = str_replace("Bearer ", "", $token);
+
+        $decode_token = JWTAuth::setToken($replace)->authenticate();
+
+        $rol = $decode_token["rol"];
+
+        $ponderados = modelPonderado::getAllPonderados();
+        
+        $get_columns = modelAtributes::getColumnsAtributes();
+        
+        $users = modelUser::getNamdeAndId();
+
+        $porcentages_end = self::savePorcentagesEnd();
+
+        
+        
+        $render = view("menuDashboard.notices", ["atributos" => $get_columns, "users" => $users, "ponderados" => $ponderados, "rol" => $rol, "porcentajes" => $porcentages_end])->render();
+
+        $checkboxes = self::getDataBaseDate();
+
+        return response()->json(["status" => true, "html" => $render, "checkboxes" => $checkboxes]);
     }
 
     public function getShowOverTime(Request $request){

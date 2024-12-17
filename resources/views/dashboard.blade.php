@@ -273,6 +273,17 @@
                                     </p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link menu_dashboard"
+                                    onclick="getShowEffectiveness('{{route('getShowEffectiveness')}}')"
+                                    type="button" id="payroll_nav">
+                                    <i class="fa-solid fa-chart-pie"></i>&nbsp;&nbsp;
+                                    <p>
+                                        Efectividad
+                                    </p>
+                                </a>
+                            </li>
                         @else
                             <li class="nav-item">
                                 <a class="nav-link menu_dashboard" type="button"
@@ -297,18 +308,6 @@
 
 
                         @endif
-
-
-                        <li class="nav-item">
-                            <a class="nav-link menu_dashboard"
-                                onclick="getShowEffectiveness('{{route('getShowEffectiveness')}}')"
-                                type="button" id="payroll_nav">
-                                <i class="fa-solid fa-chart-pie"></i>&nbsp;&nbsp;
-                                <p>
-                                    Efectividad
-                                </p>
-                            </a>
-                        </li>
 
                     </ul>
                 </nav>
@@ -403,7 +402,6 @@
 
     <!-- Toastr -->
     <script src="{{ asset('javascript/plugins/toastr/toastr.min.js') }}"></script>
-
     {{-- DATATABLES --}}
     <script src="{{ asset('javascript/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('javascript/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>

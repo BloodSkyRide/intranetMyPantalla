@@ -43,7 +43,7 @@ function startChannelPrivate(id_user) {
         playNotificationSound();
 
         let text_class = data.state === "Aceptado" ? "bg-success" : "bg-danger";
-        console.log(text_class);
+
         $(document).Toasts("create", {
             class: text_class,
             title: "Respuesta de administración",
@@ -79,7 +79,6 @@ async function register_user(url) {
         },
     }).done(function (res) {
         if (res.status) {
-            console.log("entro aqui a depurar el status");
             let element_container = document.getElementById("container_menu");
             element_container.innerHTML = res.html;
         }
@@ -131,7 +130,7 @@ async function sendUser(url) {
 }
 
 async function showManageLabor(url) {
-    console.log("ruta" + url);
+
     const token = localStorage.getItem("access_token");
     let response = await fetch(url, {
         method: "GET",
@@ -243,7 +242,6 @@ function deleteSubLaborsDashborad() {
 }
 
 async function delteSubLaborTable(url) {
-    console.log("hola");
     let column_subgroups = document.querySelectorAll(
         `td > div.div_checknox > input[type="checkbox"]:checked`
     );
@@ -253,8 +251,6 @@ async function delteSubLaborTable(url) {
     column_subgroups.forEach((node) => {
         array.push(node.value);
     });
-
-    console.log(column_subgroups);
 
     const token = localStorage.getItem("access_token");
 
@@ -271,7 +267,6 @@ async function delteSubLaborTable(url) {
 
     if (response.status) {
         let data = await response.json();
-        console.log("el tipo es: " + typeof data);
 
         let element_container = document.getElementById("container_menu");
 
@@ -299,7 +294,6 @@ async function createLabor(url) {
 
     if (response.status) {
         let data = await response.json();
-        console.log("el tipo es: " + typeof data);
 
         let element_container = document.getElementById("container_menu");
 
@@ -331,7 +325,6 @@ function initializeDataTable() {
 
 async function getShowLabors(url) {
     const token = localStorage.getItem("access_token");
-    console.log("recupero token*: " + token);
     let response = await fetch(url, {
         method: "GET",
         headers: {
@@ -342,13 +335,11 @@ async function getShowLabors(url) {
     let data = await response.json();
 
     if (data.status) {
-        console.log("el tipo es: " + typeof data);
 
         let element_container = document.getElementById("container_menu");
 
         element_container.innerHTML = data.html;
     } else {
-        console.log("entro a la jornada invalida!");
 
         Swal.fire({
             title: "¡Uuuuups!",
@@ -370,7 +361,6 @@ async function getShowAssists(url) {
 
     if (response.status) {
         let data = await response.json();
-        console.log("el tipo es: " + typeof data);
 
         let element_container = document.getElementById("container_menu");
 
@@ -461,7 +451,6 @@ async function sendModalAccept(url) {
         await retardo(iterator);
 
         iterator--;
-        console.log("el iterador es: " + iterator);
         if (iterator === 0) {
             button.innerHTML = `<i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;Confirmar`;
             button.removeAttribute("disabled");
@@ -470,7 +459,6 @@ async function sendModalAccept(url) {
 
     if (response.status) {
         let data = await response.json();
-        console.log("el tipo es: " + typeof data);
 
         let element_container = document.getElementById("container_menu");
 
@@ -491,7 +479,6 @@ async function verifyHomeWorks(url) {
 
     result.forEach((node, index) => {
         checked.push(node.value);
-        console.log("depuracion" + node.value);
     });
 
     let response = await fetch(url, {
@@ -507,7 +494,6 @@ async function verifyHomeWorks(url) {
 
     if (response.status) {
         let data = await response.json();
-        console.log("el tipo es: " + typeof data);
 
         let element_container = document.getElementById("container_menu");
 
@@ -579,8 +565,6 @@ async function getViewHistoryLabors(url) {
     if (response.status) {
         let data = await response.json();
 
-        console.log("el tipo es: " + typeof response);
-
         let element_container = document.getElementById("container_menu");
 
         element_container.innerHTML = data.html;
@@ -634,7 +618,6 @@ async function searchForRange(url) {
     let data = await response.json();
 
     if (data.status) {
-        console.log("el tipo es: " + typeof response);
 
         let element_container = document.getElementById("container_menu");
 
@@ -687,7 +670,6 @@ async function searcherText(url) {
     let data = await response.json();
 
     if (data.status) {
-        console.log("el tipo es: " + typeof response);
 
         let element_container = document.getElementById("container_menu");
 
@@ -777,7 +759,6 @@ async function getShowReportAssists(url) {
 async function getShowAdminUsers(url) {
     const token = localStorage.getItem("access_token");
 
-    console.log("el token es" + token);
 
     let response = await fetch(url, {
         method: "GET",
@@ -1160,7 +1141,7 @@ async function secures(url) {
     let data = await response.json();
 
     if (data.status) {
-        console.log("cambios realizados!");
+
     }
 }
 
@@ -1209,10 +1190,7 @@ async function changePassword(url) {
         let data = await response.json();
 
         if (data.status) {
-            console.log("entro aqui en statuajhdbjasbdkjbdhb");
-
             localStorage.removeItem("access_token");
-
             window.location.href = "./";
         }
     } else {
@@ -1225,7 +1203,6 @@ async function changePassword(url) {
 }
 
 function verifyPasswords(pass1, pass2) {
-    console.log("verifico password string");
 
     return pass1 === pass2 ? true : false;
 }
@@ -1265,6 +1242,7 @@ async function getShowNotices(url) {
     if (data.status) {
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
+        checkboxesEfectivenessDisabled(data);
     }
 }
 
@@ -1272,8 +1250,6 @@ async function searchRangeAssist() {
     const token = localStorage.getItem("access_token");
 
     let rango = document.getElementById("rango_fecha").value;
-
-    console.log("el rango elegido es: " + rango);
 
     let convert_date = new Date(rango);
 
@@ -1284,8 +1260,6 @@ async function searchRangeAssist() {
     });
 
     let format_range = fecha_f.replaceAll("/", "-");
-
-    console.log("el rango elegido es2: " + format_range);
 
     let response = await fetch("../showrangeassists/?rango=" + format_range, {
         method: "GET",
@@ -1298,7 +1272,7 @@ async function searchRangeAssist() {
     let data = await response.json();
 
     if (data.status) {
-        console.log("nueva actualizacion");
+
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
 
@@ -1431,8 +1405,6 @@ async function insertSchedule(url) {
                 let element_container =
                     document.getElementById("container_menu");
                 element_container.innerHTML = data.html;
-
-                console.log("retorno");
 
                 const scripts = element_container.querySelectorAll("script");
 
@@ -1598,8 +1570,6 @@ async function deleteClear(url, cedula, dia) {
 async function getShowPayroll(url) {
     const token = localStorage.getItem("access_token");
 
-    console.log("depuracion aca: " + url);
-
     let response = await fetch(url, {
         method: "GET",
         headers: {
@@ -1698,7 +1668,6 @@ async function sendPdf(url) {
     }
 
     function collectPayRolls(iterations) {
-        console.log("las iteraciones son: " + iterations);
 
         let array = [];
 
@@ -1706,7 +1675,6 @@ async function sendPdf(url) {
             let elemento = document.getElementById(`input_pdf${i}`);
 
             if (elemento.files.length > 0) {
-                console.log("hola mundo");
                 let element = elemento.files[0];
                 let data = elemento.dataset.code;
 
@@ -1875,29 +1843,27 @@ async function getShowEffectiveness(url) {
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
 
-        
-
-        // $("#table_efectiveness").DataTable({
-        //     // Desactiva la paginación para mostrar todos los nodos
-        //     info: true,
-        //     responsive: true,
-        //     // order: [[0, "asc"]],
-        //     lengthChange: false,
-        //     autoWidth: false,
-        //     buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        //     language: {
-        //         search: "Buscar en la tabla:",
-        //         lengthMenu: "Mostrar _MENU_ registros",
-        //         info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-        //         paginate: {
-        //             first: "Primero",
-        //             last: "Último",
-        //             next: "Siguiente",
-        //             previous: "Anterior",
-        //         },
-        //         emptyTable: "No hay datos disponibles",
-        //     },
-        // });
+        $("#table_ponderado_final").DataTable({
+            // Desactiva la paginación para mostrar todos los nodos
+            info: true,
+            responsive: true,
+            order: [[2, "desc"]],
+            lengthChange: false,
+            autoWidth: false,
+            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            language: {
+                search: "Buscar en la tabla:",
+                lengthMenu: "Mostrar _MENU_ registros",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior",
+                },
+                emptyTable: "No hay datos disponibles",
+            },
+        });
 
         let checkboxes = data.checkboxes;
         
@@ -1912,7 +1878,6 @@ async function getShowEffectiveness(url) {
                 
                 
                 if(dates === checkboxes[j]){
-                    console.log("cincidencias");
                     checks[i].checked = true;
                 }
 
@@ -1929,6 +1894,22 @@ function openModalEfectivesness() {
 async function insertAtribute(url) {
     let name = document.getElementById("atribute");
     let porcentaje = document.getElementById("%_efectiveness");
+
+    if(porcentaje.value < 0){
+
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+        Toast.fire({
+            icon: 'error',
+            title: '¡No puedes ingresar valores negativos!'
+          })
+        return 0;
+    }
 
     const token = localStorage.getItem("access_token");
     let response = await fetch(url, {
@@ -1947,11 +1928,24 @@ async function insertAtribute(url) {
     let data = await response.json();
 
 
-    if (data.status) {
+    if (data.status === true) {
         $("#modal_efectiveness").modal("hide");
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
         checkboxesEfectiveness(data);
+    }
+    else if(data.status === "limit"){
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 7000
+          });
+
+        Toast.fire({
+            icon: 'warning',
+            title: data.message
+          })
     }
 }
 
@@ -1969,7 +1963,6 @@ function collectResults() {
         }
     });
 
-    console.log(array);
     return array;
 }
 
@@ -2030,8 +2023,19 @@ async function resetPonderados(url){
 
         $("#modal_answer").modal("hide");
         let element_container = document.getElementById("container_menu");
-        element_container.innerHTML = data.html;
+        element_container.innerHTML = data.html; 
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500
+          });
 
+
+          Toast.fire({
+            icon: 'success',
+            title: "¡Los ponderados fuerón resetiados y guardados correctamente!"
+          })
     }
 
 }
@@ -2126,6 +2130,31 @@ function checkboxesEfectiveness(data){
             if(dates === checkboxes[j]){
 
                 checks[i].checked = true;
+            }
+
+        }
+    }
+}
+
+function checkboxesEfectivenessDisabled(data){
+
+
+    let checkboxes = data.checkboxes;
+        
+    let checks = document.querySelectorAll("#checkbox_efectividad");
+    
+    for(let i = 0; i < checks.length; i++){
+        
+        
+        for(let j = 0; j < checkboxes.length; j++){
+            
+            dates = ((checks[i].dataset.date).normalize("NFD").replace(/[\u0300-\u036f]/g, "")).toLowerCase();
+            
+            
+            if(dates === checkboxes[j]){
+
+                checks[i].checked = true;
+                checks[i].disabled = true;
             }
 
         }

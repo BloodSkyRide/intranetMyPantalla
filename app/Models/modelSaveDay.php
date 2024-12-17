@@ -71,6 +71,13 @@ class modelSaveDay extends Model
     }
 
 
+    public static function getAllUsersPorcentages(){
+
+        return self::select("id_user", "nombre_user")->get();
+
+    }
+
+
 
 
 }
