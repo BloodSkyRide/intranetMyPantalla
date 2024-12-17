@@ -1865,24 +1865,7 @@ async function getShowEffectiveness(url) {
             },
         });
 
-        let checkboxes = data.checkboxes;
-        
-        let checks = document.querySelectorAll("#checkbox_efectividad");
-        
-        for(let i = 0; i < checks.length; i++){
-            
-            
-            for(let j = 0; j < checkboxes.length; j++){
-                
-                dates = ((checks[i].dataset.date).normalize("NFD").replace(/[\u0300-\u036f]/g, "")).toLowerCase();
-                
-                
-                if(dates === checkboxes[j]){
-                    checks[i].checked = true;
-                }
-
-            }
-        }
+        checkboxesEfectiveness(data);
 
     }
 }
@@ -2124,7 +2107,7 @@ function checkboxesEfectiveness(data){
         
         for(let j = 0; j < checkboxes.length; j++){
             
-            dates = ((checks[i].dataset.date).normalize("NFD").replace(/[\u0300-\u036f]/g, "")).toLowerCase();
+          let  dates = ((checks[i].dataset.date).normalize("NFD").replace(/[\u0300-\u036f]/g, "")).toLowerCase();
             
             
             if(dates === checkboxes[j]){
@@ -2136,27 +2119,3 @@ function checkboxesEfectiveness(data){
     }
 }
 
-function checkboxesEfectivenessDisabled(data){
-
-
-    let checkboxes = data.checkboxes;
-        
-    let checks = document.querySelectorAll("#checkbox_efectividad");
-    
-    for(let i = 0; i < checks.length; i++){
-        
-        
-        for(let j = 0; j < checkboxes.length; j++){
-            
-            dates = ((checks[i].dataset.date).normalize("NFD").replace(/[\u0300-\u036f]/g, "")).toLowerCase();
-            
-            
-            if(dates === checkboxes[j]){
-
-                checks[i].checked = true;
-                checks[i].disabled = true;
-            }
-
-        }
-    }
-}

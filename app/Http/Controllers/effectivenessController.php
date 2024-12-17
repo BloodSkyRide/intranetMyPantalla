@@ -317,8 +317,6 @@ class effectivenessController extends Controller
 
         }
 
-        
-
         return ($flagg === $long) ? true : false;
 
     }
