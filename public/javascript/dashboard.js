@@ -2097,12 +2097,9 @@ async function editAtriubte(url){
 
 function checkboxesEfectiveness(data){
 
-
     let checkboxes = data.checkboxes;
         
     let checks = document.querySelectorAll("#checkbox_efectividad");
-
-    let depuration = [];
     
     for(let i = 0; i < checks.length; i++){
         
@@ -2110,15 +2107,13 @@ function checkboxesEfectiveness(data){
         
         for(let j = 0; j < checkboxes.length; j++){
             
-            depuration.push(dates);
-            if(dates === checkboxes[j]){
+
+            if(dates == checkboxes[j]){
 
                 checks[i].checked = true;
             }
 
         }
     }
-
-    console.log(depuration);
 }
 

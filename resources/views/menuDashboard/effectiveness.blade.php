@@ -30,7 +30,7 @@
                             @foreach ($atributos as $atributo)
                                 <th style="position: sticky; top: 0; z-index: 1;">
                                     <center><i
-                                            class="fa-brands fa-creative-commons-by"></i>&nbsp;&nbsp;{{ $atributo['nombre_atributo'] }}
+                                            class="fa-brands fa-creative-commons-by"></i>&nbsp;&nbsp;{{ ucfirst($atributo['nombre_atributo']) }}
                                         <br> <span
                                             class="badge badge-info">{{ $atributo['porcentaje_efectividad'] }}%</span>
                                     </center>

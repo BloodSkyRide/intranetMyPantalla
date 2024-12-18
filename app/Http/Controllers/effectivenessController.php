@@ -232,7 +232,7 @@ class effectivenessController extends Controller
         $name_atribute = $request->name;
         $today = date("Y-m-d");
 
-        $data = ["nombre_atributo" => $name_atribute, "porcentaje_efectividad" => $porcentaje, "fecha" => $today];
+        $data = ["nombre_atributo" => strtolower($name_atribute), "porcentaje_efectividad" => $porcentaje, "fecha" => $today];
 
         $insert = modelAtributes::insertAtribute($data);
 
