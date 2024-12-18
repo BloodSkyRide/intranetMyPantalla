@@ -59,7 +59,6 @@
 
                             <td><a type="button" data-toggle="modal" onclick="openModalState(`{{$notification['nombre']}}`, `{{$notification['apellido']}}`, `{{$notification['id_notificacion']}}`, `{{$notification['id_user']}}`, `{{$function}}`)"><span class="{{$span}}">{{$notification["estado"]}}</span></a></td>
                           </tr>
-                          <tr>
                             
                         @endforeach
 
