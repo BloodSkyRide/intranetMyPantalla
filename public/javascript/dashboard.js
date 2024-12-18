@@ -1585,6 +1585,7 @@ async function getShowPayroll(url) {
 
         $("#table_payroll").DataTable({
             // Desactiva la paginación para mostrar todos los nodos
+            paging: false,
             info: true,
             responsive: true,
             order: [[0, "asc"]],
