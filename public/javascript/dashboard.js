@@ -2119,5 +2119,7 @@ function checkboxesEfectiveness(data){
 
         }
     }
+
+    console.log(depuration);
 }
 
