@@ -1242,7 +1242,6 @@ async function getShowNotices(url) {
     if (data.status) {
         let element_container = document.getElementById("container_menu");
         element_container.innerHTML = data.html;
-        checkboxesEfectivenessDisabled(data);
     }
 }
 
@@ -1630,7 +1629,10 @@ async function getHistoryPayRoll(url, cedula) {
 async function sendPdf(url) {
     let nodes_renderized = verifyNodes();
 
+    console.log("cantidad de nodos: "+nodes_renderized);
+
     let pdfs = collectPayRolls(nodes_renderized);
+    console.log(pdfs);
 
     const token = localStorage.getItem("access_token");
 

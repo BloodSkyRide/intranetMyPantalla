@@ -88,6 +88,8 @@ class payrollController extends Controller
 
         $pdfs = $request->allFiles();
 
+        
+
         $names_pdfs_array = self::savePdf($pdfs);
 
 
@@ -143,11 +145,10 @@ class payrollController extends Controller
                     }
     
                 }
-
-                
-
-                return ($validation ===  count($array_pdf)) ? true: false;
             }
+            
+
+            return ($validation ===  count($array_pdf)) ? true: false;
         } catch (\Exception $e) {
             
 
