@@ -2101,6 +2101,8 @@ function checkboxesEfectiveness(data){
     let checkboxes = data.checkboxes;
         
     let checks = document.querySelectorAll("#checkbox_efectividad");
+
+    let depuration = [];
     
     for(let i = 0; i < checks.length; i++){
         
@@ -2109,7 +2111,7 @@ function checkboxesEfectiveness(data){
             
           let  dates = ((checks[i].dataset.date).normalize("NFD").replace(/[\u0300-\u036f]/g, "")).toLowerCase();
             
-            
+            depuration.push(dates);
             if(dates === checkboxes[j]){
 
                 checks[i].checked = true;
