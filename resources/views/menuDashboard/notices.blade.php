@@ -70,10 +70,10 @@
                                     <center>
                                         @if ($user['cedula'] == $ponderado['id_user'])
                                             @if ($ponderado['ponderado'] > 0)
-                                                {{ $ponderado['nombre_atributo_ponderado'] }}: <span
+                                                {{ ucfirst($ponderado['nombre_atributo_ponderado']) }}: <span
                                                     class="badge badge-info">{{ $ponderado['ponderado'] }} %</span><br>
                                             @else
-                                                {{ $ponderado['nombre_atributo_ponderado'] }}: <span
+                                                {{ ucfirst($ponderado['nombre_atributo_ponderado']) }}: <span
                                                     class="badge badge-danger">{{ $ponderado['ponderado'] }}
                                                     %</span><br>
                                             @endif
