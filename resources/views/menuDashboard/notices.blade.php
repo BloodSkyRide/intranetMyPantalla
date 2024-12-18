@@ -78,17 +78,17 @@
                                                     %</span><br>
                                             @endif
                                         @endif
+                                    </center>
                                     @endforeach
-                                </center>
                                 </th>
 
-                                @foreach ($porcentajes as $porcentaje)
-                                    @if ($porcentaje['id_user'] == $user['cedula'])
-                                        <th>
+                                <th>
+                                            @foreach ($porcentajes as $porcentaje)
+                                                @if ($porcentaje['id_user'] == $user['cedula'])
                                             <center><span class="badge badge-primary">{{ $porcentaje['ponderado_suma'] }} %</span></center>
+                                            @endif
+                                        @endforeach
                                         </th>
-                                    @endif
-                                @endforeach
 
                             </tr>
                         @endforeach
