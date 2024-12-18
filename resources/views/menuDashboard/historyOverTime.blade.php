@@ -16,7 +16,7 @@
 
             <div class="table-responsive">
 
-                <table class="table">
+                <table class="table" id="table_over_time">
                     <thead class="thead-dark">
                       <tr>
                         <th scope="col">Cédula</th>

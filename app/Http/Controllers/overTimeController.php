@@ -74,7 +74,8 @@ class overTimeController extends Controller
 
     public function getShowOverTimeAdmin(Request $request){
 
-        $notifications = modelOverTime::getAllNotifications();
+        $hoy = Carbon::now()->subDays(30)->format("Y-m-d");
+        $notifications = modelOverTime::getAllNotifications($hoy);
 
         $render = view("menuDashboard.historyOverTime",["notifications" => $notifications])->render();
 
@@ -93,8 +94,8 @@ class overTimeController extends Controller
         $change = modelOverTime::changeState($state_final, $id_notification);
 
         if($change){
-            
-            $notifications = modelOverTime::getAllNotifications();
+            $hoy = Carbon::now()->subDays(30)->format("Y-m-d");
+            $notifications = modelOverTime::getAllNotifications($hoy);
 
             $message = "Tu solicitud de horas extras fué $state_final!";
             $id_user = modelOverTime::getId_user($id_notification)->id_user;

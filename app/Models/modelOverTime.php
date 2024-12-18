@@ -21,9 +21,11 @@ class modelOverTime extends Model
     }
 
 
-    public static function getAllNotifications(){
-
-        return  self::orderBy("fecha_solicitud", "desc")->get();
+    public static function getAllNotifications($fecha){
+        
+        return  self::where("fecha_solicitud", ">=", $fecha)
+        ->orderBy("fecha_solicitud", "desc")
+        ->get();
 
     }
 
