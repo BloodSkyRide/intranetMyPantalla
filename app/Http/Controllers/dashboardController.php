@@ -497,7 +497,7 @@ class dashboardController extends Controller
         $decode_token = JWTAuth::setToken($replace)->authenticate();
         $id_user = $decode_token["cedula"];
 
-        $date_searcher =  Carbon::now()->subDays(7)->format('Y-m-d');
+        $date_searcher =  Carbon::now()->subDays(30)->format('Y-m-d');
 
         $data = modelOverTime::getMyRequest($id_user, $date_searcher);
 
