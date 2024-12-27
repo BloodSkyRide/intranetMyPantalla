@@ -21,7 +21,7 @@
 
                     
                     <div class="table-responsive">
-                <span class="text-secondary d-flex justify-content-start mt-2">Solo se aceptan documentos PDF (.pdf) con peso máximo de 5mb.</span>
+                <span class="text-secondary d-flex justify-content-start mt-2">Solo se aceptan imagenes (jpeg,png,jpg,gif,svg) con peso máximo de 2mb.</span>
 
                 <table class="table table-striped" id="table_payroll">
                     <thead class="thead-dark">
@@ -77,7 +77,7 @@
                                     <center>
 
                                             
-                                            <input type="file" accept="application/pdf" class="form-control input_lenght"
+                                            <input type="file" accept="image/*" class="form-control input_lenght"
                                                 id="input_pdf{{ $flagg }}"  data-code="{{$user['cedula']}}">
 
                                     </center>
